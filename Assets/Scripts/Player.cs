@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     private float _deadZone = 0.1f;
     private Vector2 _resolution;
     private float _zoneForRotation;
+    private int _touchNumber;
+    
     private void OnValidate()
     {
         UpdateFields();
@@ -68,17 +70,23 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (Input.touchCount > 0)
+            for (var i = 0; i < Input.touchCount; i++)
             {
-                var firstTouch = Input.GetTouch(0);
-                switch (firstTouch.phase)
+                var touch = Input.GetTouch(i);
+                if(touch.position.x > _zoneForRotation)
+                    continue;
+
+                switch (touch.phase)
                 {
                     case TouchPhase.Began:
                         _isSwiping = true;
-                        _tapPosition = firstTouch.position;
+                        _tapPosition = touch.position;
+                        _touchNumber = i;
+                        Debug.Log($"Touch begin. number: {_touchNumber}, position: {_tapPosition}");
                         break;
                     case TouchPhase.Ended:
                     case TouchPhase.Canceled:
+                        Debug.Log($"Touch ended. number: {_touchNumber}, position: {_tapPosition}");
                         ResetSwipe();
                         break;
                 }
@@ -92,15 +100,28 @@ public class Player : MonoBehaviour
 
         if (_isSwiping)
         {
-            if (!_isMobile && Input.GetMouseButton(0))
-                swipeDelta = (Vector2) Input.mousePosition - _tapPosition;
-            else if (Input.touchCount > 0)
-                swipeDelta = Input.GetTouch(0).position - _tapPosition;
+            var newTapPosition = new Vector2();
 
-            if ((swipeDelta.x * swipeDelta.x)  > (_deadZone * _deadZone))
+            if (!_isMobile && Input.GetMouseButton(0))
+            {
+                newTapPosition = Input.mousePosition;
+                swipeDelta = newTapPosition - _tapPosition;
+            }
+            else if (Input.touchCount > _touchNumber)
+            {
+                newTapPosition = Input.GetTouch(_touchNumber).position;
+                
+                if(newTapPosition.x > _zoneForRotation)
+                    return;
+                
+                swipeDelta = newTapPosition - _tapPosition;
+                Debug.Log($"Touch swiping. number: {_touchNumber}, position: {_tapPosition}, newPosition: {Input.GetTouch(_touchNumber).position}, swipeDelta: {swipeDelta}");
+            }
+
+            if (swipeDelta.x * swipeDelta.x > _deadZone * _deadZone)
             {
                  transform.Rotate(new Vector3(0,0, -swipeDelta.x * _rotationSpeed * Time.deltaTime));
-                _tapPosition = Input.mousePosition;
+                _tapPosition = newTapPosition;
             }
         }
     }
