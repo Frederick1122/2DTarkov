@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    private static string OBSTACLE_TAG = "Obstacle";
+    
     [SerializeField] private ShootArea _shootArea;
     [SerializeField] private Bullet _bullet;
     [SerializeField] private GameObject _bulletSpawnPoint;
@@ -12,7 +15,7 @@ public class Weapon : MonoBehaviour
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private GameObject _player;
     
-    private int _enemyCount = 0;
+    private List<GameObject> _enemies = new List<GameObject>();
     private YieldInstruction _rateOfFireInstruction;
     private Coroutine _attackRoutine;
 
@@ -20,23 +23,26 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        _shootArea.onEnter += () =>
-        {
-            _enemyCount++;
-        };
+        _shootArea.onEnter += AddEnemy;
 
-        _shootArea.onExit += () =>
-        {
-            _enemyCount--;
-        };
+        _shootArea.onExit += RemoveEnemy;
 
         _rateOfFireInstruction = new WaitForSeconds(_rateOfFire);
         UpdateFields();
     }
 
+    private void AddEnemy(GameObject enemy) => _enemies.Add(enemy);
+    
+    private void RemoveEnemy(GameObject enemy)
+    {
+        if (_enemies.Contains(enemy)) 
+            _enemies.Remove(enemy);
+    }
+
+
     private void Update()
     {
-        if (_enemyCount == 0)
+        if (_enemies.Count == 0)
         {
             if (_attackRoutine != null)
             {
@@ -47,6 +53,7 @@ public class Weapon : MonoBehaviour
         }
 
         _attackRoutine ??= StartCoroutine(AttackRoutine());
+        DrawRays();
     }
 
     private void Shoot()
@@ -58,8 +65,11 @@ public class Weapon : MonoBehaviour
     
     private IEnumerator AttackRoutine()
     {
-        while (_enemyCount != 0)
+        while (_enemies.Count != 0)
         {
+            if(!IsEnemyVisible())
+                break;
+            
             Shoot();
             yield return _rateOfFireInstruction;
         }
@@ -78,4 +88,34 @@ public class Weapon : MonoBehaviour
                 _player = playerComponent.gameObject;
         }
     }
+
+    private bool IsEnemyVisible()
+    {
+        foreach (var enemy in _enemies)
+        {
+            var hit = Physics2D.Raycast(_bulletSpawnPoint.transform.position, enemy.transform.position - _bulletSpawnPoint.transform.position);
+
+            if (hit.collider != null)
+            {
+                if(hit.collider.gameObject.CompareTag(OBSTACLE_TAG))
+                    continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+    
+    
+    #if UNITY_EDITOR
+    private void DrawRays()
+    {
+        foreach (var enemy in _enemies)
+        {
+            Debug.DrawRay(_bulletSpawnPoint.transform.position, enemy.transform.position - _bulletSpawnPoint.transform.position, Color.yellow);
+        }
+    }
+    
+    #endif
 }
