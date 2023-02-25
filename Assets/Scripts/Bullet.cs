@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
    private float _lifetime = 10f;
    private Rigidbody2D _rigidbody2D;
    private Vector3 _vectorMovement = new Vector3();
-
+   
    private void OnValidate()
    {
       UpdateFields();
@@ -22,14 +22,12 @@ public class Bullet : MonoBehaviour
    {
       if(other.GetComponent<Weapon>() || other.GetComponent<ShootArea>())
          return;
+
+      var humanoid = other.GetComponent<Humanoid>();
       
-      if (other.GetComponent<Enemy>())
-      {
-         //do something
-      }
+      if (humanoid != null) 
+         humanoid.GetDamage(_damage);
       
-      
-      Debug.Log($"Bullet has been destroyed: {other.gameObject.name}");
       Destroy(gameObject);
    }
 

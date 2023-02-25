@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : Humanoid
 {
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
@@ -82,11 +82,9 @@ public class Player : MonoBehaviour
                         _isSwiping = true;
                         _tapPosition = touch.position;
                         _touchNumber = i;
-                        //Debug.Log($"Touch begin. number: {_touchNumber}, position: {_tapPosition}");
                         break;
                     case TouchPhase.Ended:
                     case TouchPhase.Canceled:
-                        //Debug.Log($"Touch ended. number: {_touchNumber}, position: {_tapPosition}");
                         ResetSwipe();
                         break;
                 }
@@ -115,7 +113,6 @@ public class Player : MonoBehaviour
                     return;
                 
                 swipeDelta = newTapPosition - _tapPosition;
-                //Debug.Log($"Touch swiping. number: {_touchNumber}, position: {_tapPosition}, newPosition: {Input.GetTouch(_touchNumber).position}, swipeDelta: {swipeDelta}");
             }
 
             if (swipeDelta.x * swipeDelta.x > _deadZone * _deadZone)
