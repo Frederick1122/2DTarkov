@@ -4,23 +4,24 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class Bullet : Item
+public class BulletLogic : MonoBehaviour
 {
-   [SerializeField] private float _speed;
-   [SerializeField] private int _damage;
+   private float _speed;
+   private float _damage;
 
    private float _lifetime = 10f;
    private Rigidbody2D _rigidbody2D;
    private Vector3 _vectorMovement = new Vector3();
    
-   private void OnValidate()
+   public void Init(float speed, float damage)
    {
-      UpdateFields();
+      _speed = speed;
+      _damage = damage;
    }
 
    private void OnTriggerEnter2D(Collider2D other)
    {
-      if(other.GetComponent<Weapon>() || other.GetComponent<ShootArea>())
+      if(other.GetComponent<WeaponInHands>() || other.GetComponent<ShootArea>())
          return;
 
       var humanoid = other.GetComponent<Humanoid>();

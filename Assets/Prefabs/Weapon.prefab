@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 168054248992206947}
   - component: {fileID: 168054248992206944}
-  - component: {fileID: 3373793681848968763}
+  - component: {fileID: 7555680983505563385}
   m_Layer: 2
   m_Name: Weapon
   m_TagString: Untagged
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3373793681848968763
+--- !u!114 &7555680983505563385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,15 +96,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 168054248992206946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47bb0c0b50fb14c42a8f2ed34dcd7dd1, type: 3}
+  m_Script: {fileID: 11500000, guid: c9a595857b7a30b4a8f69c3c4e33342c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _shootArea: {fileID: 3371749504666574155}
-  _bullet: {fileID: 7485516105609847483, guid: 5a89c9ac09b923742b2dce72f4a9782d, type: 3}
   _bulletSpawnPoint: {fileID: 9105962404817941951}
-  _rateOfFire: 0.3
-  _bulletDispersion: 20
-  _player: {fileID: 0}
 --- !u!1 &4065374626914361140
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,10 +6,10 @@ using UnityEngine;
 public class Humanoid : MonoBehaviour
 {
     [Header("Start parameters")]
-    [SerializeField] private int _hp = 100;
-    [SerializeField] private int _armor = 10;
+    [SerializeField] private float _hp = 100f;
+    [SerializeField] private float _armor = 10f;
 
-    public void GetDamage(int damage)
+    public void GetDamage(float damage)
     {
         if (_armor != 0) 
             _armor = _armor - damage < 0 ? 0 : _armor - damage;

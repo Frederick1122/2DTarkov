@@ -2,32 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class WeaponInHands : MonoBehaviour
 {
     private static string OBSTACLE_TAG = "Obstacle";
-    
-    [SerializeField] private ShootArea _shootArea;
-    [SerializeField] private Bullet _bullet;
-    [SerializeField] private GameObject _bulletSpawnPoint;
-    [SerializeField] private float _rateOfFire;
-    [SerializeField] private float _bulletDispersion;
 
-    [Header("AUTOSERIALIZED FIELD")] [SerializeField]
-    private GameObject _player;
+    [SerializeField] private Weapon _firstWeapon;
     
+    private ShootArea _shootArea;
+    private GameObject _bulletSpawnPoint;
+    private Bullet _bullet;
+    
+    private float _bulletDispersion;
+
+    private GameObject _player;
     private List<GameObject> _enemies = new List<GameObject>();
     private YieldInstruction _rateOfFireInstruction;
     private Coroutine _attackRoutine;
-
-    private void OnValidate() => UpdateFields();
-
+    
+    public void SetWeapon(Weapon newWeapon)
+    {
+        if (_shootArea != null)
+        {
+            _shootArea.onEnter -= AddEnemy;
+            _shootArea.onExit -= RemoveEnemy;
+        }
+        
+        _bullet = newWeapon.bullet;
+        _bulletDispersion = newWeapon.bulletDispersion;
+        
+        var weapon = Instantiate(newWeapon.weaponPrefab, transform);
+        _shootArea = weapon.GetShootArea();
+        _bulletSpawnPoint = weapon.GetBulletSpawnPoint();
+        _rateOfFireInstruction = new WaitForSeconds(newWeapon.rateOfFire);
+        
+        _shootArea.onEnter += AddEnemy;
+        _shootArea.onExit += RemoveEnemy;
+    }
+    
     private void Start()
     {
-        _shootArea.onEnter += AddEnemy;
-
-        _shootArea.onExit += RemoveEnemy;
-
-        _rateOfFireInstruction = new WaitForSeconds(_rateOfFire);
+        if(_firstWeapon != null)
+            SetWeapon(_firstWeapon);
+        
+        
         UpdateFields();
     }
 
@@ -58,9 +75,10 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        var bullet = Instantiate(_bullet, _bulletSpawnPoint.transform.position, _player.transform.localRotation);
+        var bullet = Instantiate(_bullet.bulletPrefab, _bulletSpawnPoint.transform.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
         bullet.transform.Rotate(0,0,currentDispersion);
+        bullet.GetComponent<BulletLogic>().Init(_bullet.speed, _bullet.damage);
     }
     
     private IEnumerator AttackRoutine()
