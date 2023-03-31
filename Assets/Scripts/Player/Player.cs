@@ -8,8 +8,12 @@ public class Player : Humanoid
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private Joystick _movementJoystick;
-    [SerializeField] private FieldOfView _fieldOfView;
     
+    [Header("FOV settings")]
+    [SerializeField] private FieldOfView _fieldOfView;
+
+    [SerializeField] private float _minFov = 50f;
+    [SerializeField] private float _maxFov = 90f;
 
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private Rigidbody2D _rigidbody2D;
@@ -22,7 +26,8 @@ public class Player : Humanoid
     private Vector2 _resolution;
     private float _zoneForRotation;
     private int _touchNumber;
-    
+    private Vector3 _joystickParameters = Vector3.zero;
+    private float _fovDifference;
     private void OnValidate()
     {
         UpdateFields();
@@ -33,14 +38,22 @@ public class Player : Humanoid
         _isMobile = Application.isMobilePlatform;
         _resolution = new Vector2(Screen.width, Screen.height);
         _zoneForRotation = _resolution.x / 4 * 3;
+        _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
         UpdateFields();
     }
 
     private void Update()
     {
+        _joystickParameters = GetJoystickParameters();
         RotateLogic();
+        UpdateFOV();
+    }
+
+    private void UpdateFOV()
+    {
         _fieldOfView.SetAimDirection(Utils.GetVectorFromAngle(transform.rotation.eulerAngles.z + 90));
         _fieldOfView.SetOrigin(transform.position);
+        _fieldOfView.SetFov(_maxFov - _fovDifference * math.clamp(math.abs(_joystickParameters.x)  + math.abs(_joystickParameters.y), 0f, 1f));
     }
 
     private void FixedUpdate()
@@ -50,13 +63,18 @@ public class Player : Humanoid
 
     private void MovementLogic()
     {
+        var movement = transform.TransformVector(_joystickParameters.x, _joystickParameters.y, transform.position.z);
+        _rigidbody2D.velocity = movement * _movementSpeed * Time.fixedDeltaTime;
+    }
+
+    private Vector3 GetJoystickParameters()
+    {
         if (_movementJoystick == null)
-            return;
+            return Vector3.zero;
         var xMovement = _movementJoystick.Horizontal;
         var yMovement = _movementJoystick.Vertical;
-        var movement = transform.TransformVector(xMovement, yMovement, transform.position.z);
 
-        _rigidbody2D.velocity = movement * _movementSpeed * Time.fixedDeltaTime;
+        return new Vector3(xMovement, yMovement, 0);
     }
 
     private void RotateLogic()

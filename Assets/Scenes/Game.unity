@@ -504,13 +504,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151450283}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7498224, y: 2.019574, z: -0.009342315}
-  m_LocalScale: {x: 24.944, y: 24.944, z: 24.944}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.7498, y: 2.0196, z: -0.009342315}
+  m_LocalScale: {x: 25.873663, y: 25.873663, z: 25.873663}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_Father: {fileID: 2092309698}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -695,7 +695,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: dd7d90e7053a75a47acbd48e5d227e23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -889,8 +889,6 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
-  _fov: 70
-  _viewDistance: 7.2
   _rayCount: 150
 --- !u!33 &969036943
 MeshFilter:
@@ -2281,6 +2279,7 @@ Transform:
   - {fileID: 1046783189}
   - {fileID: 2146326608}
   - {fileID: 542205044}
+  - {fileID: 151450286}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2339,6 +2338,8 @@ MonoBehaviour:
   _rotationSpeed: 10
   _movementJoystick: {fileID: 949262512}
   _fieldOfView: {fileID: 969036942}
+  _minFov: 50
+  _maxFov: 90
   _rigidbody2D: {fileID: 2092309700}
 --- !u!114 &2092309702
 MonoBehaviour:
@@ -2443,6 +2444,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2092309698}
     m_Modifications:
+    - target: {fileID: 43103179294357828, guid: 34dafd4e8f388084aac384333032ece0, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 168054248992206946, guid: 34dafd4e8f388084aac384333032ece0, type: 3}
       propertyPath: m_Name
       value: Weapon
@@ -2495,6 +2500,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 2092309696}
+    - target: {fileID: 4877414027446699225, guid: 34dafd4e8f388084aac384333032ece0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7.773608
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877414027446699225, guid: 34dafd4e8f388084aac384333032ece0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.3006
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dafd4e8f388084aac384333032ece0, type: 3}
 --- !u!1001 &2099976992453987579

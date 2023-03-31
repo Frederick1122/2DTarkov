@@ -6,9 +6,9 @@ public class FieldOfView : MonoBehaviour
 {
    [SerializeField] private LayerMask _layerMask;
    private Mesh _mesh;
-   [SerializeField] private float _fov = 90f;
-   [SerializeField] private float _viewDistance = 5f;
    [SerializeField] private int _rayCount = 150;
+   private float _viewDistance = 7.2f;
+   private float _fov = 90f;
    private Vector3 _origin = Vector3.zero;
    private float _angle;
    private void Start()
@@ -63,6 +63,8 @@ public class FieldOfView : MonoBehaviour
       _mesh.vertices = vertices;
       _mesh.uv = uv;
       _mesh.triangles = triangles;
+      
+      _mesh.RecalculateBounds();
    }
 
    public void SetOrigin(Vector3 origin) => _origin = origin;
@@ -72,4 +74,8 @@ public class FieldOfView : MonoBehaviour
       var angle = Utils.GetAngleFromVectorFloat(aimDirection);
       _angle = angle + _fov / 2f;
    }
+
+   public void SetFov(float fov) => _fov = fov;
+
+   public void SetViewDistance(float viewDistance) => _viewDistance = viewDistance;
 }
