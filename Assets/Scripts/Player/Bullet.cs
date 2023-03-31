@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class Bullet : MonoBehaviour
+public class Bullet : Item
 {
    [SerializeField] private float _speed;
    [SerializeField] private int _damage;

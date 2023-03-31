@@ -1,6 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteMaskActivator))]
 public class Humanoid : MonoBehaviour
 {
     [Header("Start parameters")]

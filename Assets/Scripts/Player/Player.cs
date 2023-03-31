@@ -8,10 +8,11 @@ public class Player : Humanoid
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private Joystick _movementJoystick;
+    [SerializeField] private FieldOfView _fieldOfView;
+    
 
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private Rigidbody2D _rigidbody2D;
-
 
     private Vector2 _tapPosition;
     private bool _isMobile;
@@ -38,6 +39,8 @@ public class Player : Humanoid
     private void Update()
     {
         RotateLogic();
+        _fieldOfView.SetAimDirection(Utils.GetVectorFromAngle(transform.rotation.eulerAngles.z + 90));
+        _fieldOfView.SetOrigin(transform.position);
     }
 
     private void FixedUpdate()
