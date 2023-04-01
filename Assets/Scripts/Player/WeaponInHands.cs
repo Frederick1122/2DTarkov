@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponInHands : MonoBehaviour
@@ -10,14 +11,15 @@ public class WeaponInHands : MonoBehaviour
     
     private ShootArea _shootArea;
     private GameObject _bulletSpawnPoint;
-    private Bullet _bullet;
-    
+
     private float _bulletDispersion;
 
     private GameObject _player;
     private List<GameObject> _enemies = new List<GameObject>();
     private YieldInstruction _rateOfFireInstruction;
     private Coroutine _attackRoutine;
+    private Weapon _activeWeapon;
+    private Dictionary<Weapon, WeaponInPool> _weaponPool = new();
     
     public void SetWeapon(Weapon newWeapon)
     {
@@ -27,16 +29,32 @@ public class WeaponInHands : MonoBehaviour
             _shootArea.onExit -= RemoveEnemy;
         }
         
-        _bullet = newWeapon.bullet;
         _bulletDispersion = newWeapon.bulletDispersion;
+        _rateOfFireInstruction = new WaitForSeconds(newWeapon.rateOfFire);
+
+        WeaponPrefab weapon;
         
-        var weapon = Instantiate(newWeapon.weaponPrefab, transform);
+        if (_weaponPool.ContainsKey(newWeapon))
+        {
+            _weaponPool[newWeapon].WeaponPrefab.gameObject.SetActive(true);
+            weapon = _weaponPool[newWeapon].WeaponPrefab;
+        }
+        else
+        {
+            weapon = Instantiate(Resources.Load(newWeapon.weaponPrefabPath), transform).GetComponent<WeaponPrefab>();
+            var newWeaponInPool = new WeaponInPool(newWeapon, weapon);
+            _weaponPool.Add(newWeapon, newWeaponInPool);
+        }
+        
         _shootArea = weapon.GetShootArea();
         _bulletSpawnPoint = weapon.GetBulletSpawnPoint();
-        _rateOfFireInstruction = new WaitForSeconds(newWeapon.rateOfFire);
-        
         _shootArea.onEnter += AddEnemy;
         _shootArea.onExit += RemoveEnemy;
+        
+        if (_activeWeapon != null || _activeWeapon != default) 
+            _weaponPool[_activeWeapon].WeaponPrefab.gameObject.SetActive(false);
+        
+        _activeWeapon = newWeapon;
     }
     
     private void Start()
@@ -75,10 +93,10 @@ public class WeaponInHands : MonoBehaviour
 
     private void Shoot()
     {
-        var bullet = Instantiate(_bullet.bulletPrefab, _bulletSpawnPoint.transform.position, _player.transform.localRotation);
+        var bullet = Instantiate(_weaponPool[_activeWeapon].BulletLogic, _bulletSpawnPoint.transform.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
         bullet.transform.Rotate(0,0,currentDispersion);
-        bullet.GetComponent<BulletLogic>().Init(_bullet.speed, _bullet.damage);
+        bullet.GetComponent<BulletLogic>().Init(_activeWeapon.bullet.speed, _activeWeapon.bullet.damage);
     }
     
     private IEnumerator AttackRoutine()
@@ -124,7 +142,18 @@ public class WeaponInHands : MonoBehaviour
 
         return false;
     }
-    
+
+    struct WeaponInPool
+    {
+        public WeaponPrefab WeaponPrefab { get; }
+        public BulletLogic BulletLogic { get; }
+
+        public WeaponInPool(Weapon weaponConf, WeaponPrefab weaponPrefab)
+        {
+            WeaponPrefab = weaponPrefab;
+            BulletLogic = Resources.Load(weaponConf.bullet.bulletPrefabPath).GetComponent<BulletLogic>();
+        }
+    }
     
     #if UNITY_EDITOR
     private void DrawRays()
