@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 [CreateAssetMenu(fileName = "NewBullet", menuName = "Item/Bullet")]
 public class Bullet : Item
 {
@@ -12,5 +14,10 @@ public class Bullet : Item
     {
         if (bulletPrefabPath == "") 
             Debug.Log($"Incorrect bulletPrefabPath! Check {this.name}");
+        
+        if(_directory == "")
+            _directory = "Bullets/";
+        
+        base.OnValidate();
     }
 }

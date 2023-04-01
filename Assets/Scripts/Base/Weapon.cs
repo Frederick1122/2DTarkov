@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Item/Weapon")]
 public class Weapon : Item
 {
@@ -16,5 +17,10 @@ public class Weapon : Item
     {
         if (weaponPrefabPath == "")
             Debug.Log($"Incorrect weaponPrefabPath! Check {this.name}");
+
+        if(_directory == "")
+            _directory = "Weapons/";
+        
+        base.OnValidate();
     }
 }
