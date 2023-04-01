@@ -15,6 +15,8 @@ MonoBehaviour:
   itemName: Pistol
   description: 
   weight: 2.5
+  maxStack: 1
+  configPath: Prototypes/Weapons/Pistol
   weaponPrefabPath: Items/Weapons/Weapon
   bullet: {fileID: 11400000, guid: 8ffc00a454173c84d926eefa054e4049, type: 2}
   cartrigeClip: 7
