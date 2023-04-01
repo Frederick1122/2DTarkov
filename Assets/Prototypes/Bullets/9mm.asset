@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e33ba721f05e94794df40fa2dee9de, type: 3}
   m_Name: 9mm
   m_EditorClassIdentifier: 
-  _name: 9mm
-  _description: 
-  _weight: 0.1
-  speed: 100
+  itemName: 9mm
+  description: 
+  weight: 0.1
+  speed: 1000
   damage: 10
-  bulletPrefab: {fileID: 7485516105609847483, guid: 5a89c9ac09b923742b2dce72f4a9782d, type: 3}
+  bulletPrefabPath: Items/Bullets/Bullet
