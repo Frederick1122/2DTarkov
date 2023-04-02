@@ -4,17 +4,14 @@ namespace Base
 {
     public class Singleton<T> : MonoBehaviour where T : new()
     {
-        public static T Instance
-        {
-            get
-            {
-                if (Instance == null) 
-                    Instance = new T();
-            
-                return Instance;
-            }
-            private set => Instance = value;
-        }
+        private static T _instance;
 
+        public static T GetInstance()
+        {
+            if(_instance == null)
+                _instance = new T();
+            
+            return _instance;
+        }
     }
 }

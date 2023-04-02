@@ -13,7 +13,7 @@ namespace Base
         private Inventory _inventory;
         private string _path = "";
         
-        private void AddNewItem(Item newItem, int count)
+        public void AddNewItem(Item newItem, int count)
         {
             foreach (var inventoryCellWithItem in _inventory.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
             {
@@ -42,6 +42,8 @@ namespace Base
             Save();
         }
 
+        public Inventory GetInventory() => _inventory;
+        
         private void Start()
         {
             Load();
@@ -51,6 +53,7 @@ namespace Base
         {
             UpdatePath();
             _inventory = JsonUtility.FromJson<Inventory>(File.ReadAllText(_path));
+            GetInstance()._inventory = _inventory;
         }
 
         public void Save()

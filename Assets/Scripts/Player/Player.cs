@@ -28,6 +28,10 @@ public class Player : Humanoid
     private int _touchNumber;
     private Vector3 _joystickParameters = Vector3.zero;
     private float _fovDifference;
+    private bool _isFreezing;
+
+    public void IsFreezing(bool freezing) => _isFreezing = freezing;
+    
     private void OnValidate()
     {
         UpdateFields();
@@ -44,9 +48,20 @@ public class Player : Humanoid
 
     private void Update()
     {
+        if(_isFreezing) 
+            return;
+        
         _joystickParameters = GetJoystickParameters();
         RotateLogic();
         UpdateFOV();
+    }
+    
+    private void FixedUpdate()
+    {
+        if(_isFreezing) 
+            return;
+        
+        MovementLogic();
     }
 
     private void UpdateFOV()
@@ -54,11 +69,6 @@ public class Player : Humanoid
         _fieldOfView.SetAimDirection(Utils.GetVectorFromAngle(transform.rotation.eulerAngles.z + 90));
         _fieldOfView.SetOrigin(transform.position);
         _fieldOfView.SetFov(_maxFov - _fovDifference * math.clamp(math.abs(_joystickParameters.x)  + math.abs(_joystickParameters.y), 0f, 1f));
-    }
-
-    private void FixedUpdate()
-    {
-        MovementLogic();
     }
 
     private void MovementLogic()
@@ -74,6 +84,10 @@ public class Player : Humanoid
         var xMovement = _movementJoystick.Horizontal;
         var yMovement = _movementJoystick.Vertical;
 
+        if (xMovement + yMovement != 0)
+        {
+            Debug.Log("ada");
+        }
         return new Vector3(xMovement, yMovement, 0);
     }
 
