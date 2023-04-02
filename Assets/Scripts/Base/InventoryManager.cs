@@ -12,8 +12,17 @@ namespace Base
 
         private Inventory _inventory;
         private string _path = "";
+
+        [SerializeField] private Item _item;
+        [SerializeField] private int _count;
+
+        [ContextMenu("AddItem")]
+        public void AddItem()
+        {
+            AddNewItem(_item, _count);   
+        }
         
-        public void AddNewItem(Item newItem, int count)
+        public void AddNewItem(Item newItem, int count = 1)
         {
             foreach (var inventoryCellWithItem in _inventory.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
             {
@@ -53,7 +62,6 @@ namespace Base
         {
             UpdatePath();
             _inventory = JsonUtility.FromJson<Inventory>(File.ReadAllText(_path));
-            GetInstance()._inventory = _inventory;
         }
 
         public void Save()

@@ -5,7 +5,8 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     protected string _directory = "";
-    
+
+    public Sprite icon;
     public string itemName;
     public string description;
     public float weight = 1f;

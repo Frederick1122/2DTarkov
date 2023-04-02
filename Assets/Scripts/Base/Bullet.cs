@@ -10,7 +10,7 @@ public class Bullet : Item
     public float damage;
     public string bulletPrefabPath = "";
     
-    private void OnValidate()
+    internal override void OnValidate()
     {
         if (bulletPrefabPath == "") 
             Debug.Log($"Incorrect bulletPrefabPath! Check {this.name}");

@@ -13,7 +13,7 @@ public class Weapon : Item
     public float rateOfFire;
     public float bulletDispersion;
 
-    private void OnValidate()
+    internal override void OnValidate()
     {
         if (weaponPrefabPath == "")
             Debug.Log($"Incorrect weaponPrefabPath! Check {this.name}");

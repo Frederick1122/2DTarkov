@@ -2,16 +2,23 @@
 
 namespace Base
 {
-    public class Singleton<T> : MonoBehaviour where T : new()
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static T _instance;
-
-        public static T GetInstance()
+        protected virtual void Awake()
         {
-            if(_instance == null)
-                _instance = new T();
-            
-            return _instance;
+            if (Instance == null)
+                Instance = (T)FindObjectOfType(typeof(T));
+            else if (Instance == this)
+                return;
+            else
+                DestroyDuplicate();
         }
+
+        private void DestroyDuplicate()
+        {
+            Destroy(this);
+        }
+
+        public static T Instance { get; protected set; }
     }
 }

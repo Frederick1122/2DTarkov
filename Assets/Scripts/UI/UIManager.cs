@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI.Inventory;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
   [SerializeField] private GameObject _baseUI;
-  [SerializeField] private GameObject _inventoryUI;
+  [SerializeField] private InventoryWindow _inventoryWindow;
 
   public void OpenBaseUI()
   {
     CloseAllUI();
     
-    GameManager.GetInstance().GetPlayer().IsFreezing(false);
+    GameManager.Instance.GetPlayer().IsFreezing(false);
     _baseUI.SetActive(true);
   }
 
@@ -19,13 +20,15 @@ public class UIManager : MonoBehaviour
   {
       CloseAllUI();
       
-      GameManager.GetInstance().GetPlayer().IsFreezing(true);
-      _inventoryUI.SetActive(true);
+      GameManager.Instance.GetPlayer().IsFreezing(true);
+      
+      _inventoryWindow.Refresh();
+      _inventoryWindow.gameObject.SetActive(true);
   }
 
   private void CloseAllUI()
   {
     _baseUI.SetActive(false);
-    _inventoryUI.SetActive(false);
+    _inventoryWindow.gameObject.SetActive(false);
   }
 }

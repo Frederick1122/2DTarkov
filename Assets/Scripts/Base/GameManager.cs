@@ -9,10 +9,9 @@ public class GameManager : Singleton<GameManager>
     
     private void OnValidate() => UpdateFields();
 
-    private void Awake()
+    private void Start()
     {
         UpdateFields();
-        GetInstance()._player = _player;
     }
 
     private void UpdateFields()
