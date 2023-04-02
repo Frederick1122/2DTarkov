@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 8a52a5c45924b2545bf5f29f5f838096, type: 3}
   itemName: Pistol
-  description: 
+  description: Standart pistol
   weight: 2.5
   maxStack: 1
   configPath: Prototypes/Weapons/Pistol

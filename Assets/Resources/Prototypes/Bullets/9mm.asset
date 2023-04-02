@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: dce15ef65ee3c394cb6cc78d4d70b6d9, type: 3}
   itemName: 9mm
-  description: 
+  description: Standart ammo for pistol
   weight: 0.1
   maxStack: 30
   configPath: Prototypes/Bullets/9mm

@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Humanoid
 {
+    public bool isFreeze { get; set; }
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private Joystick _movementJoystick;
@@ -28,10 +29,7 @@ public class Player : Humanoid
     private int _touchNumber;
     private Vector3 _joystickParameters = Vector3.zero;
     private float _fovDifference;
-    private bool _isFreezing;
 
-    public void IsFreezing(bool freezing) => _isFreezing = freezing;
-    
     private void OnValidate()
     {
         UpdateFields();
@@ -48,7 +46,7 @@ public class Player : Humanoid
 
     private void Update()
     {
-        if(_isFreezing) 
+        if(isFreeze) 
             return;
         
         _joystickParameters = GetJoystickParameters();
@@ -58,7 +56,7 @@ public class Player : Humanoid
     
     private void FixedUpdate()
     {
-        if(_isFreezing) 
+        if(isFreeze) 
             return;
         
         MovementLogic();

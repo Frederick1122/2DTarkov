@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UI.Inventory;
 using UnityEngine;
 
@@ -12,7 +10,7 @@ public class UIManager : MonoBehaviour
   {
     CloseAllUI();
     
-    GameManager.Instance.GetPlayer().IsFreezing(false);
+    GameManager.Instance.GetPlayer().isFreeze = false;
     _baseUI.SetActive(true);
   }
 
@@ -20,7 +18,7 @@ public class UIManager : MonoBehaviour
   {
       CloseAllUI();
       
-      GameManager.Instance.GetPlayer().IsFreezing(true);
+      GameManager.Instance.GetPlayer().isFreeze = true;
       
       _inventoryWindow.Refresh();
       _inventoryWindow.gameObject.SetActive(true);

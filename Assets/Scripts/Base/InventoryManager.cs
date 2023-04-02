@@ -17,12 +17,12 @@ namespace Base
         [SerializeField] private int _count;
 
         [ContextMenu("AddItem")]
-        public void AddItem()
+        private void AddItem()
         {
-            AddNewItem(_item, _count);   
+            AddItem(_item, _count);   
         }
         
-        public void AddNewItem(Item newItem, int count = 1)
+        public void AddItem(Item newItem, int count = 1)
         {
             foreach (var inventoryCellWithItem in _inventory.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
             {
