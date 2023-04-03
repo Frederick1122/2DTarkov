@@ -1,10 +1,11 @@
 
 using System;
+using Base;
 using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Item/Weapon")]
-public class Weapon : Item
+public class Weapon : Item, IEquipped
 {
     [Space]
     public string weaponPrefabPath = "";
@@ -22,5 +23,10 @@ public class Weapon : Item
             _directory = "Weapons/";
         
         base.OnValidate();
+    }
+
+    public void Equip()
+    {
+        throw new NotImplementedException();
     }
 }

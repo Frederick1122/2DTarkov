@@ -13,7 +13,7 @@ namespace UI.Inventory
         private Item _item;
         private Button _button;
         
-        public void Init(ItemInformationPanel itemInformationPanel,Item item, int count = 1)
+        public void Init(Item item, int count = 1)
         {
             _item = item;
             _icon.sprite = item.icon;
@@ -21,12 +21,10 @@ namespace UI.Inventory
 
             if (_button == null) 
                 _button = GetComponent<Button>();
-            
-            _button.onClick.AddListener(() => itemInformationPanel.SetNewInformation(item.icon, item.name, item.description));
         }
 
-        public Image GetImage() => _icon;
+        public Button GetButton() => _button;
 
-        public TMP_Text GetCount() => _count;
+        public Item GetItem() => _item;
     }
 }
