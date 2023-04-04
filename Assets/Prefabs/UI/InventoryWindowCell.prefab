@@ -86,9 +86,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4160765959914434588}
   - component: {fileID: 5414000592150853912}
+  - component: {fileID: 3523136498789725488}
   - component: {fileID: 6126165286259749938}
   - component: {fileID: 7101001261294016886}
-  - component: {fileID: 3523136498789725488}
   m_Layer: 5
   m_Name: InventoryWindowCell
   m_TagString: Untagged
@@ -126,6 +126,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2291138809831851552}
   m_CullTransparentMesh: 1
+--- !u!114 &3523136498789725488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291138809831851552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c816364f2f7f704bbb1b2f7ed320406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 4726031549364060283}
+  _countText: {fileID: 5250249922502164459}
 --- !u!114 &6126165286259749938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,20 +214,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3523136498789725488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2291138809831851552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c816364f2f7f704bbb1b2f7ed320406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _icon: {fileID: 4726031549364060283}
-  _count: {fileID: 5250249922502164459}
 --- !u!1 &7563989090312427267
 GameObject:
   m_ObjectHideFlags: 0

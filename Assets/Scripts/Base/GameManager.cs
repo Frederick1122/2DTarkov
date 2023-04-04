@@ -1,11 +1,14 @@
 using Base;
+using InteractObjects;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private Player _player;
-
+    [SerializeField] private InteractItem _interactItem;
     public Player GetPlayer() => _player;
+
+    public InteractItem GetInteract() => _interactItem;
     
     private void OnValidate() => UpdateFields();
 

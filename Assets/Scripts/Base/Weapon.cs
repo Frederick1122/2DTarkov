@@ -5,7 +5,7 @@ using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Item/Weapon")]
-public class Weapon : Item, IEquipped
+public class Weapon : Item, IEquip
 {
     [Space]
     public string weaponPrefabPath = "";

@@ -10,7 +10,7 @@ using UnityEngine.UI;
     {
         [SerializeField] private Button _interactButton;
 
-        private List<ObjectWithInteraction> _objectWithInteractions = new List<ObjectWithInteraction>();
+        private List<IInteract> _objectWithInteractions = new List<IInteract>();
         private Player _player;
 
         private void Start()
@@ -24,14 +24,14 @@ using UnityEngine.UI;
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            var obj = col.GetComponent<ObjectWithInteraction>();
+            var obj = col.GetComponent<IInteract>();
             if (obj != null)
                 _objectWithInteractions.Add(obj);
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            var obj = other.GetComponent<ObjectWithInteraction>();
+            var obj = other.GetComponent<IInteract>();
             if (obj != null)
                 _objectWithInteractions.Remove(obj);
         }

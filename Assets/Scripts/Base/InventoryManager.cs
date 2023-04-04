@@ -51,6 +51,37 @@ namespace Base
             Save();
         }
 
+        public void DeleteItem(Item item, int count)
+        {
+            var deletedCells = new List<InventoryCell>();
+            foreach (var cell in _inventory.inventoryCells.FindAll(cell => cell.GetItem() == item))
+            {
+                if (cell.Count > count)
+                {
+                    cell.Count -= count;
+                    return;
+                }
+
+                count -= cell.Count;
+                deletedCells.Add(cell);
+
+                if (count == 0)
+                    return;
+            }
+
+            foreach (var deletedCell in deletedCells) 
+                _inventory.inventoryCells.Remove(deletedCell);
+            
+            Save();
+        }
+        
+        public void DeleteItem(int itemIndex, int count)
+        {
+            _inventory.inventoryCells.RemoveAt(itemIndex);
+            
+            Save();
+        }
+
         public Inventory GetInventory() => _inventory;
         
         private void Start()

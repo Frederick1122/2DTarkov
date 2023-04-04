@@ -1,4 +1,5 @@
 using System;
+using Base;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ using UnityEngine;
 public class Player : Humanoid
 {
     public bool isFreeze { get; set; }
+    public Action<Item, int> dropAction;
+    [Space]
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private Joystick _movementJoystick;
@@ -16,6 +19,8 @@ public class Player : Humanoid
     [SerializeField] private float _minFov = 50f;
     [SerializeField] private float _maxFov = 90f;
 
+    [Header("Points")] [SerializeField] private SpawnPoint _spawnUnderPlayer;
+    
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private Rigidbody2D _rigidbody2D;
 
@@ -41,6 +46,7 @@ public class Player : Humanoid
         _resolution = new Vector2(Screen.width, Screen.height);
         _zoneForRotation = _resolution.x / 4 * 3;
         _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
+        dropAction += _spawnUnderPlayer.SpawnItem;
         UpdateFields();
     }
 
@@ -81,11 +87,7 @@ public class Player : Humanoid
             return Vector3.zero;
         var xMovement = _movementJoystick.Horizontal;
         var yMovement = _movementJoystick.Vertical;
-
-        if (xMovement + yMovement != 0)
-        {
-            Debug.Log("ada");
-        }
+        
         return new Vector3(xMovement, yMovement, 0);
     }
 

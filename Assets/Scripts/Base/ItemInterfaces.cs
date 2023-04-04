@@ -1,11 +1,11 @@
 namespace Base
 {
-    public interface IEquipped
+    public interface IEquip
     {
         public void Equip();
     }
     
-    public interface IUsed
+    public interface IUse
     {
         public void Use();
     }
