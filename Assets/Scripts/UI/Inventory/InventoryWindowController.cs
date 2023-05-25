@@ -6,29 +6,28 @@ using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-    public class InventoryWindowController : MonoBehaviour
+    public class InventoryWindowController : WindowController
     {
         [SerializeField] private InventoryWindowCellView _inventoryCellView;
         [SerializeField] private GridLayoutGroup _inventoryLayoutGroup;
         [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
         [SerializeField] private InventoryActionButtonsView _inventoryActionButtonsView;
-        
 
         private InventoryWindowCellView _currentCellView;
         private Dictionary<InventoryWindowCellView, int> _cells = new Dictionary<InventoryWindowCellView, int>();
 
         private void Start()
         {
-            _inventoryActionButtonsView.onUseAction += Use;
-            _inventoryActionButtonsView.onEquipAction += Equip;
-            _inventoryActionButtonsView.onDropAction += Drop;
+            _inventoryActionButtonsView.OnUseAction += Use;
+            _inventoryActionButtonsView.OnEquipAction += Equip;
+            _inventoryActionButtonsView.OnDropAction += Drop;
         }
 
         private void OnDestroy()
         {
-            _inventoryActionButtonsView.onUseAction -= Use;
-            _inventoryActionButtonsView.onEquipAction -= Equip;
-            _inventoryActionButtonsView.onDropAction -= Drop;
+            _inventoryActionButtonsView.OnUseAction -= Use;
+            _inventoryActionButtonsView.OnEquipAction -= Equip;
+            _inventoryActionButtonsView.OnDropAction -= Drop;
         }
 
         private void Use()
@@ -50,9 +49,7 @@ namespace UI.Inventory
         }
         
         private void Drop()
-        {
-            //TODO: Destroy button, clean inventory, spawn drop in spawnpoint
-            
+        { 
             RefreshActionButtons();
             DropCurrentItem();
         }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base;
+using UI;
+using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,18 +10,16 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerInteractZone : MonoBehaviour
     {
-        [SerializeField] private Button _interactButton;
-
         private List<IInteract> _objectWithInteractions = new List<IInteract>();
         private Player _player;
-
+        private BaseUIWindowController _baseUIWindowController;
+        
+        private bool _isNewChange;
+        
         private void Start()
         {
             _player = GameManager.Instance.GetPlayer();
-            _interactButton.onClick.AddListener(() =>
-            {
-                _objectWithInteractions[^1].Interact();
-            });
+            _baseUIWindowController = UIMainController.Instance.GetBaseUI();   
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -27,6 +27,8 @@ using UnityEngine.UI;
             var obj = col.GetComponent<IInteract>();
             if (obj != null)
                 _objectWithInteractions.Add(obj);
+
+            _isNewChange = true;
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -34,16 +36,23 @@ using UnityEngine.UI;
             var obj = other.GetComponent<IInteract>();
             if (obj != null)
                 _objectWithInteractions.Remove(obj);
+
+            _isNewChange = true;
         }
 
         private void Update()
         {
+            if(_isNewChange == false)
+                return;
+
+            _isNewChange = false;
             var canInteract = _objectWithInteractions.Count > 0 && !_player.isFreeze;
-            if (_interactButton.gameObject.activeSelf != canInteract)
-            {
-                _interactButton.gameObject.SetActive(canInteract);
-            }
+            
+            _baseUIWindowController.SetActiveInteractButton(canInteract);
+            
+            if(canInteract != true)
+                return;
+            
+            _baseUIWindowController.InitInteractButton(_objectWithInteractions[^1]);
         }
-        
-        
     }

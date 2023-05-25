@@ -13,6 +13,7 @@ namespace Base
         private Inventory _inventory;
         private string _path = "";
 
+        [Header("Fields for tests")]
         [SerializeField] private Item _item;
         [SerializeField] private int _count;
 
