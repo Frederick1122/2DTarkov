@@ -19,7 +19,7 @@ public class Player : Humanoid
     [SerializeField] private float _minFov = 50f;
     [SerializeField] private float _maxFov = 90f;
 
-    [Header("Points")] [SerializeField] private SpawnPoint _spawnUnderPlayer;
+    [Header("Points")] [SerializeField] private SpawnPoint _dropPoint;
     
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private Rigidbody2D _rigidbody2D;
@@ -46,7 +46,7 @@ public class Player : Humanoid
         _resolution = new Vector2(Screen.width, Screen.height);
         _zoneForRotation = _resolution.x / 4 * 3;
         _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
-        dropAction += _spawnUnderPlayer.SpawnItem;
+        dropAction += _dropPoint.SpawnItem;
         UpdateFields();
     }
 
