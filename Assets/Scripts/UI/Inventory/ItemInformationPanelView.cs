@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-   public class ItemInformationPanel : MonoBehaviour
+   public class ItemInformationPanelView : MonoBehaviour
    {
       [SerializeField] private Image _icon;
       [SerializeField] private TMP_Text _name;

@@ -4,7 +4,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
   [SerializeField] private GameObject _baseUI;
-  [SerializeField] private InventoryWindow _inventoryWindow;
+  [SerializeField] private InventoryWindowController _inventoryWindowController;
 
   public void OpenBaseUI()
   {
@@ -20,13 +20,13 @@ public class UIManager : MonoBehaviour
       
       GameManager.Instance.GetPlayer().isFreeze = true;
       
-      _inventoryWindow.Refresh();
-      _inventoryWindow.gameObject.SetActive(true);
+      _inventoryWindowController.gameObject.SetActive(true);
+      _inventoryWindowController.Refresh();
   }
 
   private void CloseAllUI()
   {
     _baseUI.SetActive(false);
-    _inventoryWindow.gameObject.SetActive(false);
+    _inventoryWindowController.gameObject.SetActive(false);
   }
 }
