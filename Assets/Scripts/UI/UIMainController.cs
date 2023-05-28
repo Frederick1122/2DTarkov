@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Base;
 using UI.Base;
 using UI.Inventory;
@@ -9,6 +10,7 @@ namespace UI
   {
     [SerializeField] private BaseUIWindowController _baseUIWindowController;
     [SerializeField] private InventoryWindowController _inventoryWindowController;
+    [SerializeField] private LootBoxWindowController _lootBoxWindowController;
 
     private void Start() => OpenBaseUI();
 
@@ -30,12 +32,23 @@ namespace UI
       _inventoryWindowController.Refresh();
     }
 
+    public void OpenLootBoxUI(List<Item> lootItems)
+    {
+      CloseAllUI();
+      
+      GameManager.Instance.GetPlayer().isFreeze = true;
+      
+      _lootBoxWindowController.OpenWindow();
+      _lootBoxWindowController.Init(lootItems);
+    }
+
     public BaseUIWindowController GetBaseUI() => _baseUIWindowController;
     
     private void CloseAllUI()
     {
       _baseUIWindowController.CloseWindow();
       _inventoryWindowController.CloseWindow();
+      _lootBoxWindowController.CloseWindow();
     }
   }
 }

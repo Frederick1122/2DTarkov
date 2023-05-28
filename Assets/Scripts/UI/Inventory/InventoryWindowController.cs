@@ -8,26 +8,26 @@ namespace UI.Inventory
 {
     public class InventoryWindowController : WindowController
     {
-        [SerializeField] private InventoryWindowCellView _inventoryCellView;
+        [SerializeField] private ItemCellView _inventoryCellView;
         [SerializeField] private GridLayoutGroup _inventoryLayoutGroup;
         [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
-        [SerializeField] private InventoryActionButtonsView _inventoryActionButtonsView;
+        [SerializeField] private ActionButtonsView _actionButtonsView;
 
-        private InventoryWindowCellView _currentCellView;
-        private Dictionary<InventoryWindowCellView, int> _cells = new Dictionary<InventoryWindowCellView, int>();
+        private ItemCellView _currentCellView;
+        private Dictionary<ItemCellView, int> _cells = new Dictionary<ItemCellView, int>();
 
         private void Start()
         {
-            _inventoryActionButtonsView.OnUseAction += Use;
-            _inventoryActionButtonsView.OnEquipAction += Equip;
-            _inventoryActionButtonsView.OnDropAction += Drop;
+            _actionButtonsView.OnUseAction += Use;
+            _actionButtonsView.OnEquipAction += Equip;
+            _actionButtonsView.OnDropAction += Drop;
         }
 
         private void OnDestroy()
         {
-            _inventoryActionButtonsView.OnUseAction -= Use;
-            _inventoryActionButtonsView.OnEquipAction -= Equip;
-            _inventoryActionButtonsView.OnDropAction -= Drop;
+            _actionButtonsView.OnUseAction -= Use;
+            _actionButtonsView.OnEquipAction -= Equip;
+            _actionButtonsView.OnDropAction -= Drop;
         }
 
         private void Use()
@@ -78,7 +78,7 @@ namespace UI.Inventory
             }
         }
 
-        private void ClickOnCell(InventoryWindowCellView cellView)
+        private void ClickOnCell(ItemCellView cellView)
         {
             var cellItem = cellView.GetItem(); 
             _currentCellView = _currentCellView == cellView ? null : cellView;
@@ -96,20 +96,20 @@ namespace UI.Inventory
                 return;
             }
 
-            _inventoryActionButtonsView.SetActiveButtons(item is IUse, item is IEquip,
+            _actionButtonsView.SetActiveButtons(item is IUse, item is IEquip,
                 true, true);
         }
 
         private void SetActiveActionButton(bool isActive)
         {
-            _inventoryActionButtonsView.SetActiveButtons(isActive, isActive,
+            _actionButtonsView.SetActiveButtons(isActive, isActive,
                 isActive, isActive);
         }
 
         private void DropCurrentItem()
         {
             GameManager.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
-            InventoryManager.Instance.DeleteItem(_cells[_currentCellView], _currentCellView.GetCount());
+            InventoryManager.Instance.DeleteItem(_cells[_currentCellView]);
             Destroy(_currentCellView.gameObject);
         }
     }

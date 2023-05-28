@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6126165286259749938}
   - component: {fileID: 7101001261294016886}
   m_Layer: 5
-  m_Name: InventoryWindowCell
+  m_Name: ItemCellView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

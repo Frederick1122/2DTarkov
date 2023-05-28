@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace UI.Inventory
 {
     [RequireComponent(typeof(Button))]
-    public class InventoryWindowCellView : MonoBehaviour
+    public class ItemCellView : MonoBehaviour
     {
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _countText;

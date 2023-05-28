@@ -2,7 +2,7 @@
 
 namespace InteractObjects
 {
-    public class SaveInChunkTag : MonoBehaviour
+    public class SaveInChunk : MonoBehaviour
     {
         private int _index;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-    public class InventoryActionButtonsView : MonoBehaviour
+    public class ActionButtonsView : MonoBehaviour
     {
         public event Action OnUseAction;
         public event Action OnEquipAction;

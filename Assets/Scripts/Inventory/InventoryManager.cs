@@ -76,7 +76,7 @@ namespace Base
             Save();
         }
         
-        public void DeleteItem(int itemIndex, int count)
+        public void DeleteItem(int itemIndex)
         {
             _inventory.inventoryCells.RemoveAt(itemIndex);
             

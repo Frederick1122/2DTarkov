@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Base;
 using InteractObjects;
@@ -9,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private Player _player;
     [SerializeField] private InteractItem _baseItem;
+    [SerializeField] private ItemList _itemList;
 
     [Header("Chunk Preset")] 
     [SerializeField] private Vector2 _chunkTableSize;
@@ -28,10 +28,7 @@ public class GameManager : Singleton<GameManager>
     
     private void OnValidate() => UpdateFields();
 
-    private void Start()
-    {
-        UpdateFields();
-    }
+    private void Start() => UpdateFields();
 
     [ContextMenu("GenerateChunks")]
     private void GenerateChunks()
@@ -44,19 +41,17 @@ public class GameManager : Singleton<GameManager>
             return;
         }
 
-        var allSaveObjects = new List<SaveInChunkTag>();
-        allSaveObjects.AddRange(FindObjectsOfType<SaveInChunkTag>());
+        var allSaveObjects = new List<SaveInChunk>();
+        allSaveObjects.AddRange(FindObjectsOfType<SaveInChunk>());
         
-        if(allSaveObjects.Count == 0)
-        {
+        if(allSaveObjects.Count == 0) 
             Debug.LogError("SaveObjects not found");
-        } 
-        
+
         _chunkTableSize = new Vector2((int) _chunkTableSize.x, (int) _chunkTableSize.y);
         var downVector = new Vector3(0, -_chunkSideSize);
         var rightVector = new Vector3(_chunkSideSize, 0);
         
-        var saveObjectsInChunk = new List<SaveInChunkTag>();
+        var saveObjectsInChunk = new List<SaveInChunk>();
         var counter = 1;
         for (var i = 0; i < _chunkTableSize.y; i++)
         {
@@ -146,31 +141,5 @@ public class GameManagerEditor : Editor
                     $"Chunk {counter++}");
             }
         }
-    }
-}
-
-[Serializable]
-public class Chunk
-{
-    [SerializeField] private int _chunkIndex;
-    [SerializeField] private List<SaveInChunkTag> _chunkObjects = new List<SaveInChunkTag>();
-
-    public void Init(int chunkIndex, List<SaveInChunkTag> chunkObjects)
-    {
-        _chunkIndex = chunkIndex;
-        SetChunkObjects(chunkObjects);
-    }
-    
-    private void SetChunkObjects(List<SaveInChunkTag> chunkObjects)
-    {
-        _chunkObjects.Clear();
-        
-        for (var i = 0; i < chunkObjects.Count; i++)
-        {
-            var index = _chunkIndex * 100000 + 1 * 10000 + i;
-            chunkObjects[i].SetIndex(index);
-        }
-
-        _chunkObjects.AddRange(chunkObjects);
     }
 }
