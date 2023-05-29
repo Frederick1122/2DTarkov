@@ -32,14 +32,14 @@ namespace UI
       _inventoryWindowController.Refresh();
     }
 
-    public void OpenLootBoxUI(List<Item> lootItems)
+    public void OpenLootBoxUI(int lootBoxIndex, List<Item> lootItems)
     {
       CloseAllUI();
       
       GameManager.Instance.GetPlayer().isFreeze = true;
       
       _lootBoxWindowController.OpenWindow();
-      _lootBoxWindowController.Init(lootItems);
+      _lootBoxWindowController.Init(lootBoxIndex, lootItems);
     }
 
     public BaseUIWindowController GetBaseUI() => _baseUIWindowController;

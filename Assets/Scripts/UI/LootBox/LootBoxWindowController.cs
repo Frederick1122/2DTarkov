@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Base;
 using UI;
 using UI.Inventory;
@@ -9,7 +8,10 @@ public class LootBoxWindowController : WindowController
 {
     [SerializeField] private LootBoxWindowView _lootBoxWindowView;
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
+    
     private ItemCellView _currentCellView;
+    private List<Item> _lootItems = new List<Item>();
+    private int _lootBoxIndex;
 
     private void Start()
     {
@@ -25,8 +27,11 @@ public class LootBoxWindowController : WindowController
         _lootBoxWindowView.OnTakeAction -= Take;
     }
 
-    public void Init(List<Item> lootItems)
+    public void Init(int lootBoxIndex, List<Item> lootItems)
     {
+        _lootItems = lootItems;
+        _lootBoxIndex = lootBoxIndex;
+        
         _lootBoxWindowView.Init(lootItems);
     }
 
@@ -46,5 +51,19 @@ public class LootBoxWindowController : WindowController
         InventoryManager.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount());
         _lootBoxWindowView.DeleteCell(_currentCellView);
         _itemInformationPanelView.SetNewInformation();
+        
+        _lootItems.Remove(_currentCellView.GetItem());
+        ChunkManager.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
+    }
+
+    public override void CloseWindow()
+    {
+        if (_lootBoxIndex != 0)
+        {
+            ChunkManager.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
+            _lootBoxIndex = 0;
+        }
+        
+        base.CloseWindow();
     }
 }

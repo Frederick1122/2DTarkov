@@ -1,18 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class SaveInChunk : MonoBehaviour
+public class SaveInChunkLootBox : SaveInChunk<InteractLootBox>
 {
-    [SerializeField] private InteractLootBox _interactLootBox;
-
-    private int _index;
-
-    public void SetIndex(int index) => _index = index;
-
-    public int GetIndex() => _index;
-    
-    private void UpdateFields()
+    public void Load(List<Item> items)
     {
-        if ((_interactLootBox == null || _interactLootBox == default))
-            _interactLootBox = GetComponent<InteractLootBox>();
+        _saveObject.Init(items);
     }
 }
