@@ -12,13 +12,9 @@ namespace UI.Inventory
 
       public void SetNewInformation(Sprite icon = null, string name = "", string description = "")
       {
-         if (icon == null)
-         {
-            var tempColor = _icon.color;
-            tempColor.a = icon == null ? 0f : 1f;
-            _icon.color = tempColor;
-         }
-         
+         var tempColor = _icon.color;
+         tempColor.a = icon == null ? 0f : 1f;
+         _icon.color = tempColor;
          _icon.sprite = icon;
          _name.text = name;
          _description.text = description;

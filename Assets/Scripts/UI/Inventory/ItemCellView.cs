@@ -30,5 +30,7 @@ namespace UI.Inventory
         public Item GetItem() => _item;
 
         public int GetCount() => _count;
+
+        public void SetCount( int count ) => _count = count;
     }
 }

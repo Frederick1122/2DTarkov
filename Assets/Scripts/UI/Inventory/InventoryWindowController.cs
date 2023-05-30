@@ -18,34 +18,38 @@ namespace UI.Inventory
 
         private void Start()
         {
-            _actionButtonsView.OnUseAction += Use;
-            _actionButtonsView.OnEquipAction += Equip;
+            _actionButtonsView.OnUseAction += InteractWithItem;
+            _actionButtonsView.OnEquipAction += InteractWithItem;
             _actionButtonsView.OnDropAction += Drop;
         }
 
         private void OnDestroy()
         {
-            _actionButtonsView.OnUseAction -= Use;
-            _actionButtonsView.OnEquipAction -= Equip;
+            _actionButtonsView.OnUseAction -= InteractWithItem;
+            _actionButtonsView.OnEquipAction -= InteractWithItem;
             _actionButtonsView.OnDropAction -= Drop;
         }
 
-        private void Use()
-        {
-            RefreshActionButtons();
-                
-            var item = _currentCellView.GetItem();
-            if (item is IUse)
-                ((IUse)item).Use();
-        }
-
-        private void Equip()
+        private void InteractWithItem()
         {
             RefreshActionButtons();
                 
             var item = _currentCellView.GetItem();
             if (item is IEquip)
-                ((IEquip)item).Equip(); 
+                ((IEquip)item).Equip();
+            else if(item is IUse)
+                ((IUse)item).Use();
+
+            var count = _currentCellView.GetCount(); 
+            
+            if(count == 1)
+                DestroyCurrentItem();
+            else
+            {
+                count--;
+                _currentCellView.SetCount(count);
+                InventoryManager.Instance.DeleteItem(item, 1);
+            }
         }
         
         private void Drop()
@@ -75,6 +79,7 @@ namespace UI.Inventory
                 newCell.Init(cellItem, cell.Count);
                 newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
                 _cells.Add(newCell, counter);
+                counter++;
             }
         }
 
@@ -109,8 +114,14 @@ namespace UI.Inventory
         private void DropCurrentItem()
         {
             GameManager.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
+            DestroyCurrentItem();
+        }
+
+        private void DestroyCurrentItem()
+        {
             InventoryManager.Instance.DeleteItem(_cells[_currentCellView]);
-            Destroy(_currentCellView.gameObject);
+            Destroy(_currentCellView.gameObject);   
+            _itemInformationPanelView.SetNewInformation();
         }
     }
 }

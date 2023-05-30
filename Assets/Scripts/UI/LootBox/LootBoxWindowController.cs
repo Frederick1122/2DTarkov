@@ -62,6 +62,16 @@ public class LootBoxWindowController : WindowController
         
         if (_lootItems.Count == 0) 
             _itemInformationPanelView.SetNewInformation(null, "", "Box is empty");
+        else
+            _itemInformationPanelView.SetNewInformation();
+
+    }
+
+    public override void OpenWindow()
+    {
+        base.OpenWindow();
+        
+        _itemInformationPanelView.SetNewInformation();
     }
 
     public override void CloseWindow()

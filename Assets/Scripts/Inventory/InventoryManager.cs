@@ -45,6 +45,13 @@ namespace Base
                     inventoryCellWithItem.Count = newItem.maxStack;
                 }
             }
+            
+            while (count > 0)
+            {
+                _saveData.inventoryCells.Add(new InventoryCell(newItem,math.clamp(count, 1,newItem.maxStack)));
+                count -= newItem.maxStack;
+            }
+            
             Save();
         }
 

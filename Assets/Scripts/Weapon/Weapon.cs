@@ -27,6 +27,6 @@ public class Weapon : Item, IEquip
 
     public void Equip()
     {
-        throw new NotImplementedException();
+        Debug.Log("EQUIP " + name);
     }
 }
