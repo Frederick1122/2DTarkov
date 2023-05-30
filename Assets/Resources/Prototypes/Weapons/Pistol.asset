@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563ecd2a372ad7345a7ebca5839622a0, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 8a52a5c45924b2545bf5f29f5f838096, type: 3}
+  icon: {fileID: 1542969870, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
   itemName: Pistol
   description: Standart pistol
   weight: 2.5
   maxStack: 1
+  baseStack: 1
   configPath: Prototypes/Weapons/Pistol
   weaponPrefabPath: Items/Weapons/Weapon
   bullet: {fileID: 11400000, guid: 8ffc00a454173c84d926eefa054e4049, type: 2}
