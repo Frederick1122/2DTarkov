@@ -29,6 +29,11 @@ public class LootBoxWindowController : WindowController
 
     public void Init(int lootBoxIndex, List<Item> lootItems)
     {
+        if (lootItems.Count == 0)
+        {
+            _itemInformationPanelView.SetNewInformation(null,"","Box is empty");
+            return;
+        }
         _lootItems = lootItems;
         _lootBoxIndex = lootBoxIndex;
         
@@ -54,6 +59,9 @@ public class LootBoxWindowController : WindowController
         
         _lootItems.Remove(_currentCellView.GetItem());
         ChunkManager.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
+        
+        if (_lootItems.Count == 0) 
+            _itemInformationPanelView.SetNewInformation(null, "", "Box is empty");
     }
 
     public override void CloseWindow()

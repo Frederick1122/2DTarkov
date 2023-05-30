@@ -88,7 +88,10 @@ public class WeaponInHands : MonoBehaviour
         }
 
         _attackRoutine ??= StartCoroutine(AttackRoutine());
+        
+        #if UNITY_EDITOR
         DrawRays();
+        #endif
     }
 
     private void Shoot()

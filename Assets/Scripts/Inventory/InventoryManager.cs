@@ -7,7 +7,7 @@ namespace Base
 {
     public class InventoryManager : SaveLoadManager<Inventory, InventoryManager>
     {
-        private const string INVENTORY_JSON_PATH = "/Inventory.json";
+        private const string INVENTORY_JSON_PATH = "Inventory.json";
 
         [Header("Fields for tests")]
         [SerializeField] private Item _item;
@@ -17,6 +17,13 @@ namespace Base
         private void AddItem()
         {
             AddItem(_item, _count);   
+        }
+
+        [ContextMenu("ClearInventory")]
+        private void ClearInventory()
+        {
+            _saveData = new Inventory();
+            Save();
         }
         
         public void AddItem(Item newItem, int count = 1)
@@ -38,13 +45,6 @@ namespace Base
                     inventoryCellWithItem.Count = newItem.maxStack;
                 }
             }
-
-            while (count > 0)
-            {
-                _saveData.inventoryCells.Add(new InventoryCell(newItem,math.clamp(count, 1,newItem.maxStack)));
-                count -= newItem.maxStack;
-            }
-            
             Save();
         }
 
@@ -91,6 +91,15 @@ namespace Base
                 Save();
         }
         
+        protected override void Load()
+        {
+            base.Load();
+            if (_saveData == null)
+            {
+                _saveData = new Inventory();
+                Save();
+            }
+        }
         
         protected override void UpdatePath()
         {
@@ -102,7 +111,7 @@ namespace Base
     [Serializable]
     public class Inventory
     {
-        public List<InventoryCell> inventoryCells;
+        public List<InventoryCell> inventoryCells = new List<InventoryCell>();
     }
     [Serializable]
     public class InventoryCell

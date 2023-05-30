@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ChunkManager : SaveLoadManager<ChunksData, ChunkManager>
 {
-    private const string CHUNK_INFO_JSON_PATH = "/GameChunkInfo.json";
+    private const string CHUNK_INFO_JSON_PATH = "GameChunkInfo.json";
 
     [Header("Chunk Preset")] [SerializeField]
     private Vector2 _chunkTableSize;
@@ -69,6 +69,18 @@ public class ChunkManager : SaveLoadManager<ChunksData, ChunkManager>
         foreach (var lootBoxData in _saveData.lootBoxes) 
             _lootBoxes[lootBoxData.index].Load(lootBoxData.lootItems);
     }
+
+    protected override void Load()
+    {
+        base.Load();
+        if (_saveData == null)
+        {
+            _saveData = new ChunksData();
+            Save();
+        }
+    }
+    
+#if UNITY_EDITOR
     
     [ContextMenu("GenerateChunks")]
     private void GenerateChunks()
@@ -129,10 +141,11 @@ public class ChunkManager : SaveLoadManager<ChunksData, ChunkManager>
             }
         }
         
-        EditorUtility.SetDirty(this);
         Save();
+        EditorUtility.SetDirty(this);
     }
-
+    
+#endif
     protected override void UpdatePath()
     {
         _secondPath = CHUNK_INFO_JSON_PATH;
@@ -154,6 +167,7 @@ public class LootBoxData
     public List<Item> lootItems = new List<Item>();
 }
 
+#if UNITY_EDITOR
 
 [CustomEditor(typeof(ChunkManager))]
 public class GameManagerEditor : Editor
@@ -205,3 +219,5 @@ public class GameManagerEditor : Editor
         }
     }
 }
+
+#endif

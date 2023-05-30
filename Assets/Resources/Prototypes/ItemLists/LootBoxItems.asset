@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LootBoxItems
   m_EditorClassIdentifier: 
   itemList:
+  - {fileID: 11400000, guid: ab162eb4953d8ab4290a6c1754c18d12, type: 2}
   - {fileID: 11400000, guid: 8ffc00a454173c84d926eefa054e4049, type: 2}
   - {fileID: 11400000, guid: 5c379498d43d15544ae111868d1ab474, type: 2}
+  - {fileID: 11400000, guid: aa07c13190f7436409296185754da040, type: 2}
   _paths: []

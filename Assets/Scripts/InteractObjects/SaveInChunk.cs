@@ -7,11 +7,14 @@ public class SaveInChunk<T> : MonoBehaviour where T : MonoBehaviour
 
     [SerializeField][HideInInspector] private int _index;
 
+    #if UNITY_EDITOR
     public void SetIndex(int index)
     {
         _index = index;
         EditorUtility.SetDirty(this);
     }
+    
+    #endif
 
     public int GetIndex() => _index;
 

@@ -10,16 +10,16 @@ namespace Base
         
         internal T _saveData;
 
-        protected void Load()
+        protected virtual void Load()
         {
             UpdatePath();
-            _saveData = JsonUtility.FromJson<T>(File.ReadAllText(_path));
+            _saveData = DataSaver.LoadData<T>(_secondPath);
         }
 
         protected void Save()
         {
             UpdatePath();
-            File.WriteAllText(_path, JsonUtility.ToJson(_saveData));
+            DataSaver.SaveData(_saveData, _secondPath);
         }
 
         protected virtual void UpdatePath()
