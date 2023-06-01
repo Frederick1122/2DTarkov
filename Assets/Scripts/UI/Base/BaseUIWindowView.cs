@@ -1,4 +1,5 @@
 ﻿using Base;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ namespace UI.Base
 
         public void InitInteractButton(IInteract interact)
         {
+            _interactButton.onClick.RemoveAllListeners();
             _interactButton.onClick.AddListener(interact.Interact);
         }
 

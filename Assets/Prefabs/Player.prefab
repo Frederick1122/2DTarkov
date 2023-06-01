@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 6278537345423509598}
   - component: {fileID: 6278537345423509597}
   - component: {fileID: 6278537345423509599}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InteractZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
