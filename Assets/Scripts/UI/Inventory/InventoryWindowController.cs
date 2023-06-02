@@ -76,7 +76,7 @@ namespace UI.Inventory
             {
                 var newCell = Instantiate(_inventoryCellView, _inventoryLayoutGroup.transform);
                 var cellItem = cell.GetItem(); 
-                newCell.Init(cellItem, cell.Count);
+                newCell.Init(cellItem, cell.count);
                 newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
                 _cells.Add(newCell, counter);
                 counter++;

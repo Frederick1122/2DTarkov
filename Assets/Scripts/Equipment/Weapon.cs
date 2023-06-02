@@ -1,11 +1,9 @@
-
 using System;
-using Base;
 using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Item/Weapon")]
-public class Weapon : Item, IEquip
+public class Weapon : EquipmentItem
 {
     [Space]
     public string weaponPrefabPath = "";
@@ -25,8 +23,10 @@ public class Weapon : Item, IEquip
         base.OnValidate();
     }
 
-    public void Equip()
+    public override void Equip()
     {
         Debug.Log("EQUIP " + name);
     }
+
+    public override EquipmentType GetEquipmentType() => EquipmentType.weapon;
 }
