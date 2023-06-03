@@ -52,10 +52,10 @@ public class ChunkManager : SaveLoadManager<ChunksData, ChunkManager>
         
         Save();
     }
-    
-    private void Start()
+
+    protected override void Start()
     {
-        Load();
+        base.Start();
         LoadLootBoxes();
     }
 

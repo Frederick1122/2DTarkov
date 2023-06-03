@@ -3,13 +3,23 @@ using UnityEngine;
 
 namespace Base
 {
-    public class SaveLoadManager<T, T2> : Singleton<T2> where T2 : MonoBehaviour
+    public abstract class SaveLoadManager<T, T2> : Singleton<T2> where T2 : MonoBehaviour
     {
         [SerializeField] internal string _secondPath = "";
         [SerializeField] protected string _path = "";
         
         internal T _saveData;
 
+        protected virtual void Start() => Load();
+
+        protected virtual void OnApplicationQuit() => Save();
+        
+        protected virtual void OnApplicationPause(bool pauseStatus)
+        {
+            if(pauseStatus)
+                Save();
+        }
+        
         protected virtual void Load()
         {
             UpdatePath();

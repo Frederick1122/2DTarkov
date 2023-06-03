@@ -30,19 +30,19 @@ namespace Base
         {
             foreach (var inventoryCellWithItem in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
             {
-                if (inventoryCellWithItem.Count < newItem.maxStack)
+                if (inventoryCellWithItem.count < newItem.maxStack)
                 {
-                    var remainingSpace = newItem.maxStack - inventoryCellWithItem.Count;
+                    var remainingSpace = newItem.maxStack - inventoryCellWithItem.count;
 
                     if (remainingSpace >= count)
                     {
-                        inventoryCellWithItem.Count += count;
+                        inventoryCellWithItem.count += count;
                         count = 0;
                         break;
                     }
 
                     count -= remainingSpace;
-                    inventoryCellWithItem.Count = newItem.maxStack;
+                    inventoryCellWithItem.count = newItem.maxStack;
                 }
             }
             
@@ -55,18 +55,18 @@ namespace Base
             Save();
         }
 
-        public void DeleteItem(Item item, int count)
+        public void DeleteItem(Item item, int count = 1)
         {
             var deletedCells = new List<InventoryCell>();
             foreach (var cell in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == item))
             {
-                if (cell.Count > count)
+                if (cell.count > count)
                 {
-                    cell.Count -= count;
+                    cell.count -= count;
                     return;
                 }
 
-                count -= cell.Count;
+                count -= cell.count;
                 deletedCells.Add(cell);
 
                 if (count == 0)
@@ -87,17 +87,7 @@ namespace Base
         }
 
         public Inventory GetInventory() => _saveData;
-        
-        private void Start() => Load();
 
-        private void OnApplicationQuit() => Save();
-
-        private void OnApplicationPause(bool pauseStatus)
-        {
-            if(pauseStatus)
-                Save();
-        }
-        
         protected override void Load()
         {
             base.Load();
@@ -124,20 +114,20 @@ namespace Base
     public class InventoryCell
     {
         private Item _item;
-        public string ItemConfigPath;
-        public int Count;
+        public string itemConfigPath;
+        public int count;
 
         public InventoryCell(Item item, int count)
         {
             _item = item;
-            ItemConfigPath = item.configPath;
-            Count = count;
+            itemConfigPath = item.configPath;
+            this.count = count;
         }
 
         public Item GetItem()
         {
             if (_item == null || _item == default) 
-                _item = Resources.Load<Item>(ItemConfigPath);
+                _item = Resources.Load<Item>(itemConfigPath);
         
             return _item;
         }
