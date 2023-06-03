@@ -10,7 +10,7 @@ public class Weapon : Item, IEquip
     [Space]
     public string weaponPrefabPath = "";
     public Bullet bullet;
-    public int cartrigeClip;
+    public int maxAmmoInMagazine;
     public float rateOfFire;
     public float bulletDispersion;
 
