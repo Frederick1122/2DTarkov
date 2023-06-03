@@ -9,6 +9,8 @@ namespace Base
     {
         private const string INVENTORY_JSON_PATH = "Inventory.json";
 
+        public event Action OnInventoryChanged;
+
         [Header("Fields for tests")]
         [SerializeField] private Item _item;
         [SerializeField] private int _count;

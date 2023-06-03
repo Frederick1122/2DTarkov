@@ -26,6 +26,7 @@ public class Weapon : EquipmentItem
     public override void Equip()
     {
         Debug.Log("EQUIP " + name);
+        EquipmentManager.Instance.AddEquipment(this);
     }
 
     public override EquipmentType GetEquipmentType() => EquipmentType.weapon;

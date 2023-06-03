@@ -78,6 +78,24 @@ public class EquipmentManager: SaveLoadManager<Equipment, EquipmentManager>
         }
         
         public Equipment GetInventory() => _saveData;
+        
+        protected override void Load()
+        {
+            base.Load();
+            if (_saveData == null)
+            {
+                _saveData = new Equipment();
+                Save();
+            }
+            
+            OnEquipmentChanged?.Invoke(_saveData);
+        }
+        
+        protected override void UpdatePath()
+        {
+            _secondPath = EQUIPMENT_JSON_PATH;
+            base.UpdatePath();
+        }
     }
     
     

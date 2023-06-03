@@ -5,10 +5,10 @@ namespace Base
 {
     public abstract class SaveLoadManager<T, T2> : Singleton<T2> where T2 : MonoBehaviour
     {
-        [SerializeField] internal string _secondPath = "";
+        [SerializeField] protected string _secondPath = "";
         [SerializeField] protected string _path = "";
         
-        internal T _saveData;
+        protected T _saveData;
 
         protected virtual void Start() => Load();
 
