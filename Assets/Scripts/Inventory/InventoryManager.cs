@@ -9,7 +9,8 @@ namespace Base
     {
         private const string INVENTORY_JSON_PATH = "Inventory.json";
 
-        public event Action OnInventoryChanged;
+        public event Action<Item, int> OnInventoryAdded;
+        public event Action<Item, int> OnInventoryDeleted;
 
         [Header("Fields for tests")]
         [SerializeField] private Item _item;
@@ -30,6 +31,8 @@ namespace Base
         
         public void AddItem(Item newItem, int count = 1)
         {
+            OnInventoryAdded?.Invoke(newItem, count);
+            
             foreach (var inventoryCellWithItem in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
             {
                 if (inventoryCellWithItem.count < newItem.maxStack)
@@ -78,6 +81,7 @@ namespace Base
             foreach (var deletedCell in deletedCells) 
                 _saveData.inventoryCells.Remove(deletedCell);
             
+            OnInventoryDeleted?.Invoke(item, count);
             Save();
         }
         

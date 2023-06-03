@@ -4,14 +4,7 @@ using UnityEngine;
 public class EquipmentPanelController : MonoBehaviour
 {
     [SerializeField] private EquipmentPanelView _equipmentPanelView;
-
-    private void OnEnable()
-    {
-        EquipmentManager.Instance.OnEquipmentChanged += UpdateView;
-        _equipmentPanelView.OnContainerClick += ClickOnContainer;
-        _equipmentPanelView.OnRemoveButtonClick += ClickOnRemoveButton;
-    }
-
+    
     private void OnDisable()
     {
         EquipmentManager.Instance.OnEquipmentChanged -= UpdateView;
@@ -22,6 +15,10 @@ public class EquipmentPanelController : MonoBehaviour
     private void Start()
     {
         _equipmentPanelView.ChangeViews();
+        
+        EquipmentManager.Instance.OnEquipmentChanged += UpdateView;
+        _equipmentPanelView.OnContainerClick += ClickOnContainer;
+        _equipmentPanelView.OnRemoveButtonClick += ClickOnRemoveButton;
     }
 
     private void UpdateView( Equipment equipment )
@@ -57,6 +54,7 @@ public class EquipmentPanelController : MonoBehaviour
             kevlarData = new WeaponContainerData
             {
                 equipmentItem = equipment.kevlar,
+                itemName = equipment.kevlar.itemName,
                 icon = equipment.kevlar.icon,
                 description = equipment.kevlar.description,
                 ammoDescription = ""
@@ -69,6 +67,7 @@ public class EquipmentPanelController : MonoBehaviour
             {
                 equipmentItem = equipment.backpack,
                 icon = equipment.backpack.icon,
+                itemName = equipment.backpack.itemName,
                 description = equipment.backpack.description,
                 ammoDescription = ""
             };
@@ -80,6 +79,7 @@ public class EquipmentPanelController : MonoBehaviour
             {
                 equipmentItem = equipment.firstWeapon,
                 icon = equipment.firstWeapon.icon,
+                itemName = equipment.firstWeapon.itemName,
                 description = equipment.firstWeapon.description,
                 ammoDescription = equipment.firstWeapon.bullet.itemName,
                 maxAmmoInMagazine = equipment.firstWeapon.maxAmmoInMagazine,
@@ -93,6 +93,7 @@ public class EquipmentPanelController : MonoBehaviour
             {
                 equipmentItem = equipment.secondWeapon,
                 icon = equipment.secondWeapon.icon,
+                itemName = equipment.secondWeapon.itemName,
                 description = equipment.secondWeapon.description,
                 ammoDescription = equipment.secondWeapon.bullet.itemName,
                 maxAmmoInMagazine = equipment.secondWeapon.maxAmmoInMagazine,

@@ -29,7 +29,6 @@ namespace UI
       GameManager.Instance.GetPlayer().isFreeze = true;
       
       _inventoryWindowController.OpenWindow();
-      _inventoryWindowController.Refresh();
     }
 
     public void OpenLootBoxUI(int lootBoxIndex, List<Item> lootItems)
