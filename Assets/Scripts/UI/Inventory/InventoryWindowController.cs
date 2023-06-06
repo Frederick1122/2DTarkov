@@ -61,15 +61,20 @@ public class InventoryWindowController : WindowController
         RefreshActionButtons();
 
         var item = _currentCellView.GetItem();
+        var count = _currentCellView.GetCount();
+        
         if (item is IEquip)
             ((IEquip) item).Equip();
         else if (item is IUse)
             ((IUse) item).Use();
 
-        var count = _currentCellView.GetCount();
-
+        if (_currentCellView == null) 
+            return;
+        
         if (count <= 1)
+        {
             DestroyCurrentItem();
+        }
         else
         {
             count--;

@@ -75,7 +75,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
             deletedCells.Add(cell);
 
             if (count == 0)
-                return;
+                break;
         }
 
         foreach (var deletedCell in deletedCells)
