@@ -17,7 +17,7 @@ namespace InteractObjects
         
         public void Interact()
         {
-            InventoryManager.Instance.AddItem(_item, _count);
+            Inventory.Instance.AddItem(_item, _count);
             Destroy(gameObject);
         }
     }

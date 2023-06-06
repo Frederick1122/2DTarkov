@@ -1278,7 +1278,7 @@ GameObject:
   - component: {fileID: 520810781}
   - component: {fileID: 520810780}
   m_Layer: 0
-  m_Name: InventoryManager
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1458,7 +1458,7 @@ GameObject:
   - component: {fileID: 677906708}
   - component: {fileID: 677906707}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameBus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2331,7 +2331,7 @@ GameObject:
   - component: {fileID: 1030876476}
   - component: {fileID: 1030876475}
   m_Layer: 0
-  m_Name: ChunkManager
+  m_Name: Chunks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2394,7 +2394,7 @@ GameObject:
   - component: {fileID: 1046383214}
   - component: {fileID: 1046383213}
   m_Layer: 0
-  m_Name: EquipmentManager
+  m_Name: Equipment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,7 +15,7 @@ public class InventoryWindowController : WindowController
 
     private ItemCellView _currentCellView;
     private Dictionary<ItemCellView, int> _cells = new Dictionary<ItemCellView, int>();
-    private Inventory _localInventory;
+    private InventoryData _localInventoryData;
     private void OnEnable()
     {
         _actionButtonsView.OnUseAction += InteractWithItem;
@@ -36,16 +36,16 @@ public class InventoryWindowController : WindowController
         
         Refresh();
 
-        InventoryManager.Instance.OnInventoryAdded += AddNewItem;
-        InventoryManager.Instance.OnInventoryDeleted += DeleteItem;
+        Inventory.Instance.OnInventoryAdded += AddNewItem;
+        Inventory.Instance.OnInventoryDeleted += DeleteItem;
     }
 
     public override void CloseWindow()
     {
         base.CloseWindow();
         
-        InventoryManager.Instance.OnInventoryAdded -= AddNewItem;
-        InventoryManager.Instance.OnInventoryDeleted -= DeleteItem;
+        Inventory.Instance.OnInventoryAdded -= AddNewItem;
+        Inventory.Instance.OnInventoryDeleted -= DeleteItem;
     }
 
     private void AddNewItem(Item item, int count)
@@ -74,7 +74,7 @@ public class InventoryWindowController : WindowController
         {
             count--;
             _currentCellView.SetCount(count);
-            InventoryManager.Instance.DeleteItem(item, 1);
+            Inventory.Instance.DeleteItem(item, 1);
         }
     }
 
@@ -86,7 +86,7 @@ public class InventoryWindowController : WindowController
 
     private void Refresh()
     {
-        _localInventory = InventoryManager.Instance.GetInventory();
+        _localInventoryData = Inventory.Instance.GetInventory();
         
         RefreshActionButtons();
         _itemInformationPanelView.SetNewInformation();
@@ -100,7 +100,7 @@ public class InventoryWindowController : WindowController
         }
         
         var counter = 0;
-        foreach (var cell in _localInventory.inventoryCells)
+        foreach (var cell in _localInventoryData.inventoryCells)
         {
             CreateCell(cell, counter);
             counter++;
@@ -146,13 +146,13 @@ public class InventoryWindowController : WindowController
 
     private void DropCurrentItem()
     {
-        GameManager.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
+        GameBus.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
         DestroyCurrentItem();
     }
 
     private void DestroyCurrentItem()
     {
-        InventoryManager.Instance.DeleteItem(_cells[_currentCellView]);
+        Inventory.Instance.DeleteItem(_cells[_currentCellView]);
         Destroy(_currentCellView.gameObject);
         _itemInformationPanelView.SetNewInformation();
     }

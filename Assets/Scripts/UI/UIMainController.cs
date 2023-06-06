@@ -18,7 +18,7 @@ namespace UI
     {
       CloseAllUI();
     
-      GameManager.Instance.GetPlayer().isFreeze = false;
+      GameBus.Instance.GetPlayer().isFreeze = false;
       _baseUIWindowController.OpenWindow();
     }
 
@@ -26,7 +26,7 @@ namespace UI
     {
       CloseAllUI();
       
-      GameManager.Instance.GetPlayer().isFreeze = true;
+      GameBus.Instance.GetPlayer().isFreeze = true;
       
       _inventoryWindowController.OpenWindow();
     }
@@ -35,7 +35,7 @@ namespace UI
     {
       CloseAllUI();
       
-      GameManager.Instance.GetPlayer().isFreeze = true;
+      GameBus.Instance.GetPlayer().isFreeze = true;
       
       _lootBoxWindowController.OpenWindow();
       _lootBoxWindowController.Init(lootBoxIndex, lootItems);

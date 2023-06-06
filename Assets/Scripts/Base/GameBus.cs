@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using Base;
 using InteractObjects;
-using UnityEditor;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>
+public class GameBus : Singleton<GameBus>
 {
     [SerializeField] private Player _player;
     [SerializeField] private InteractItem _baseItem;
@@ -24,7 +22,7 @@ public class GameManager : Singleton<GameManager>
             _player = FindObjectOfType<Player>();
 
             if (_player == null || _player == default)
-                Debug.LogError("GameManager doesn't found player. Update this value");
+                Debug.LogError("GameBus doesn't found player. Update this value");
         }
     }
 }

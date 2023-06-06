@@ -53,12 +53,12 @@ public class LootBoxWindowController : WindowController
 
     private void Take()
     {
-        InventoryManager.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount());
+        Inventory.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount());
         _lootBoxWindowView.DeleteCell(_currentCellView);
         _itemInformationPanelView.SetNewInformation();
         
         _lootItems.Remove(_currentCellView.GetItem());
-        ChunkManager.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
+        Chunks.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
         
         if (_lootItems.Count == 0) 
             _itemInformationPanelView.SetNewInformation(null, "", "Box is empty");
@@ -78,7 +78,7 @@ public class LootBoxWindowController : WindowController
     {
         if (_lootBoxIndex != 0)
         {
-            ChunkManager.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
+            Chunks.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
             _lootBoxIndex = 0;
         }
         

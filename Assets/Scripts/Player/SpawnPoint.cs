@@ -6,7 +6,7 @@ public class SpawnPoint : MonoBehaviour
 {
     public void SpawnItem(Item item, int count)
     {
-        var newItem = Instantiate(GameManager.Instance.GetBaseItem(), transform);
+        var newItem = Instantiate(GameBus.Instance.GetBaseItem(), transform);
         newItem.Init(item, count);
         newItem.transform.position = transform.position + new Vector3(0, 0, 2);
         

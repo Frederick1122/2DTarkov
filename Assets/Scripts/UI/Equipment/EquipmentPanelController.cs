@@ -7,7 +7,7 @@ public class EquipmentPanelController : MonoBehaviour
     
     private void OnDisable()
     {
-        EquipmentManager.Instance.OnEquipmentChanged -= UpdateView;
+        Equipment.Instance.OnEquipmentChanged -= UpdateView;
         _equipmentPanelView.OnContainerClick -= ClickOnContainer;
         _equipmentPanelView.OnRemoveButtonClick -= ClickOnRemoveButton;
     }
@@ -16,16 +16,16 @@ public class EquipmentPanelController : MonoBehaviour
     {
         _equipmentPanelView.ChangeViews();
         
-        EquipmentManager.Instance.OnEquipmentChanged += UpdateView;
+        Equipment.Instance.OnEquipmentChanged += UpdateView;
         _equipmentPanelView.OnContainerClick += ClickOnContainer;
         _equipmentPanelView.OnRemoveButtonClick += ClickOnRemoveButton;
     }
 
-    private void UpdateView( Equipment equipment )
+    private void UpdateView( EquipmentData equipmentData )
     {
         _equipmentPanelView.Refresh();
 
-        var data = GenerateNewWindowData(equipment);
+        var data = GenerateNewWindowData(equipmentData);
 
         _equipmentPanelView.ChangeViews(data);
     }
@@ -38,66 +38,66 @@ public class EquipmentPanelController : MonoBehaviour
 
     private void ClickOnRemoveButton( EquipmentItem equipmentItem )
     {
-        EquipmentManager.Instance.RemoveEquipment(equipmentItem);
+        Equipment.Instance.RemoveEquipment(equipmentItem);
         _equipmentPanelView.Refresh();
     }
 
-    private EquipmentWindowData GenerateNewWindowData( Equipment equipment )
+    private EquipmentWindowData GenerateNewWindowData( EquipmentData equipmentData )
     {
         var kevlarData = new WeaponContainerData();
         var backpackData = new WeaponContainerData();
         var firstWeaponData = new WeaponContainerData();
         var secondWeaponData = new WeaponContainerData();
 
-        if( equipment.kevlar != null )
+        if( equipmentData.kevlar != null )
         {
             kevlarData = new WeaponContainerData
             {
-                equipmentItem = equipment.kevlar,
-                itemName = equipment.kevlar.itemName,
-                icon = equipment.kevlar.icon,
-                description = equipment.kevlar.description,
+                equipmentItem = equipmentData.kevlar,
+                itemName = equipmentData.kevlar.itemName,
+                icon = equipmentData.kevlar.icon,
+                description = equipmentData.kevlar.description,
                 ammoDescription = ""
             };
         }
 
-        if( equipment.backpack != null )
+        if( equipmentData.backpack != null )
         {
             backpackData = new WeaponContainerData
             {
-                equipmentItem = equipment.backpack,
-                icon = equipment.backpack.icon,
-                itemName = equipment.backpack.itemName,
-                description = equipment.backpack.description,
+                equipmentItem = equipmentData.backpack,
+                icon = equipmentData.backpack.icon,
+                itemName = equipmentData.backpack.itemName,
+                description = equipmentData.backpack.description,
                 ammoDescription = ""
             };
         }
 
-        if( equipment.firstWeapon != null )
+        if( equipmentData.firstWeapon != null )
         {
             firstWeaponData = new WeaponContainerData
             {
-                equipmentItem = equipment.firstWeapon,
-                icon = equipment.firstWeapon.icon,
-                itemName = equipment.firstWeapon.itemName,
-                description = equipment.firstWeapon.description,
-                ammoDescription = equipment.firstWeapon.bullet.itemName,
-                maxAmmoInMagazine = equipment.firstWeapon.maxAmmoInMagazine,
-                ammoInMagazine = equipment.firstWeapon.maxAmmoInMagazine
+                equipmentItem = equipmentData.firstWeapon,
+                icon = equipmentData.firstWeapon.icon,
+                itemName = equipmentData.firstWeapon.itemName,
+                description = equipmentData.firstWeapon.description,
+                ammoDescription = equipmentData.firstWeapon.bullet.itemName,
+                maxAmmoInMagazine = equipmentData.firstWeapon.maxAmmoInMagazine,
+                ammoInMagazine = equipmentData.firstWeapon.maxAmmoInMagazine
             };
         }
 
-        if( equipment.secondWeapon != null )
+        if( equipmentData.secondWeapon != null )
         {
             secondWeaponData = new WeaponContainerData
             {
-                equipmentItem = equipment.secondWeapon,
-                icon = equipment.secondWeapon.icon,
-                itemName = equipment.secondWeapon.itemName,
-                description = equipment.secondWeapon.description,
-                ammoDescription = equipment.secondWeapon.bullet.itemName,
-                maxAmmoInMagazine = equipment.secondWeapon.maxAmmoInMagazine,
-                ammoInMagazine = equipment.secondWeapon.maxAmmoInMagazine
+                equipmentItem = equipmentData.secondWeapon,
+                icon = equipmentData.secondWeapon.icon,
+                itemName = equipmentData.secondWeapon.itemName,
+                description = equipmentData.secondWeapon.description,
+                ammoDescription = equipmentData.secondWeapon.bullet.itemName,
+                maxAmmoInMagazine = equipmentData.secondWeapon.maxAmmoInMagazine,
+                ammoInMagazine = equipmentData.secondWeapon.maxAmmoInMagazine
             };
         }
 

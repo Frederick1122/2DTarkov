@@ -18,7 +18,7 @@ using UnityEngine.UI;
         
         private void Start()
         {
-            _player = GameManager.Instance.GetPlayer();
+            _player = GameBus.Instance.GetPlayer();
             _baseUIWindowController = UIMainController.Instance.GetBaseUI();   
         }
 

@@ -2,16 +2,16 @@
 using Base;
 using UnityEngine;
 
-public class EquipmentManager: SaveLoadManager<Equipment, EquipmentManager>
+public class Equipment: SaveLoadManager<EquipmentData, Equipment>
     {   
         private const string EQUIPMENT_JSON_PATH = "Equipment.json";
 
-        public event Action<Equipment> OnEquipmentChanged;
+        public event Action<EquipmentData> OnEquipmentChanged;
         
         [ContextMenu("ClearEquipment")]
         private void ClearInventory()
         {
-            _saveData = new Equipment();
+            _saveData = new EquipmentData();
             OnEquipmentChanged?.Invoke(_saveData);
             Save();
         }
@@ -44,10 +44,10 @@ public class EquipmentManager: SaveLoadManager<Equipment, EquipmentManager>
                     break;
             }
 
-            InventoryManager.Instance.DeleteItem(item);
+            Inventory.Instance.DeleteItem(item);
             if (currentEquip != null)
             {
-                InventoryManager.Instance.AddItem(currentEquip);
+                Inventory.Instance.AddItem(currentEquip);
             }
             
             OnEquipmentChanged?.Invoke(_saveData);
@@ -72,19 +72,19 @@ public class EquipmentManager: SaveLoadManager<Equipment, EquipmentManager>
                     break;
             }
             
-            InventoryManager.Instance.AddItem(item);
+            Inventory.Instance.AddItem(item);
             
             OnEquipmentChanged?.Invoke(_saveData);
         }
         
-        public Equipment GetInventory() => _saveData;
+        public EquipmentData GetInventory() => _saveData;
         
         protected override void Load()
         {
             base.Load();
             if (_saveData == null)
             {
-                _saveData = new Equipment();
+                _saveData = new EquipmentData();
                 Save();
             }
             
@@ -100,7 +100,7 @@ public class EquipmentManager: SaveLoadManager<Equipment, EquipmentManager>
     
     
     [Serializable]
-    public class Equipment
+    public class EquipmentData
     {
         public EquipmentItem kevlar;
         public EquipmentItem backpack;
