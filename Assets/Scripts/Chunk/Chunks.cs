@@ -170,7 +170,7 @@ public class LootBoxData
 #if UNITY_EDITOR
 
 [CustomEditor(typeof(Chunks))]
-public class GameManagerEditor : Editor
+public class ChunkEditor : Editor
 {
     public void OnSceneGUI()
     {
