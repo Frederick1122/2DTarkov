@@ -6,23 +6,19 @@ public class GameBus : Singleton<GameBus>
 {
     [SerializeField] private Player _player;
     [SerializeField] private InteractItem _baseItem;
+    [SerializeField] private Joystick _joystick;
     
-    public Player GetPlayer() => _player;
+    public Player GetPlayer()
+    {
+        if(_player == null)
+            Debug.LogError("GameBus doesn't found player. Update this value");
+
+        return _player;
+    }
 
     public InteractItem GetBaseItem() => _baseItem;
-    
-    private void OnValidate() => UpdateFields();
 
-    private void Start() => UpdateFields();
-    
-    private void UpdateFields()
-    {
-        if (_player == null || _player == default)
-        {
-            _player = FindObjectOfType<Player>();
+    public Joystick GetJoystick() => _joystick;
 
-            if (_player == null || _player == default)
-                Debug.LogError("GameBus doesn't found player. Update this value");
-        }
-    }
+    public void SetPlayer( Player player ) => _player = player;
 }

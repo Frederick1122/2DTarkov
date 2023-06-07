@@ -47,6 +47,7 @@ public class Player : Humanoid
         _zoneForRotation = _resolution.x / 4 * 3;
         _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
         dropAction += _dropPoint.SpawnItem;
+        _movementJoystick = GameBus.Instance.GetJoystick();
         UpdateFields();
     }
 
