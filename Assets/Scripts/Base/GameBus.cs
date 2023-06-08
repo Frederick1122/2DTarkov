@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Base;
 using InteractObjects;
 using UnityEngine;
@@ -7,7 +9,7 @@ public class GameBus : Singleton<GameBus>
     [SerializeField] private Player _player;
     [SerializeField] private InteractItem _baseItem;
     [SerializeField] private Joystick _joystick;
-    
+
     public Player GetPlayer()
     {
         if(_player == null)

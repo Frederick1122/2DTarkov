@@ -30,7 +30,7 @@ public class Player : Humanoid
 
     private float _deadZone = 0.1f;
     private Vector2 _resolution;
-    private float _zoneForRotation;
+    private float _nonRotationZone;
     private int _touchNumber;
     private Vector3 _joystickParameters = Vector3.zero;
     private float _fovDifference;
@@ -44,7 +44,7 @@ public class Player : Humanoid
     {
         _isMobile = Application.isMobilePlatform;
         _resolution = new Vector2(Screen.width, Screen.height);
-        _zoneForRotation = _resolution.x / 4 * 3;
+        _nonRotationZone = _resolution.x / 4;
         _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
         dropAction += _dropPoint.SpawnItem;
         _movementJoystick = GameBus.Instance.GetJoystick();
@@ -109,7 +109,7 @@ public class Player : Humanoid
             for (var i = 0; i < Input.touchCount; i++)
             {
                 var touch = Input.GetTouch(i);
-                if(touch.position.x > _zoneForRotation)
+                if(touch.position.x < _nonRotationZone)
                     continue;
 
                 switch (touch.phase)
@@ -129,7 +129,7 @@ public class Player : Humanoid
 
         var swipeDelta = Vector2.zero;
         
-        if(_tapPosition.x > _zoneForRotation) 
+        if(_tapPosition.x < _nonRotationZone) 
             return;
 
         if (_isSwiping)
@@ -145,7 +145,7 @@ public class Player : Humanoid
             {
                 newTapPosition = Input.GetTouch(_touchNumber).position;
                 
-                if(newTapPosition.x > _zoneForRotation)
+                if(newTapPosition.x < _nonRotationZone)
                     return;
                 
                 swipeDelta = newTapPosition - _tapPosition;

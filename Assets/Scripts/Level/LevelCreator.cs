@@ -20,5 +20,6 @@ public class LevelCreator : MonoBehaviour
         playerContainer.GetPlayer().transform.position = new Vector3(currentExitPosition.x, currentExitPosition.y);
         
         GameBus.Instance.SetPlayer(playerContainer.GetPlayer());
+        Chunks.Instance.SetLevelInfo(level.GetLootBoxIndexes, level.GetLootBoxes);
     }
 }

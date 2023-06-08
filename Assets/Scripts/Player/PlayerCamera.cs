@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-public class CameraFollower : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
   [SerializeField] private GameObject _player;
   [SerializeField] private bool _isUseOffset;

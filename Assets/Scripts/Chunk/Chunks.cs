@@ -14,12 +14,19 @@ public class Chunks : SaveLoadManager<ChunksData, Chunks>
     [SerializeField] private float _chunkSideSize;
     [SerializeField] private Vector3 _chunkOffset;
 
-    [Space(5)] [Header("Chunks")] [SerializeField]
-    private List<int> _lootBoxIndexes;
-    [SerializeField] private List<SaveInChunkLootBox> _saveInChunkLootBoxes;
-    
-    
+
     private Dictionary<int, SaveInChunkLootBox> _lootBoxes = new Dictionary<int, SaveInChunkLootBox>();
+
+    public void SetLevelInfo(List<int> lootBoxIndexes, List<SaveInChunkLootBox> saveInChunkLootBoxes)
+    {
+        _lootBoxes.Clear();
+        
+        for (var i = 0; i < lootBoxIndexes.Count; i++) 
+            _lootBoxes.Add(lootBoxIndexes[i], saveInChunkLootBoxes[i]);
+
+        foreach (var lootBoxData in _saveData.lootBoxes) 
+            _lootBoxes[lootBoxData.index].Load(lootBoxData.lootItems);
+    }
 
     public float GetChunkSideSize() => _chunkSideSize;
 
@@ -53,23 +60,6 @@ public class Chunks : SaveLoadManager<ChunksData, Chunks>
         Save();
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        LoadLootBoxes();
-    }
-
-    private void LoadLootBoxes()
-    {
-        _lootBoxes.Clear();
-        
-        for (var i = 0; i < _lootBoxIndexes.Count; i++) 
-            _lootBoxes.Add(_lootBoxIndexes[i], _saveInChunkLootBoxes[i]);
-
-        foreach (var lootBoxData in _saveData.lootBoxes) 
-            _lootBoxes[lootBoxData.index].Load(lootBoxData.lootItems);
-    }
-
     protected override void Load()
     {
         base.Load();
@@ -85,22 +75,29 @@ public class Chunks : SaveLoadManager<ChunksData, Chunks>
     [ContextMenu("GenerateChunks")]
     private void GenerateChunks()
     {
-        _saveData = new ChunksData();
-        
+        var level = FindObjectOfType<Level>();
+
+        if (level == null)
+        {
+            Debug.LogError("Level not found. Can't generate chunks");
+            return;
+        }
+
         if (_chunkTableSize.x < 1 || _chunkTableSize.y < 1 || _chunkSideSize <= 0)
         {
             Debug.LogError("Chunk preset is wrong");
             return;
         }
 
+        _saveData = new ChunksData();
         var allLootBoxes = new List<SaveInChunkLootBox>();
         allLootBoxes.AddRange(FindObjectsOfType<SaveInChunkLootBox>());
 
         if (allLootBoxes.Count == 0)
             Debug.LogError("SaveObjects not found");
 
-        _saveInChunkLootBoxes = new List<SaveInChunkLootBox>();
-        _lootBoxIndexes = new List<int>();
+        var saveInChunkLootBoxes = new List<SaveInChunkLootBox>();
+        var lootBoxIndexes = new List<int>();
         
         _chunkTableSize = new Vector2((int) _chunkTableSize.x, (int) _chunkTableSize.y);
         var downVector = new Vector3(0, -_chunkSideSize);
@@ -133,16 +130,19 @@ public class Chunks : SaveLoadManager<ChunksData, Chunks>
                 {
                     var index = counter * 100000 + 1 * 10000 + k;
                     saveLootBoxesInChunk[k].SetIndex(index);
-                    _lootBoxIndexes.Add(index);
-                    _saveInChunkLootBoxes.Add(saveLootBoxesInChunk[k]);
+                    lootBoxIndexes.Add(index);
+                    saveInChunkLootBoxes.Add(saveLootBoxesInChunk[k]);
                 }
                 
                 counter++;
             }
         }
         
+        level.SetLootBoxes(saveInChunkLootBoxes, lootBoxIndexes);
+        
         Save();
         EditorUtility.SetDirty(this);
+        EditorUtility.SetDirty(level);
     }
     
 #endif

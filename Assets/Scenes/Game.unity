@@ -134,37 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b07851aeab74e56a4bd4253782553cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &466146674
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 466146675}
-  m_Layer: 0
-  m_Name: CameraFollowerOffsetPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &466146675
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 466146674}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1800003, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &520810779
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,27 +326,6 @@ MonoBehaviour:
   _chunkTableSize: {x: 3, y: 3}
   _chunkSideSize: 17
   _chunkOffset: {x: -26.1, y: 26.5, z: 0}
-  _lootBoxIndexes: b0ad010050340300f0ba0400904106009141060030c8070031c8070032c8070033c80700d04e0900d14e0900d24e0900d34e090070d50a0071d50a0072d50a00105c0c00115c0c00b0e20d00
-  _saveInChunkLootBoxes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &1030876476
 Transform:
   m_ObjectHideFlags: 0
@@ -706,11 +654,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22414360, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1030.9663
+      value: -1027
       objectReference: {fileID: 0}
     - target: {fileID: 22414360, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 30.966309
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1226,22 +1174,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1369867976}
     m_Modifications:
-    - target: {fileID: 258271527907582738, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
-      propertyPath: m_text
-      value: Version 0.0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 258271528603321544, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 258271528603321544, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 690a463d8843a434c8d825488581cba0, type: 3}
-    - target: {fileID: 258271528603321544, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 258271528603321545, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1333,10 +1265,6 @@ PrefabInstance:
     - target: {fileID: 258271529082039951, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
       propertyPath: m_Name
       value: BaseUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 258271529533752884, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b1cd94bc0ae8304e8f91e66397088f0, type: 3}
