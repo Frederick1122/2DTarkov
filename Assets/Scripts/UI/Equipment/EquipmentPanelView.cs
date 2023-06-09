@@ -1,15 +1,16 @@
 ﻿using System;
+using Base;
 using UnityEngine;
 
 public class EquipmentPanelView : MonoBehaviour
 {
-    public event Action<WeaponWindowView> OnContainerClick;
-    public event Action<EquipmentItem> OnRemoveButtonClick;
+    public event Action<EquipmentTabView> OnContainerClick;
+    public event Action<IEquip> OnRemoveButtonClick;
 
-    [SerializeField] private WeaponWindowView _kevlarContainer;
-    [SerializeField] private WeaponWindowView _backpackContainer;
-    [SerializeField] private WeaponWindowView _weaponContainer;
-    [SerializeField] private WeaponWindowView _weapon2Container;
+    [SerializeField] private EquipmentTabView _kevlarContainer;
+    [SerializeField] private EquipmentTabView _backpackContainer;
+    [SerializeField] private EquipmentTabView _weaponContainer;
+    [SerializeField] private EquipmentTabView _weapon2Container;
 
     private void OnEnable()
     {

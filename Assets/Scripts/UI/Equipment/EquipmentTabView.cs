@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class WeaponWindowView : MonoBehaviour
 {
     public event Action<WeaponWindowView> OnContainerClick;
-    public event Action<EquipmentItem> OnRemoveButtonClick;
+    public event Action<Weapon> OnRemoveButtonClick;
     
     [SerializeField] private Image _icon;
     

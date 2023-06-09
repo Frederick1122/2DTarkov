@@ -2,115 +2,138 @@
 using Base;
 using UnityEngine;
 
-public class Equipment: SaveLoadManager<EquipmentData, Equipment>
-    {   
-        private const string EQUIPMENT_JSON_PATH = "Equipment.json";
+public class Equipment : SaveLoadManager<EquipmentData, Equipment>
+{
+    private const string EQUIPMENT_JSON_PATH = "Equipment.json";
 
-        public event Action<EquipmentData> OnEquipmentChanged;
+    public event Action<EquipmentData> OnEquipmentChanged;
+
+    [ContextMenu("ClearEquipment")]
+    private void ClearInventory()
+    {
+        _saveData = new EquipmentData();
+        OnEquipmentChanged?.Invoke(_saveData);
+        Save();
+    }
+
+    public void AddEquipment(IEquip item)
+    {
+        var equipmentType = item.GetEquipmentType();
+
+        var currentEquip = _saveData.GetEquipment(equipmentType);
+        _saveData.SetEquipment(item, equipmentType);
+
+        Inventory.Instance.DeleteItem((Item) item);
         
-        [ContextMenu("ClearEquipment")]
-        private void ClearInventory()
+        if (currentEquip != null)
+        {
+            Inventory.Instance.AddItem((Item) currentEquip);
+        }
+
+        OnEquipmentChanged?.Invoke(_saveData);
+    }
+
+    public void RemoveEquipment(IEquip item)
+    {
+        _saveData.SetEquipment(default, item.GetEquipmentType());
+
+        Inventory.Instance.AddItem((Item) item);
+
+        OnEquipmentChanged?.Invoke(_saveData);
+    }
+
+    public EquipmentData GetInventory() => _saveData;
+
+    protected override void Load()
+    {
+        base.Load();
+        if (_saveData == null)
         {
             _saveData = new EquipmentData();
-            OnEquipmentChanged?.Invoke(_saveData);
             Save();
         }
-        
-        public void AddEquipment(EquipmentItem item)
-        {
-            EquipmentItem currentEquip = null;
-            var equipmentType = item.GetEquipmentType();
-            switch (equipmentType)
-            {
-                case EquipmentType.kevlar:
-                    currentEquip = _saveData.kevlar;
-                    _saveData.kevlar = item;
-                    break;
-                case EquipmentType.backpack:
-                    currentEquip = _saveData.backpack;
-                    _saveData.backpack = item;
-                    break;
-                case EquipmentType.weapon:
-                    if (_saveData.firstWeapon == null)
-                    {
-                        currentEquip = _saveData.firstWeapon;
-                        _saveData.firstWeapon = (Weapon) item;
-                    }
-                    else
-                    {
-                        currentEquip = _saveData.secondWeapon;
-                        _saveData.secondWeapon = (Weapon) item;
-                    }
-                    break;
-            }
 
-            Inventory.Instance.DeleteItem(item);
-            if (currentEquip != null)
-            {
-                Inventory.Instance.AddItem(currentEquip);
-            }
-            
-            OnEquipmentChanged?.Invoke(_saveData);
-        }
-
-        public void RemoveEquipment(EquipmentItem item)
-        {
-            var equipmentType = item.GetEquipmentType();
-            switch (equipmentType)
-            {
-                case EquipmentType.kevlar:
-                    _saveData.kevlar = default;
-                    break;
-                case EquipmentType.backpack:
-                    _saveData.backpack = default;
-                    break;
-                case EquipmentType.weapon:
-                    if (_saveData.firstWeapon == item)
-                        _saveData.firstWeapon = default;
-                    else
-                        _saveData.secondWeapon = default;
-                    break;
-            }
-            
-            Inventory.Instance.AddItem(item);
-            
-            OnEquipmentChanged?.Invoke(_saveData);
-        }
-        
-        public EquipmentData GetInventory() => _saveData;
-        
-        protected override void Load()
-        {
-            base.Load();
-            if (_saveData == null)
-            {
-                _saveData = new EquipmentData();
-                Save();
-            }
-            
-            OnEquipmentChanged?.Invoke(_saveData);
-        }
-        
-        protected override void UpdatePath()
-        {
-            _secondPath = EQUIPMENT_JSON_PATH;
-            base.UpdatePath();
-        }
+        OnEquipmentChanged?.Invoke(_saveData);
     }
-    
-    
-    [Serializable]
-    public class EquipmentData
+
+    protected override void UpdatePath()
     {
-        public EquipmentItem kevlar;
-        public EquipmentItem backpack;
-        public Weapon firstWeapon;
-        public Weapon secondWeapon;
+        _secondPath = EQUIPMENT_JSON_PATH;
+        base.UpdatePath();
     }
+}
+
+
+[Serializable]
+public class EquipmentData
+{
+    public string kevlarConfigPath;
+    public string backpackConfigPath;
+    public string firstWeaponConfigPath;
+    public string secondWeaponConfigPath;
+
+    private Weapon _kevlar;
+    private Weapon _backpack;
+    private Weapon _firstWeapon;
+    private Weapon _secondWeapon;
+
+    public void SetEquipment(IEquip equipmentItem, EquipmentType equipmentType)
+    {
+        switch (equipmentType)
+        {
+            case EquipmentType.kevlar:
+                _kevlar = (Weapon) equipmentItem;
+                kevlarConfigPath = _kevlar == default ? "" : _kevlar.configPath;
+                break;
+            case EquipmentType.backpack:
+                _backpack = (Weapon) equipmentItem;
+                backpackConfigPath = _backpack == default ? "" : _backpack.configPath;
+                break;
+            case EquipmentType.firstWeapon:
+                _firstWeapon = (Weapon) equipmentItem;
+                firstWeaponConfigPath = _firstWeapon == default ? "" : _firstWeapon.configPath;
+                break;
+            case EquipmentType.secondWeapon:
+                _secondWeapon = (Weapon) equipmentItem;
+                secondWeaponConfigPath = _secondWeapon == default ? "" : _secondWeapon.configPath;
+                break;
+        }
+    }
+
+    public IEquip GetEquipment(EquipmentType equipmentType)
+    {
+        switch (equipmentType)
+        {
+            case EquipmentType.kevlar:
+                if (_kevlar == null || _kevlar == default)
+                    _kevlar = Resources.Load<Weapon>(kevlarConfigPath);
+
+                return _kevlar;
+            case EquipmentType.backpack:
+                if (_backpack == null || _backpack == default)
+                    _backpack = Resources.Load<Weapon>(backpackConfigPath);
+
+                return _backpack;
+            case EquipmentType.firstWeapon:
+                if (_firstWeapon == null || _firstWeapon == default)
+                    _firstWeapon = Resources.Load<Weapon>(firstWeaponConfigPath);
+
+                return _firstWeapon;
+            case EquipmentType.secondWeapon:
+                if (_secondWeapon == null || _secondWeapon == default)
+                    _secondWeapon = Resources.Load<Weapon>(secondWeaponConfigPath);
+
+                return _secondWeapon;
+        }
+
+        return null;
+    }
+}
 
 public enum EquipmentType
-    {
-        backpack,
-        kevlar,
-        weapon
-    }
+{
+    backpack,
+    kevlar,
+    firstWeapon,
+    secondWeapon
+}

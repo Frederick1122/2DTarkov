@@ -1,9 +1,10 @@
 using System;
+using Base;
 using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Item/Weapon")]
-public class Weapon : EquipmentItem
+public class Weapon : Item, IEquip
 {
     [Space]
     public string weaponPrefabPath = "";
@@ -11,7 +12,7 @@ public class Weapon : EquipmentItem
     public int maxAmmoInMagazine;
     public float rateOfFire;
     public float bulletDispersion;
-
+    public bool isSecondWeapon;
     internal override void OnValidate()
     {
         if (weaponPrefabPath == "")
@@ -23,11 +24,17 @@ public class Weapon : EquipmentItem
         base.OnValidate();
     }
 
-    public override void Equip()
+    public void Equip()
     {
         Debug.Log("EQUIP " + name);
         Equipment.Instance.AddEquipment(this);
     }
 
-    public override EquipmentType GetEquipmentType() => EquipmentType.weapon;
+    public EquipmentType GetEquipmentType()
+    {
+        if (isSecondWeapon)
+            return EquipmentType.secondWeapon;
+
+        return EquipmentType.firstWeapon;
+    }
 }
