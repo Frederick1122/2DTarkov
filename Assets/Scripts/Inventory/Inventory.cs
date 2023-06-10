@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Base;
 using Unity.Mathematics;
 using UnityEngine;
@@ -31,8 +32,6 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 
     public void AddItem(Item newItem, int count = 1)
     {
-        OnInventoryAdded?.Invoke(newItem, count);
-
         foreach (var inventoryCellWithItem in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
         {
             if (inventoryCellWithItem.count < newItem.maxStack)
@@ -58,6 +57,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
         }
 
         Save();
+        OnInventoryAdded?.Invoke(newItem, count);
     }
 
     public void DeleteItem(Item item, int count = 1)
@@ -80,20 +80,23 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 
         foreach (var deletedCell in deletedCells)
             _saveData.inventoryCells.Remove(deletedCell);
-
+        
+        Save();
         OnInventoryDeleted?.Invoke(item, count);
-        Save();
     }
-
-    public void DeleteItem(int itemIndex)
-    {
-        _saveData.inventoryCells.RemoveAt(itemIndex);
-
-        Save();
-    }
-
+    
     public InventoryData GetInventory() => _saveData;
 
+    public int GetItemCount(Item item)
+    {
+        var count = 0;
+        foreach (var cell in _saveData.inventoryCells.Where(cell => cell.GetItem() == item))
+        {
+            count += cell.count;
+        }
+
+        return count;
+    }
     protected override void Load()
     {
         base.Load();

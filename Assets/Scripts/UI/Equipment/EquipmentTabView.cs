@@ -1,15 +1,16 @@
 using System;
+using Base;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponWindowView : MonoBehaviour
+public class EquipmentTabView : MonoBehaviour
 {
-    public event Action<WeaponWindowView> OnContainerClick;
-    public event Action<Weapon> OnRemoveButtonClick;
-    
+    public event Action<EquipmentTabView> OnContainerClick;
+    public event Action<IEquip> OnRemoveButtonClick;
+
     [SerializeField] private Image _icon;
-    
+
     [SerializeField] private TMP_Text _name;
     [SerializeField] private TMP_Text _description;
     [SerializeField] private TMP_Text _ammoDescription;
@@ -18,8 +19,8 @@ public class WeaponWindowView : MonoBehaviour
     [SerializeField] private Button _containerButton;
     [SerializeField] private Button _removeButton;
 
-    private EquipmentItem _equipmentItem;
-    
+    private IEquip _equipmentItem;
+
     private void OnEnable()
     {
         _containerButton.onClick.AddListener(() => OnContainerClick?.Invoke(this));
@@ -32,11 +33,11 @@ public class WeaponWindowView : MonoBehaviour
         _removeButton.onClick.RemoveAllListeners();
     }
 
-    public void ChangeView( WeaponContainerData data )
+    public void ChangeView(WeaponContainerData data)
     {
         data ??= new WeaponContainerData();
 
-        if (data.equipmentItem != null )
+        if (data.equipmentItem != null)
         {
             _containerButton.gameObject.SetActive(true);
             _equipmentItem = data.equipmentItem;
@@ -49,11 +50,10 @@ public class WeaponWindowView : MonoBehaviour
         _name.text = data.itemName;
         _description.text = data.description;
         _ammoDescription.text = data.ammoDescription;
-        
-        _ammoQuantity.text = data.maxAmmoInMagazine > 0 ?
-            $"{data.maxAmmoInMagazine} / {data.ammoInMagazine}" : "";
 
-        if( data.icon == null )
+        _ammoQuantity.text = data.maxAmmoInMagazine > 0 ? $"{data.maxAmmoInMagazine} / {data.ammoInMagazine}" : "";
+
+        if (data.icon == null)
         {
             _icon.gameObject.SetActive(false);
         }
@@ -77,7 +77,7 @@ public class WeaponWindowView : MonoBehaviour
 
 public class WeaponContainerData
 {
-    public EquipmentItem equipmentItem = default;
+    public IEquip equipmentItem = default;
     public Sprite icon = null;
     public string itemName = "";
     public string description = "";

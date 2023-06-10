@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Base;
 using UI;
 using UI.Inventory;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class InventoryWindowController : WindowController
     [SerializeField] private ActionButtonsView _actionButtonsView;
 
     private ItemCellView _currentCellView;
-    private Dictionary<ItemCellView, int> _cells = new Dictionary<ItemCellView, int>();
+    private List<ItemCellView> _cells = new List<ItemCellView>();
     private InventoryData _localInventoryData;
     private void OnEnable()
     {
@@ -51,7 +52,7 @@ public class InventoryWindowController : WindowController
     private void AddNewItem(Item item, int count)
     {
         var newItem = new InventoryCell(item, count);
-        CreateCell(newItem, _cells.Count - 1);
+        CreateCell(newItem);
     }
 
     private void DeleteItem(Item item, int count) => Refresh();
@@ -104,21 +105,19 @@ public class InventoryWindowController : WindowController
             Destroy(child.gameObject);
         }
         
-        var counter = 0;
         foreach (var cell in _localInventoryData.inventoryCells)
         {
-            CreateCell(cell, counter);
-            counter++;
+            CreateCell(cell);
         }
     }
 
-    private void CreateCell(InventoryCell cell, int key)
+    private void CreateCell(InventoryCell cell)
     {
         var newCell = Instantiate(_inventoryCellView, _inventoryLayoutGroup.transform);
         var cellItem = cell.GetItem();
         newCell.Init(cellItem, cell.count);
         newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
-        _cells.Add(newCell, key);
+        _cells.Add(newCell);
     }
     
     private void ClickOnCell(ItemCellView cellView)
@@ -157,8 +156,9 @@ public class InventoryWindowController : WindowController
 
     private void DestroyCurrentItem()
     {
-        Inventory.Instance.DeleteItem(_cells[_currentCellView]);
+        var item = _currentCellView.GetItem();
         Destroy(_currentCellView.gameObject);
+        Inventory.Instance.DeleteItem(item, _currentCellView.GetCount());
         _itemInformationPanelView.SetNewInformation();
     }
 }

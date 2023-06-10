@@ -7,7 +7,7 @@ namespace UI.Base
     public class BaseUIWindowController : WindowController
     {
         [SerializeField] private BaseUIWindowView _baseUIWindowView;
-
+        
         private void Start()
         {
             _baseUIWindowView.Init();

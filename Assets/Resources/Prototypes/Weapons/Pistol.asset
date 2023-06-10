@@ -23,4 +23,5 @@ MonoBehaviour:
   bullet: {fileID: 11400000, guid: 8ffc00a454173c84d926eefa054e4049, type: 2}
   maxAmmoInMagazine: 7
   rateOfFire: 0.3
-  bulletDispersion: 30
+  bulletDispersion: 10
+  isSecondWeapon: 1

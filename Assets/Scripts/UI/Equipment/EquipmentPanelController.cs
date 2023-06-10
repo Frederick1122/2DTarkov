@@ -89,7 +89,7 @@ public class EquipmentPanelController : MonoBehaviour
                 description = firstWeapon.description,
                 ammoDescription = firstWeapon.bullet.itemName,
                 maxAmmoInMagazine = firstWeapon.maxAmmoInMagazine,
-                ammoInMagazine = firstWeapon.maxAmmoInMagazine
+                ammoInMagazine = equipmentData.firstWeaponAmmoInMagazine
             };
         }
 
@@ -103,7 +103,7 @@ public class EquipmentPanelController : MonoBehaviour
                 description = secondWeapon.description,
                 ammoDescription = secondWeapon.bullet.itemName,
                 maxAmmoInMagazine = secondWeapon.maxAmmoInMagazine,
-                ammoInMagazine = secondWeapon.maxAmmoInMagazine
+                ammoInMagazine = equipmentData.secondWeaponAmmoInMagazine
             };
         }
 

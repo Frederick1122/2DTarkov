@@ -16,10 +16,11 @@ public class Equipment : SaveLoadManager<EquipmentData, Equipment>
         Save();
     }
 
+    public EquipmentData GetEquipment() => _saveData;
+    
     public void AddEquipment(IEquip item)
     {
         var equipmentType = item.GetEquipmentType();
-
         var currentEquip = _saveData.GetEquipment(equipmentType);
         _saveData.SetEquipment(item, equipmentType);
 
@@ -27,6 +28,13 @@ public class Equipment : SaveLoadManager<EquipmentData, Equipment>
         
         if (currentEquip != null)
         {
+            var ammoInMagazine = _saveData.GetAmmoInMagazine(equipmentType);
+            if (ammoInMagazine > 0)
+            {
+                var ammoItem = ((Weapon) currentEquip).bullet;
+                Inventory.Instance.AddItem(ammoItem, ammoInMagazine);
+            }
+            
             Inventory.Instance.AddItem((Item) currentEquip);
         }
 
@@ -42,8 +50,38 @@ public class Equipment : SaveLoadManager<EquipmentData, Equipment>
         OnEquipmentChanged?.Invoke(_saveData);
     }
 
-    public EquipmentData GetInventory() => _saveData;
+    public int GetAmmoInMagazine(Weapon weapon)
+    {
+        if (weapon.GetEquipmentType() == EquipmentType.firstWeapon)
+        {
+            return _saveData.firstWeaponAmmoInMagazine;
+        }
 
+        return _saveData.secondWeaponAmmoInMagazine;
+    }
+
+    public void SetAmmoInMagazine(Weapon weapon, int ammoInMagazine)
+    {
+        if (weapon.GetEquipmentType() == EquipmentType.firstWeapon)
+        {
+            _saveData.firstWeaponAmmoInMagazine = ammoInMagazine;
+        }
+        else
+        {
+            _saveData.secondWeaponAmmoInMagazine = ammoInMagazine;
+        }
+        
+        Save();
+        OnEquipmentChanged?.Invoke(_saveData);
+    }
+
+    public void SwipeWeapon()
+    {
+        _saveData.isSecondWeapon = !_saveData.isSecondWeapon;
+        Save();
+        OnEquipmentChanged?.Invoke(_saveData);
+    }
+    
     protected override void Load()
     {
         base.Load();
@@ -72,6 +110,10 @@ public class EquipmentData
     public string firstWeaponConfigPath;
     public string secondWeaponConfigPath;
 
+    public int firstWeaponAmmoInMagazine;
+    public int secondWeaponAmmoInMagazine;
+    public bool isSecondWeapon;
+    
     private Weapon _kevlar;
     private Weapon _backpack;
     private Weapon _firstWeapon;
@@ -92,10 +134,12 @@ public class EquipmentData
             case EquipmentType.firstWeapon:
                 _firstWeapon = (Weapon) equipmentItem;
                 firstWeaponConfigPath = _firstWeapon == default ? "" : _firstWeapon.configPath;
+                firstWeaponAmmoInMagazine = 0;
                 break;
             case EquipmentType.secondWeapon:
                 _secondWeapon = (Weapon) equipmentItem;
                 secondWeaponConfigPath = _secondWeapon == default ? "" : _secondWeapon.configPath;
+                secondWeaponAmmoInMagazine = 0;
                 break;
         }
     }
@@ -127,6 +171,20 @@ public class EquipmentData
         }
 
         return null;
+    }
+
+    public int GetAmmoInMagazine(EquipmentType equipmentType)
+    {
+        if (equipmentType == EquipmentType.firstWeapon)
+        {
+            return firstWeaponAmmoInMagazine;
+        }
+        else if (equipmentType == EquipmentType.secondWeapon)
+        {
+            return secondWeaponAmmoInMagazine;
+        }
+
+        return 0;
     }
 }
 

@@ -11,7 +11,6 @@ public class Player : Humanoid
     [Space]
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private Joystick _movementJoystick;
     
     [Header("FOV settings")]
     [SerializeField] private FieldOfView _fieldOfView;
@@ -24,11 +23,13 @@ public class Player : Humanoid
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private Rigidbody2D _rigidbody2D;
 
+    private Joystick _movementJoystick;
+
     private Vector2 _tapPosition;
     private bool _isMobile;
     private bool _isSwiping;
 
-    private float _deadZone = 0.1f;
+    private readonly float _deadZone = 0.1f;
     private Vector2 _resolution;
     private float _nonRotationZone;
     private int _touchNumber;

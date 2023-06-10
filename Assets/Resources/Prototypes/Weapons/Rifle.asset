@@ -21,6 +21,7 @@ MonoBehaviour:
   configPath: Prototypes/Weapons/Rifle
   weaponPrefabPath: Items/Weapons/Weapon
   bullet: {fileID: 11400000, guid: ab162eb4953d8ab4290a6c1754c18d12, type: 2}
-  cartrigeClip: 30
+  maxAmmoInMagazine: 30
   rateOfFire: 0.1
   bulletDispersion: 15
+  isSecondWeapon: 0

@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponInHands : MonoBehaviour
 {
     private static string OBSTACLE_TAG = "Obstacle";
-
-    [SerializeField] private Weapon _firstWeapon;
     
     private ShootArea _shootArea;
     private GameObject _bulletSpawnPoint;
@@ -20,15 +20,38 @@ public class WeaponInHands : MonoBehaviour
     private Coroutine _attackRoutine;
     private Weapon _activeWeapon;
     private Dictionary<Weapon, WeaponInPool> _weaponPool = new();
+    private int _ammo = 0;
     
-    public void SetWeapon(Weapon newWeapon)
+    private void SetWeapon(EquipmentData equipmentData)
     {
+        var newWeapon = new Weapon();
+        if (equipmentData.isSecondWeapon)
+        {
+            newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
+            _ammo = equipmentData.secondWeaponAmmoInMagazine;
+        }
+        else
+        {
+            newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
+            _ammo = equipmentData.firstWeaponAmmoInMagazine;
+        }
+
+        if (newWeapon == _activeWeapon)
+        {
+            return;
+        }
+
         if (_shootArea != null)
         {
             _shootArea.onEnter -= AddEnemy;
             _shootArea.onExit -= RemoveEnemy;
         }
         
+        if (newWeapon == null)
+        {
+             return;
+        }
+
         _bulletDispersion = newWeapon.bulletDispersion;
         _rateOfFireInstruction = new WaitForSeconds(newWeapon.rateOfFire);
 
@@ -59,11 +82,15 @@ public class WeaponInHands : MonoBehaviour
     
     private void Start()
     {
-        if(_firstWeapon != null)
-            SetWeapon(_firstWeapon);
+        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
         
-        
+        SetWeapon(Equipment.Instance.GetEquipment());
         UpdateFields();
+    }
+
+    private void OnDisable()
+    {
+        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
     }
 
     private void AddEnemy(GameObject enemy) => _enemies.Add(enemy);
@@ -77,7 +104,7 @@ public class WeaponInHands : MonoBehaviour
 
     private void Update()
     {
-        if (_enemies.Count == 0)
+        if (_enemies.Count == 0 || _ammo <= 0)
         {
             if (_attackRoutine != null)
             {
@@ -98,6 +125,8 @@ public class WeaponInHands : MonoBehaviour
     {
         var bullet = Instantiate(_weaponPool[_activeWeapon].BulletLogic, _bulletSpawnPoint.transform.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
+        _ammo--;
+        Equipment.Instance.SetAmmoInMagazine(_activeWeapon, _ammo);
         bullet.transform.Rotate(0,0,currentDispersion);
         bullet.GetComponent<BulletLogic>().Init(_activeWeapon.bullet.speed, _activeWeapon.bullet.damage);
     }

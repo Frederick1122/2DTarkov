@@ -19,6 +19,6 @@ MonoBehaviour:
   maxStack: 30
   baseStack: 30
   configPath: "Prototypes/Bullets/5,56\xD745mm"
-  speed: 2500
+  speed: 5000
   damage: 35
   bulletPrefabPath: Items/Bullets/Bullet
