@@ -11,14 +11,14 @@ using UnityEngine.UI;
     public class PlayerInteractZone : MonoBehaviour
     {
         private List<IInteract> _objectWithInteractions = new List<IInteract>();
-        private Player _player;
+        private PlayerHumanoid _playerHumanoid;
         private BaseUIWindowController _baseUIWindowController;
         
         private bool _isNewChange;
         
         private void Start()
         {
-            _player = GameBus.Instance.GetPlayer();
+            _playerHumanoid = GameBus.Instance.GetPlayer();
             _baseUIWindowController = UIMainController.Instance.GetBaseUI();   
         }
 
@@ -46,7 +46,7 @@ using UnityEngine.UI;
                 return;
 
             _isNewChange = false;
-            var canInteract = _objectWithInteractions.Count > 0 && !_player.isFreeze;
+            var canInteract = _objectWithInteractions.Count > 0 && !_playerHumanoid.isFreeze;
             
             _baseUIWindowController.SetActiveInteractButton(canInteract);
             

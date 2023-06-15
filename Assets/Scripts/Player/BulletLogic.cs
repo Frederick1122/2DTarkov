@@ -21,7 +21,7 @@ public class BulletLogic : MonoBehaviour
 
    private void OnTriggerEnter2D(Collider2D other)
    {
-      if(other.GetComponent<WeaponInHands>() || other.GetComponent<ShootArea>() || other.GetComponent<PlayerInteractZone>())
+      if(other.isTrigger)
          return;
 
       var humanoid = other.GetComponent<Humanoid>();

@@ -10,7 +10,11 @@ namespace Base
         
         protected T _saveData;
 
-        protected virtual void Start() => Load();
+        protected override void Awake()
+        {
+            base.Awake();
+            Load();
+        }
 
         protected virtual void OnApplicationQuit() => Save();
         

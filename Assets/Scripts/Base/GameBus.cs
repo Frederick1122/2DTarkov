@@ -6,21 +6,21 @@ using UnityEngine;
 
 public class GameBus : Singleton<GameBus>
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerHumanoid _playerHumanoid;
     [SerializeField] private InteractItem _baseItem;
     [SerializeField] private Joystick _joystick;
 
-    public Player GetPlayer()
+    public PlayerHumanoid GetPlayer()
     {
-        if(_player == null)
+        if(_playerHumanoid == null)
             Debug.LogError("GameBus doesn't found player. Update this value");
 
-        return _player;
+        return _playerHumanoid;
     }
 
     public InteractItem GetBaseItem() => _baseItem;
 
     public Joystick GetJoystick() => _joystick;
 
-    public void SetPlayer( Player player ) => _player = player;
+    public void SetPlayer( PlayerHumanoid playerHumanoid ) => _playerHumanoid = playerHumanoid;
 }

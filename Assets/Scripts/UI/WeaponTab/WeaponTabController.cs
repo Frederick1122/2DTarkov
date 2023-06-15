@@ -66,6 +66,9 @@ public class WeaponTabController : MonoBehaviour
     
     private void ReloadCurrentWeapon()
     {
+        if (_currentWeapon == null)
+            return;
+        
         var maxAmmoInMagazine = _currentWeapon.maxAmmoInMagazine;
         var ammoInMagazine = Equipment.Instance.GetAmmoInMagazine(_currentWeapon);
         

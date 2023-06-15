@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerContainer : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerHumanoid _playerHumanoid;
 
-    public Player GetPlayer() => _player;
+    public PlayerHumanoid GetPlayer() => _playerHumanoid;
 }

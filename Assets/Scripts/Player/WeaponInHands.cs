@@ -150,7 +150,7 @@ public class WeaponInHands : MonoBehaviour
     {
         if (_player == null || _player == default)
         {
-            var playerComponent = GetComponentInParent<Player>();
+            var playerComponent = GetComponentInParent<PlayerHumanoid>();
             
             if(playerComponent != null)
                 _player = playerComponent.gameObject;

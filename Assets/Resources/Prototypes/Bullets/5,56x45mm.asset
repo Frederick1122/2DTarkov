@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e33ba721f05e94794df40fa2dee9de, type: 3}
-  m_Name: "5,56\xD745mm"
+  m_Name: 5,56x45mm
   m_EditorClassIdentifier: 
   icon: {fileID: 1502070258, guid: 7ad272138a7e59742bf648301a9ffba6, type: 3}
   itemName: "5,56\xD745mm"
