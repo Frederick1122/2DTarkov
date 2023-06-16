@@ -1,0 +1,332 @@
+fileFormatVersion: 2
+guid: 576c2328bda34c14593f055d4a8a8d08
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WeaponsSide_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 1782
+        width: 230
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbc6c925f283fec44a103c9efd0df164
+      internalID: -1262232965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsSide_5
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 1798
+        width: 68
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a3aaa086d568124b830a1a2a415ce78
+      internalID: 374077121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsSide_36
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1627
+        width: 240
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74e5d066d11f3b347891d6c7b60fe9c7
+      internalID: 1440210654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsSide_43
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 1643
+        width: 79
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca5aafbb80e287d429f38c80d106a878
+      internalID: -82152157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsSide_52
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 1489
+        width: 226
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a36b3efa932f9ce4e852157f621267cb
+      internalID: 2002283499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsSide_60
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 1476
+        width: 109
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c7f3aec25ea0494c89f05fb2f796f91
+      internalID: 1656089913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      WeaponsSide_2: -297561955
+      WeaponsSide_64: 411170121
+      WeaponsSide_29: 1258356150
+      WeaponsSide_57: 115812630
+      WeaponsSide_1: -1262232965
+      WeaponsSide_60: 1656089913
+      WeaponsSide_42: 1886593870
+      WeaponsSide_41: 506256772
+      WeaponsSide_68: -800720145
+      WeaponsSide_14: -1648442176
+      WeaponsSide_15: 1449781939
+      WeaponsSide_63: 1902898790
+      WeaponsSide_12: -191010414
+      WeaponsSide_24: 799306528
+      WeaponsSide_16: -1537576897
+      WeaponsSide_25: 1226627276
+      WeaponsSide_8: -1697505011
+      WeaponsSide_27: -15808224
+      WeaponsSide_32: 343253665
+      WeaponsSide_35: 164409419
+      WeaponsSide_47: -442386779
+      WeaponsSide_30: -594819141
+      WeaponsSide_46: 712403973
+      WeaponsSide_69: 49508476
+      WeaponsSide_71: 1401943707
+      WeaponsSide_26: -855551052
+      WeaponsSide_52: 2002283499
+      WeaponsSide_54: -558430233
+      WeaponsSide_62: 2062422391
+      WeaponsSide_59: -1887800249
+      WeaponsSide_4: -33802500
+      WeaponsSide_11: -670398403
+      WeaponsSide_65: 855394924
+      WeaponsSide_48: -594979806
+      WeaponsSide_33: -1659158238
+      WeaponsSide_10: 919108827
+      WeaponsSide_3: 675363477
+      WeaponsSide_58: -1273004126
+      WeaponsSide_50: -627144529
+      WeaponsSide_53: 1303614918
+      WeaponsSide_31: -1092251907
+      WeaponsSide_61: -1842195766
+      WeaponsSide_7: 1581550405
+      WeaponsSide_18: -954151529
+      WeaponsSide_6: -1876599744
+      WeaponsSide_56: -1001782702
+      WeaponsSide_0: 1836243950
+      WeaponsSide_34: 1890300829
+      WeaponsSide_38: 1843192692
+      WeaponsSide_55: 362734258
+      WeaponsSide_66: 62238947
+      WeaponsSide_13: 2051506000
+      WeaponsSide_23: 1081749900
+      WeaponsSide_21: 1125678317
+      WeaponsSide_20: -319868509
+      WeaponsSide_5: 374077121
+      WeaponsSide_43: -82152157
+      WeaponsSide_49: -89573983
+      WeaponsSide_28: 1907724988
+      WeaponsSide_67: 1469330700
+      WeaponsSide_37: 94490906
+      WeaponsSide_19: -1947046298
+      WeaponsSide_36: 1440210654
+      WeaponsSide_9: 713664014
+      WeaponsSide_51: -1714367634
+      WeaponsSide_17: -1467122938
+      WeaponsSide_40: -1676677678
+      WeaponsSide_70: 1030889339
+      WeaponsSide_45: -1051811784
+      WeaponsSide_44: 1551172798
+      WeaponsSide_22: 1449947200
+      WeaponsSide_39: -939023732
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

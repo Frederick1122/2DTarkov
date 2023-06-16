@@ -1,0 +1,312 @@
+fileFormatVersion: 2
+guid: 22969f4f4426d5148b0c240390fabbf6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WeaponsTop_2
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 1728
+        width: 229
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04316bc072b52334f84e5f9b7112b9a1
+      internalID: 1881987507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsTop_7
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 1726
+        width: 69
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 958b86f8c5747d743a9b18bbb73aa88e
+      internalID: 1415514133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsTop_21
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 1630
+        width: 241
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd426a4f331db394faaa644134af65d1
+      internalID: -801959872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsTop_30
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 1628
+        width: 73
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03518a5d61d558045b7da262e8443a1d
+      internalID: 35302353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsTop_36
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 1538
+        width: 230
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a934c663aa7dd33468be54afc6bad989
+      internalID: -1428814998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WeaponsTop_42
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 1536
+        width: 111
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8c9e31f16418264bae344e0df201f0d
+      internalID: 1628929469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      WeaponsTop_36: -1428814998
+      WeaponsTop_2: 1881987507
+      WeaponsTop_30: 35302353
+      WeaponsTop_41: 1809940869
+      WeaponsTop_3: -1835074273
+      WeaponsTop_45: -597077654
+      WeaponsTop_9: -453527118
+      WeaponsTop_12: -853980695
+      WeaponsTop_25: 1979233564
+      WeaponsTop_32: 849637314
+      WeaponsTop_44: -942477644
+      WeaponsTop_31: -68928734
+      WeaponsTop_43: -738939380
+      WeaponsTop_8: 40101021
+      WeaponsTop_4: -1714430056
+      WeaponsTop_47: 1084198409
+      WeaponsTop_29: -1260655121
+      WeaponsTop_50: -1805536677
+      WeaponsTop_1: -1992310639
+      WeaponsTop_42: 1628929469
+      WeaponsTop_5: 618179283
+      WeaponsTop_28: -2128216096
+      WeaponsTop_49: 532821023
+      WeaponsTop_39: 2024679667
+      WeaponsTop_21: -801959872
+      WeaponsTop_23: 1779886485
+      WeaponsTop_6: -54096769
+      WeaponsTop_51: 1427853910
+      WeaponsTop_13: 419982177
+      WeaponsTop_20: -579785800
+      WeaponsTop_46: 96804866
+      WeaponsTop_0: -2002657487
+      WeaponsTop_18: -1640578460
+      WeaponsTop_24: -780960303
+      WeaponsTop_14: 1123725787
+      WeaponsTop_26: 1909628983
+      WeaponsTop_33: -1982034330
+      WeaponsTop_40: 48459323
+      WeaponsTop_10: 2144534886
+      WeaponsTop_38: 764290664
+      WeaponsTop_35: -1249833324
+      WeaponsTop_34: 831295104
+      WeaponsTop_22: -1697387373
+      WeaponsTop_48: -557532905
+      WeaponsTop_17: -752166996
+      WeaponsTop_7: 1415514133
+      WeaponsTop_27: 1192525453
+      WeaponsTop_16: 1886265558
+      WeaponsTop_37: 585356755
+      WeaponsTop_15: -1551798545
+      WeaponsTop_19: 1319346247
+      WeaponsTop_11: 2144879863
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
