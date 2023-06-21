@@ -116,64 +116,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: character_6
+      name: character_1
       rect:
         serializedVersion: 2
-        x: 351
-        y: 1701
+        x: 6
+        y: 256
         width: 205
-        height: 153
+        height: 151
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03f57b04746c289478ab6a8e8f0a4268
-      internalID: 1635193508
+      spriteID: 5fffc7b4d0cd78249a21c7b591054cf2
+      internalID: 697165496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_17
+      name: character_4
       rect:
         serializedVersion: 2
-        x: 384
-        y: 1545
-        width: 91
-        height: 63
+        x: 37
+        y: 168
+        width: 89
+        height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39aec37c19cc10e4d87b9441f8af9fed
-      internalID: -675272120
+      spriteID: f22a2116bb3d2e0429ed700c28755895
+      internalID: -892731808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: character_23
+      name: character_12
       rect:
         serializedVersion: 2
-        x: 364
-        y: 1278
+        x: 22
+        y: 0
         width: 176
-        height: 156
+        height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70498d3a09d2b54479282774ea0fcc7e
-      internalID: -557202602
+      spriteID: 3cd377f5cc34d3d4cb1374a174982cb7
+      internalID: -1475447120
       vertices: []
       indices: 
       edges: []
@@ -189,39 +189,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      character_21: -491298755
-      character_11: -2142189673
-      character_2: 1895185320
-      character_20: 208414163
-      character_31: 558104349
-      character_18: -1286802636
-      character_15: -325045500
-      character_6: 1635193508
-      character_26: 1049460183
-      character_1: 1283827860
-      character_5: -1532138976
-      character_10: 2088299679
-      character_19: 1849485974
-      character_12: -1820842661
-      character_14: 651549080
-      character_16: -170876858
-      character_28: 587102349
-      character_27: 950020127
-      character_23: -557202602
-      character_24: -1997078797
-      character_32: -1297800817
-      character_0: -757652132
-      character_9: -1802297853
-      character_22: -1983251088
-      character_13: 1111668408
-      character_3: -1821719053
-      character_17: -675272120
-      character_4: 932121043
-      character_8: 1212918107
-      character_29: 1457478943
-      character_7: 2057169962
-      character_25: -219505071
-      character_30: 987922461
+      character_11: -43368383
+      character_2: 1125850583
+      character_15: -1498743553
+      character_6: 1127011401
+      character_1: 697165496
+      character_5: 1730904594
+      character_10: 516966793
+      character_12: -1475447120
+      character_14: -1736952116
+      character_0: 756573314
+      character_9: -860375479
+      character_13: -1253064247
+      character_3: -300304792
+      character_4: -892731808
+      character_8: -1274063136
+      character_7: 1118653522
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

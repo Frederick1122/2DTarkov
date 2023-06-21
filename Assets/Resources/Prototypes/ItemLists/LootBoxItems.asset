@@ -15,6 +15,12 @@ MonoBehaviour:
   itemList:
   - {fileID: 11400000, guid: ab162eb4953d8ab4290a6c1754c18d12, type: 2}
   - {fileID: 11400000, guid: 8ffc00a454173c84d926eefa054e4049, type: 2}
+  - {fileID: 11400000, guid: 7065a2464db256e41b6d4870960504ab, type: 2}
   - {fileID: 11400000, guid: 5c379498d43d15544ae111868d1ab474, type: 2}
+  - {fileID: 11400000, guid: e91f23d67baa2d241ae5431dee068375, type: 2}
   - {fileID: 11400000, guid: aa07c13190f7436409296185754da040, type: 2}
-  _paths: []
+  - {fileID: 11400000, guid: 06eaa31706bb14e4cabc501e2e801e4e, type: 2}
+  - {fileID: 11400000, guid: de0d37aacfa3a0141a9d54cb7774f215, type: 2}
+  _paths:
+  - Prototypes/Bullets
+  - Prototypes/Weapons

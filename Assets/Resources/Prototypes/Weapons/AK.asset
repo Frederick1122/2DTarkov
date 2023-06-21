@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 563ecd2a372ad7345a7ebca5839622a0, type: 3}
-  m_Name: Rifle
+  m_Name: AK
   m_EditorClassIdentifier: 
-  icon: {fileID: 355935633, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
-  itemName: Rifle
-  description: Standart rifle
+  icon: {fileID: -1151193902, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
+  itemName: AK
+  description: Standart russian rifle
   weight: 5.5
   maxStack: 1
   baseStack: 1
-  configPath: Prototypes/Weapons/Rifle
+  configPath: Prototypes/Weapons/AK
   bullet: {fileID: 11400000, guid: ab162eb4953d8ab4290a6c1754c18d12, type: 2}
   isSecondWeapon: 0
   maxAmmoInMagazine: 30
@@ -26,5 +26,5 @@ MonoBehaviour:
   bulletDispersion: 15
   maxFiringDistance: 7
   bulletSpawnPointPosition: {x: 0, y: 0, z: 0}
-  topSprite: {fileID: -646404424, guid: 6f4d05f2aa4044848add923ad42988ff, type: 3}
-  sideSprite: {fileID: 1095257775, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
+  topSprite: {fileID: -1846529810, guid: 6f4d05f2aa4044848add923ad42988ff, type: 3}
+  sideSprite: {fileID: -1908594858, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}

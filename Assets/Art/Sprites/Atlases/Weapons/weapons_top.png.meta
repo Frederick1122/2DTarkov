@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 576c2328bda34c14593f055d4a8a8d08
+guid: 6f4d05f2aa4044848add923ad42988ff
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,127 +116,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WeaponsSide_1
+      name: top_0
       rect:
         serializedVersion: 2
-        x: 56
-        y: 1782
-        width: 230
-        height: 68
+        x: 14
+        y: 198
+        width: 227
+        height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbc6c925f283fec44a103c9efd0df164
-      internalID: -1262232965
+      spriteID: 039bd00bc1bd65d47b8e8b8b12176b19
+      internalID: -1846529810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WeaponsSide_5
+      name: top_1
       rect:
         serializedVersion: 2
-        x: 870
-        y: 1798
-        width: 68
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a3aaa086d568124b830a1a2a415ce78
-      internalID: 374077121
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WeaponsSide_36
-      rect:
-        serializedVersion: 2
-        x: 58
-        y: 1627
+        x: 12
+        y: 159
         width: 240
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 39
+      alignment: 9
+      pivot: {x: 0.49898896, y: 0.58795834}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74e5d066d11f3b347891d6c7b60fe9c7
-      internalID: 1440210654
+      spriteID: a46635d0e1512c046bae303da6c448a2
+      internalID: -646404424
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WeaponsSide_43
+      name: top_2
       rect:
         serializedVersion: 2
-        x: 869
-        y: 1643
-        width: 79
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 8
+        y: 120
+        width: 225
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5154014, y: 0.5547258}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca5aafbb80e287d429f38c80d106a878
-      internalID: -82152157
+      spriteID: 4d1091a118bde7649936681b142af515
+      internalID: -501225479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WeaponsSide_52
+      name: top_3
       rect:
         serializedVersion: 2
-        x: 43
-        y: 1489
-        width: 226
-        height: 54
+        x: 69
+        y: 81
+        width: 107
+        height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a36b3efa932f9ce4e852157f621267cb
-      internalID: 2002283499
+      spriteID: 42c44922a4b622a4187bfde3338027bd
+      internalID: 1978616680
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WeaponsSide_60
+      name: top_4
       rect:
         serializedVersion: 2
-        x: 861
-        y: 1476
-        width: 109
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 90
+        y: 42
+        width: 77
+        height: 39
+      alignment: 9
+      pivot: {x: 0.6047617, y: 0.5098494}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c7f3aec25ea0494c89f05fb2f796f91
-      internalID: 1656089913
+      spriteID: 9be0f3edb7af8004b9fcda99f6f36649
+      internalID: 1589876758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: top_5
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 3
+        width: 66
+        height: 39
+      alignment: 9
+      pivot: {x: 0.6571429, y: 0.47045204}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53167abed8b761a419f15e372b3c3fb9
+      internalID: -1139648693
       vertices: []
       indices: 
       edges: []
@@ -252,78 +252,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WeaponsSide_2: -297561955
-      WeaponsSide_64: 411170121
-      WeaponsSide_29: 1258356150
-      WeaponsSide_57: 115812630
-      WeaponsSide_1: -1262232965
-      WeaponsSide_60: 1656089913
-      WeaponsSide_42: 1886593870
-      WeaponsSide_41: 506256772
-      WeaponsSide_68: -800720145
-      WeaponsSide_14: -1648442176
-      WeaponsSide_15: 1449781939
-      WeaponsSide_63: 1902898790
-      WeaponsSide_12: -191010414
-      WeaponsSide_24: 799306528
-      WeaponsSide_16: -1537576897
-      WeaponsSide_25: 1226627276
-      WeaponsSide_8: -1697505011
-      WeaponsSide_27: -15808224
-      WeaponsSide_32: 343253665
-      WeaponsSide_35: 164409419
-      WeaponsSide_47: -442386779
-      WeaponsSide_30: -594819141
-      WeaponsSide_46: 712403973
-      WeaponsSide_69: 49508476
-      WeaponsSide_71: 1401943707
-      WeaponsSide_26: -855551052
-      WeaponsSide_52: 2002283499
-      WeaponsSide_54: -558430233
-      WeaponsSide_62: 2062422391
-      WeaponsSide_59: -1887800249
-      WeaponsSide_4: -33802500
-      WeaponsSide_11: -670398403
-      WeaponsSide_65: 855394924
-      WeaponsSide_48: -594979806
-      WeaponsSide_33: -1659158238
-      WeaponsSide_10: 919108827
-      WeaponsSide_3: 675363477
-      WeaponsSide_58: -1273004126
-      WeaponsSide_50: -627144529
-      WeaponsSide_53: 1303614918
-      WeaponsSide_31: -1092251907
-      WeaponsSide_61: -1842195766
-      WeaponsSide_7: 1581550405
-      WeaponsSide_18: -954151529
-      WeaponsSide_6: -1876599744
-      WeaponsSide_56: -1001782702
-      WeaponsSide_0: 1836243950
-      WeaponsSide_34: 1890300829
-      WeaponsSide_38: 1843192692
-      WeaponsSide_55: 362734258
-      WeaponsSide_66: 62238947
-      WeaponsSide_13: 2051506000
-      WeaponsSide_23: 1081749900
-      WeaponsSide_21: 1125678317
-      WeaponsSide_20: -319868509
-      WeaponsSide_5: 374077121
-      WeaponsSide_43: -82152157
-      WeaponsSide_49: -89573983
-      WeaponsSide_28: 1907724988
-      WeaponsSide_67: 1469330700
-      WeaponsSide_37: 94490906
-      WeaponsSide_19: -1947046298
-      WeaponsSide_36: 1440210654
-      WeaponsSide_9: 713664014
-      WeaponsSide_51: -1714367634
-      WeaponsSide_17: -1467122938
-      WeaponsSide_40: -1676677678
-      WeaponsSide_70: 1030889339
-      WeaponsSide_45: -1051811784
-      WeaponsSide_44: 1551172798
-      WeaponsSide_22: 1449947200
-      WeaponsSide_39: -939023732
+      top_1: -646404424
+      top_2: -501225479
+      top_5: -1139648693
+      top_3: 1978616680
+      top_0: -1846529810
+      top_4: 1589876758
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

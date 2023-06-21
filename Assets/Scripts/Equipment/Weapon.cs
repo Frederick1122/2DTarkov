@@ -7,17 +7,20 @@ using UnityEngine;
 public class Weapon : Item, IEquip
 {
     [Space]
-    public string weaponPrefabPath = "";
     public Bullet bullet;
+    [Space]
+    public bool isSecondWeapon;
     public int maxAmmoInMagazine;
     public float rateOfFire;
     public float bulletDispersion;
-    public bool isSecondWeapon;
+    public float maxFiringDistance;
+    public Vector3 bulletSpawnPointPosition;
+    [Space]
+    public Sprite topSprite;
+    public Sprite sideSprite;
+    
     internal override void OnValidate()
     {
-        if (weaponPrefabPath == "")
-            Debug.Log($"Incorrect weaponPrefabPath! Check {this.name}");
-
         if(_directory == "")
             _directory = "Weapons/";
         

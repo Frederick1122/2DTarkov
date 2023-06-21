@@ -5,26 +5,55 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class WeaponInHands : MonoBehaviour
 {
     private static string OBSTACLE_TAG = "Obstacle";
     
-    private ShootArea _shootArea;
-    private GameObject _bulletSpawnPoint;
+    [SerializeField] private ShootArea _shootArea;
+    [SerializeField] private GameObject _bulletSpawnPoint;
 
-    private float _bulletDispersion;
-
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    
     private GameObject _player;
     private List<GameObject> _enemies = new List<GameObject>();
+    
     private YieldInstruction _rateOfFireInstruction;
     private Coroutine _attackRoutine;
+    
     private Weapon _activeWeapon;
-    private Dictionary<Weapon, WeaponInPool> _weaponPool = new();
+    private Dictionary<string, BulletLogic> _weaponPool = new();
     private int _ammo = 0;
+    private float _bulletDispersion; 
+
+    private void OnValidate()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void OnEnable()
+    {
+        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
+        _shootArea.onEnter += AddEnemy;
+        _shootArea.onExit += RemoveEnemy;
+    }
+
+    private void OnDisable()
+    {
+        Equipment.Instance.OnEquipmentChanged -= SetWeapon; 
+        _shootArea.onEnter -= AddEnemy;
+        _shootArea.onExit -= RemoveEnemy;
+    }
+
+    private void Start()
+    {
+        SetWeapon(Equipment.Instance.GetEquipment());
+        UpdateFields();
+    }
     
     private void SetWeapon(EquipmentData equipmentData)
     {
-        var newWeapon = new Weapon();
+        Weapon newWeapon;
         if (equipmentData.isSecondWeapon)
         {
             newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
@@ -35,76 +64,56 @@ public class WeaponInHands : MonoBehaviour
             newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
             _ammo = equipmentData.firstWeaponAmmoInMagazine;
         }
-
+        
+        if (newWeapon == null)
+        {
+            _activeWeapon = null;
+            _spriteRenderer.enabled = false;
+        }
+        else
+        {
+            _spriteRenderer.enabled = true;
+        }
+        
         if (newWeapon == _activeWeapon)
         {
             return;
         }
-
-        if (_shootArea != null)
-        {
-            _shootArea.onEnter -= AddEnemy;
-            _shootArea.onExit -= RemoveEnemy;
-        }
         
-        if (newWeapon == null)
-        {
-             return;
-        }
-
         _bulletDispersion = newWeapon.bulletDispersion;
         _rateOfFireInstruction = new WaitForSeconds(newWeapon.rateOfFire);
+        
+        if (!_weaponPool.ContainsKey(newWeapon.itemName))
+        {
+            var newBulletLogic = Resources.Load(newWeapon.bullet.bulletPrefabPath).GetComponent<BulletLogic>();
+            _weaponPool.Add(newWeapon.itemName, newBulletLogic);
+        }
+        
+        _spriteRenderer.sprite = newWeapon.topSprite;
 
-        WeaponPrefab weapon;
-        
-        if (_weaponPool.ContainsKey(newWeapon))
-        {
-            _weaponPool[newWeapon].WeaponPrefab.gameObject.SetActive(true);
-            weapon = _weaponPool[newWeapon].WeaponPrefab;
-        }
-        else
-        {
-            weapon = Instantiate(Resources.Load(newWeapon.weaponPrefabPath), transform).GetComponent<WeaponPrefab>();
-            var newWeaponInPool = new WeaponInPool(newWeapon, weapon);
-            _weaponPool.Add(newWeapon, newWeaponInPool);
-        }
-        
-        _shootArea = weapon.GetShootArea();
-        _bulletSpawnPoint = weapon.GetBulletSpawnPoint();
-        _shootArea.onEnter += AddEnemy;
-        _shootArea.onExit += RemoveEnemy;
-        
-        if (_activeWeapon != null || _activeWeapon != default) 
-            _weaponPool[_activeWeapon].WeaponPrefab.gameObject.SetActive(false);
+        var bulletSpawnPointX = _spriteRenderer.bounds.center.x;
+        var bulletSpawnPointY = _spriteRenderer.bounds.max.y;
+        _bulletSpawnPoint.transform.position = new Vector3(bulletSpawnPointX, bulletSpawnPointY);
+
+        _shootArea.SetDistance(newWeapon.maxFiringDistance, _bulletSpawnPoint.transform.position);
         
         _activeWeapon = newWeapon;
     }
-    
-    private void Start()
+
+    private void AddEnemy(GameObject enemy)
     {
-        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
-        
-        SetWeapon(Equipment.Instance.GetEquipment());
-        UpdateFields();
+        _enemies.Add(enemy);
     }
 
-    private void OnDisable()
-    {
-        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
-    }
-
-    private void AddEnemy(GameObject enemy) => _enemies.Add(enemy);
-    
     private void RemoveEnemy(GameObject enemy)
     {
         if (_enemies.Contains(enemy)) 
             _enemies.Remove(enemy);
     }
-
-
+    
     private void Update()
     {
-        if (_enemies.Count == 0 || _ammo <= 0)
+        if (_enemies.Count == 0 || _ammo <= 0 || _activeWeapon == null)
         {
             if (_attackRoutine != null)
             {
@@ -123,7 +132,7 @@ public class WeaponInHands : MonoBehaviour
 
     private void Shoot()
     {
-        var bullet = Instantiate(_weaponPool[_activeWeapon].BulletLogic, _bulletSpawnPoint.transform.position, _player.transform.localRotation);
+        var bullet = Instantiate(_weaponPool[_activeWeapon.itemName], _bulletSpawnPoint.transform.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
         _ammo--;
         Equipment.Instance.SetAmmoInMagazine(_activeWeapon, _ammo);
@@ -173,18 +182,6 @@ public class WeaponInHands : MonoBehaviour
         }
 
         return false;
-    }
-
-    struct WeaponInPool
-    {
-        public WeaponPrefab WeaponPrefab { get; }
-        public BulletLogic BulletLogic { get; }
-
-        public WeaponInPool(Weapon weaponConf, WeaponPrefab weaponPrefab)
-        {
-            WeaponPrefab = weaponPrefab;
-            BulletLogic = Resources.Load(weaponConf.bullet.bulletPrefabPath).GetComponent<BulletLogic>();
-        }
     }
     
     #if UNITY_EDITOR
