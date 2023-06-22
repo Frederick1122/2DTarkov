@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 public class WeaponInHands : MonoBehaviour
 {
     private static string OBSTACLE_TAG = "Obstacle";
+    [SerializeField] private Vector3 _firstWeaponPosition;
+    [SerializeField] private Vector3 _secondWeaponPosition;
     
     [SerializeField] private ShootArea _shootArea;
     [SerializeField] private GameObject _bulletSpawnPoint;
@@ -58,11 +60,13 @@ public class WeaponInHands : MonoBehaviour
         {
             newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
             _ammo = equipmentData.secondWeaponAmmoInMagazine;
+            transform.localPosition = _secondWeaponPosition;
         }
         else
         {
             newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
             _ammo = equipmentData.firstWeaponAmmoInMagazine;
+            transform.localPosition = _firstWeaponPosition;
         }
         
         if (newWeapon == null)
