@@ -91,9 +91,9 @@ public class WeaponInHands : MonoBehaviour
         
         _spriteRenderer.sprite = newWeapon.topSprite;
 
-        var bulletSpawnPointX = _spriteRenderer.bounds.center.x;
-        var bulletSpawnPointY = _spriteRenderer.bounds.max.y;
-        _bulletSpawnPoint.transform.position = new Vector3(bulletSpawnPointX, bulletSpawnPointY);
+        var bulletSpawnPointX = _spriteRenderer.localBounds.max.x;
+        var bulletSpawnPointY = _spriteRenderer.localBounds.center.y;
+        _bulletSpawnPoint.transform.localPosition = new Vector3(bulletSpawnPointX, bulletSpawnPointY);
 
         _shootArea.SetDistance(newWeapon.maxFiringDistance, _bulletSpawnPoint.transform.position);
         

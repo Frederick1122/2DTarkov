@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   icon: {fileID: 355935633, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
+  dropIcon: {fileID: 1095257775, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
   itemName: Rifle
   description: Standart rifle
   weight: 5.5

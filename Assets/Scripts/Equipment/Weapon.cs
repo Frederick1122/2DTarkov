@@ -17,7 +17,6 @@ public class Weapon : Item, IEquip
     public Vector3 bulletSpawnPointPosition;
     [Space]
     public Sprite topSprite;
-    public Sprite sideSprite;
     
     internal override void OnValidate()
     {

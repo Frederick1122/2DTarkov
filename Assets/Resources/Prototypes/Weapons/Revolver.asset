@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: 
   icon: {fileID: 2084742160, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
+  dropIcon: {fileID: 2011175306, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
   itemName: Revolver
   description: Wild, wild west...
   weight: 5.5

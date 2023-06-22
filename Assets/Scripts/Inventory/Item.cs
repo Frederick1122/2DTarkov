@@ -7,8 +7,11 @@ public class Item : ScriptableObject
     protected string _directory = "";
 
     public Sprite icon;
+    public Sprite dropIcon;
+    [Space]
     public string itemName;
     public string description;
+    [Space]
     public float weight = 1f;
     [Range(0, 100)]
     public int maxStack = 1;

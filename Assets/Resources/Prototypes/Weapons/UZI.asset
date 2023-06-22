@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UZI
   m_EditorClassIdentifier: 
   icon: {fileID: 332878718, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
+  dropIcon: {fileID: -1095896142, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
   itemName: UZI
   description: Popular israeli submachine gun
   weight: 5.5

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AK
   m_EditorClassIdentifier: 
   icon: {fileID: -1151193902, guid: ad581ba63191ae047a6eaaac037a3004, type: 3}
+  dropIcon: {fileID: -1908594858, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
   itemName: AK
   description: Standart russian rifle
   weight: 5.5
@@ -27,4 +28,3 @@ MonoBehaviour:
   maxFiringDistance: 7
   bulletSpawnPointPosition: {x: 0, y: 0, z: 0}
   topSprite: {fileID: -1846529810, guid: 6f4d05f2aa4044848add923ad42988ff, type: 3}
-  sideSprite: {fileID: -1908594858, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
