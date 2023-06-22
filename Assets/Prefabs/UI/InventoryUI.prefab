@@ -2392,6 +2392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windowView: {fileID: 1062944770821029796}
   _inventoryCellView: {fileID: 3523136498789725488, guid: a0953fe3762e3c04fa7039d6b49cfa9c, type: 3}
+  _equipmentPanelController: {fileID: 564383001798384513}
   _inventoryLayoutGroup: {fileID: 3480895874009632456}
   _itemInformationPanelView: {fileID: 3480895872730482535}
   _actionButtonsView: {fileID: 9053602183381421149}
@@ -2407,7 +2408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d60327db624ef5946a21cf025eee77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _equipmentWindowView: {fileID: 7389036966378781377}
+  _inventoryWindowController: {fileID: 3480895874609562186}
+  _equipmentPanelView: {fileID: 7389036966378781377}
 --- !u!1 &4083981542035763543
 GameObject:
   m_ObjectHideFlags: 0

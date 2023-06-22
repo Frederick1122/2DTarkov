@@ -9,7 +9,10 @@ using UnityEngine.UI;
 
 public class InventoryWindowController : WindowController
 {
+    public event Action OnClickCell;
+    
     [SerializeField] private ItemCellView _inventoryCellView;
+    [SerializeField] private EquipmentPanelController _equipmentPanelController;
     [SerializeField] private GridLayoutGroup _inventoryLayoutGroup;
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
     [SerializeField] private ActionButtonsView _actionButtonsView;
@@ -22,6 +25,11 @@ public class InventoryWindowController : WindowController
         _actionButtonsView.OnUseAction += InteractWithItem;
         _actionButtonsView.OnEquipAction += InteractWithItem;
         _actionButtonsView.OnDropAction += Drop;
+        if (_equipmentPanelController != null)
+        {
+            _equipmentPanelController.OnContainerClick += ClickOnEquipment;
+            _equipmentPanelController.OnRemoveButtonClick += RemoveEquipment;
+        }
     }
 
     private void OnDisable()
@@ -29,6 +37,11 @@ public class InventoryWindowController : WindowController
         _actionButtonsView.OnUseAction -= InteractWithItem;
         _actionButtonsView.OnEquipAction -= InteractWithItem;
         _actionButtonsView.OnDropAction -= Drop;
+        if (_equipmentPanelController != null)
+        {
+            _equipmentPanelController.OnContainerClick -= ClickOnEquipment;
+            _equipmentPanelController.OnRemoveButtonClick -= RemoveEquipment;
+        }
     }
 
     public override void OpenWindow()
@@ -128,6 +141,20 @@ public class InventoryWindowController : WindowController
             _itemInformationPanelView.SetNewInformation(cellItem.icon, cellItem.name, cellItem.description);
 
         RefreshActionButtons(cellItem);
+        OnClickCell?.Invoke();
+    }
+
+    private void ClickOnEquipment(IEquip equip)
+    {
+        var item = (Item) equip;
+        _itemInformationPanelView.SetNewInformation(item.icon, item.name, item.description);
+        RefreshActionButtons();
+    }
+
+    private void RemoveEquipment()
+    {
+        _itemInformationPanelView.SetNewInformation();
+        RefreshActionButtons();
     }
 
     private void RefreshActionButtons(Item item = null)

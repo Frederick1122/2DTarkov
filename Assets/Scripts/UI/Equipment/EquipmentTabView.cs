@@ -21,6 +21,11 @@ public class EquipmentTabView : MonoBehaviour
 
     private IEquip _equipmentItem;
 
+    public IEquip GetItem()
+    {
+        return _equipmentItem;
+    }
+    
     private void OnEnable()
     {
         _containerButton.onClick.AddListener(() => OnContainerClick?.Invoke(this));

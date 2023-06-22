@@ -32,6 +32,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 
     public void AddItem(Item newItem, int count = 1)
     {
+        var countCopy = count;
         foreach (var inventoryCellWithItem in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
         {
             if (inventoryCellWithItem.count < newItem.maxStack)
@@ -57,7 +58,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
         }
 
         Save();
-        OnInventoryAdded?.Invoke(newItem, count);
+        OnInventoryAdded?.Invoke(newItem, countCopy);
     }
 
     public void DeleteItem(Item item, int count = 1)

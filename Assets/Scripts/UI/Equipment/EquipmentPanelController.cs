@@ -1,16 +1,36 @@
 ﻿using System;
 using Base;
+using UI.Inventory;
 using UnityEngine;
 
 public class EquipmentPanelController : MonoBehaviour
 {
+    public event Action<IEquip> OnContainerClick;
+    public event Action OnRemoveButtonClick;
+    [SerializeField] private InventoryWindowController _inventoryWindowController;
     [SerializeField] private EquipmentPanelView _equipmentPanelView;
+
+    private void OnEnable()
+    {
+        _equipmentPanelView.OnContainerClick += ClickOnContainer;
+        _equipmentPanelView.OnRemoveButtonClick += ClickOnRemoveButton;
+
+        if (_inventoryWindowController != null)
+        {
+            _inventoryWindowController.OnClickCell += _equipmentPanelView.Refresh;
+        }
+    }
 
     private void OnDisable()
     {
         Equipment.Instance.OnEquipmentChanged -= UpdateView;
         _equipmentPanelView.OnContainerClick -= ClickOnContainer;
         _equipmentPanelView.OnRemoveButtonClick -= ClickOnRemoveButton;
+        
+        if (_inventoryWindowController != null)
+        {
+            _inventoryWindowController.OnClickCell -= _equipmentPanelView.Refresh;
+        }
     }
 
     private void Start()
@@ -18,8 +38,8 @@ public class EquipmentPanelController : MonoBehaviour
         _equipmentPanelView.ChangeViews();
 
         Equipment.Instance.OnEquipmentChanged += UpdateView;
-        _equipmentPanelView.OnContainerClick += ClickOnContainer;
-        _equipmentPanelView.OnRemoveButtonClick += ClickOnRemoveButton;
+        
+        UpdateView(Equipment.Instance.GetEquipment());
     }
 
     private void UpdateView(EquipmentData equipmentData)
@@ -35,12 +55,14 @@ public class EquipmentPanelController : MonoBehaviour
     {
         _equipmentPanelView.Refresh();
         equipmentTabView.OpenActionButton();
+        OnContainerClick?.Invoke(equipmentTabView.GetItem());
     }
 
     private void ClickOnRemoveButton(IEquip equipmentItem)
     {
         Equipment.Instance.RemoveEquipment(equipmentItem);
         _equipmentPanelView.Refresh();
+        OnRemoveButtonClick?.Invoke();
     }
 
     private EquipmentWindowData GenerateNewWindowData(EquipmentData equipmentData)
