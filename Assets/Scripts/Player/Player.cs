@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Base;
 using UnityEngine;
 
@@ -31,6 +32,17 @@ public class Player : SaveLoadManager<PlayerData, Player>
     {
         _saveData.lastLevelData = levelData;
         Save();
+    }
+
+    public void SetExitIndexes(List<int> indexes)
+    {
+        _saveData.lastLevelData.exitIndexes = indexes;
+        Save();
+    }
+
+    public List<int> GetExitIndexes()
+    {
+        return _saveData.lastLevelData.exitIndexes;
     }
     
     protected override void Load()
@@ -71,4 +83,6 @@ public class LastLevelData
     public Vector3 lastPosition;
     public int remainingMinutes;
     public int remainingSeconds;
+
+    public List<int> exitIndexes;
 }
