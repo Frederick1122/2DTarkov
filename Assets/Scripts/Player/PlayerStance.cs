@@ -8,6 +8,7 @@ public class PlayerStance : MonoBehaviour
 {
     [SerializeField] private Sprite _firstWeaponSprite;
     [SerializeField] private Sprite _secondWeaponSprite;
+    [SerializeField] private Sprite _emptyWeaponSprite;
 
     [Space] [SerializeField] private SpriteRenderer _spriteRenderer;
 
@@ -33,6 +34,25 @@ public class PlayerStance : MonoBehaviour
 
     private void SetStance(EquipmentData equipmentData)
     {
-        _spriteRenderer.sprite = equipmentData.isSecondWeapon ? _secondWeaponSprite : _firstWeaponSprite;
+        if (!equipmentData.isSecondWeapon)
+        {
+            var weapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
+            if (weapon != null)
+            {
+                _spriteRenderer.sprite = _firstWeaponSprite;
+                return;
+            }
+        }
+        else
+        {
+            var weapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
+            if (weapon != null)
+            {
+                _spriteRenderer.sprite = _secondWeaponSprite;
+                return;
+            }
+        }
+
+        _spriteRenderer.sprite = _emptyWeaponSprite;
     }
 }

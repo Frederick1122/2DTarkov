@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _firstWeaponSprite: {fileID: 697165496, guid: add026bf80d8c484685d261b5a954133, type: 3}
   _secondWeaponSprite: {fileID: -1475447120, guid: add026bf80d8c484685d261b5a954133, type: 3}
+  _emptyWeaponSprite: {fileID: 21300000, guid: f9824938af7f5e14688cf850f8aaba0d, type: 3}
   _spriteRenderer: {fileID: 795674418325315091}
 --- !u!1 &4398348104179452093
 GameObject:
