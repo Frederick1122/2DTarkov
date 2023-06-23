@@ -20,7 +20,7 @@ MonoBehaviour:
   maxStack: 1
   baseStack: 1
   configPath: Prototypes/Weapons/AK
-  bullet: {fileID: 11400000, guid: ab162eb4953d8ab4290a6c1754c18d12, type: 2}
+  bullet: {fileID: 11400000, guid: 900c24d78c898f74fb4c9bf063981056, type: 2}
   isSecondWeapon: 0
   maxAmmoInMagazine: 30
   rateOfFire: 0.1

@@ -20,7 +20,7 @@ MonoBehaviour:
   maxStack: 1
   baseStack: 1
   configPath: Prototypes/Weapons/Revolver
-  bullet: {fileID: 11400000, guid: ab162eb4953d8ab4290a6c1754c18d12, type: 2}
+  bullet: {fileID: 11400000, guid: a52168670ad663045b90dbce9d4899c9, type: 2}
   isSecondWeapon: 1
   maxAmmoInMagazine: 30
   rateOfFire: 0.1
@@ -28,4 +28,3 @@ MonoBehaviour:
   maxFiringDistance: 5
   bulletSpawnPointPosition: {x: 0, y: 0, z: 0}
   topSprite: {fileID: 1589876758, guid: 6f4d05f2aa4044848add923ad42988ff, type: 3}
-  sideSprite: {fileID: 2011175306, guid: 5e598c5af3e232c4896389e6983aae94, type: 3}
