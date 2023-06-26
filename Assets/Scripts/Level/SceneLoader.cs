@@ -8,7 +8,7 @@ public class SceneLoader : Singleton<SceneLoader>
 {
     public void TryExitTheLocation(EntryExit exit)
     {
-        var exitIndexes = Player.Instance.GetExitIndexes();
+        var exitIndexes = Player.Instance.GetLastLevelData().exitIndexes;
         foreach (var exitIndex in exitIndexes)
         {
             if (GameBus.Instance.GetLevel().GetEntryExits()[exitIndex] == exit)

@@ -40,9 +40,9 @@ public class Player : SaveLoadManager<PlayerData, Player>
         Save();
     }
 
-    public List<int> GetExitIndexes()
+    public LastLevelData GetLastLevelData()
     {
-        return _saveData.lastLevelData.exitIndexes;
+        return _saveData.lastLevelData;
     }
     
     protected override void Load()
@@ -81,8 +81,7 @@ public class LastLevelData
 {
     public string lastLevelPath = "";
     public Vector3 lastPosition;
-    public int remainingMinutes;
-    public int remainingSeconds;
+    public TimeSpan lastRemainingTime;
 
     public List<int> exitIndexes;
 }

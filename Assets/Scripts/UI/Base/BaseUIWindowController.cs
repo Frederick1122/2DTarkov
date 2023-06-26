@@ -1,4 +1,6 @@
-﻿using Base;
+﻿using System;
+using System.Collections.Generic;
+using Base;
 using UnityEngine;
 
 namespace UI.Base
@@ -9,9 +11,22 @@ namespace UI.Base
         [SerializeField] private HealthBarView _healthBarView;
         private void Start()
         {
-            _baseUIWindowView.Init();
-            Player.Instance.OnHpChanged += SetHp;
+            var lastLevelData = Player.Instance.GetLastLevelData();
+            var exits = GameBus.Instance.GetLevel().GetEntryExits();
+            var exitNames = new List<string>();
+            foreach (var exitIndex in lastLevelData.exitIndexes)
+            {
+                exitNames.Add(exits[exitIndex].GetName());
+            }
+            
+            _baseUIWindowView.Init(exitNames, lastLevelData.lastRemainingTime);
+            
             SetHp(Player.Instance.GetHp());
+        }
+
+        private void OnEnable()
+        {
+            Player.Instance.OnHpChanged += SetHp;
         }
 
         private void OnDisable()

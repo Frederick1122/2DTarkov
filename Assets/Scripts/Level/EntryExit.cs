@@ -7,10 +7,20 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class EntryExit : MonoBehaviour
 {
+    [SerializeField] private string _name;
+    [Space]
     [SerializeField] private List<EntryExit> _currentExits = new List<EntryExit>();
 
-    public List<EntryExit> GetCurrentExits() => _currentExits;
+    public List<EntryExit> GetCurrentExits()
+    {
+        return _currentExits;
+    }
 
+    public string GetName()
+    {
+        return _name;
+    }
+    
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.GetComponent<PlayerHumanoid>())
