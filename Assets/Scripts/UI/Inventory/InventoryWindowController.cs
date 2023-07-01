@@ -3,28 +3,22 @@ using System.Collections.Generic;
 using Base;
 using UI;
 using UI.Inventory;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class InventoryWindowController : WindowController
+public class InventoryWindowController : WindowController<InventoryWindowView>
 {
     public event Action OnClickCell;
     
     [SerializeField] private ItemCellView _inventoryCellView;
     [SerializeField] private EquipmentPanelController _equipmentPanelController;
-    [SerializeField] private GridLayoutGroup _inventoryLayoutGroup;
-    [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
-    [SerializeField] private ActionButtonsView _actionButtonsView;
-
+    
     private ItemCellView _currentCellView;
     private List<ItemCellView> _cells = new List<ItemCellView>();
     private InventoryData _localInventoryData;
     private void OnEnable()
     {
-        _actionButtonsView.OnUseAction += InteractWithItem;
-        _actionButtonsView.OnEquipAction += InteractWithItem;
-        _actionButtonsView.OnDropAction += Drop;
+        _view.OnInteractWithItem += InteractWithItem;
+        _view.OnDrop += Drop;
         if (_equipmentPanelController != null)
         {
             _equipmentPanelController.OnContainerClick += ClickOnEquipment;
@@ -34,9 +28,8 @@ public class InventoryWindowController : WindowController
 
     private void OnDisable()
     {
-        _actionButtonsView.OnUseAction -= InteractWithItem;
-        _actionButtonsView.OnEquipAction -= InteractWithItem;
-        _actionButtonsView.OnDropAction -= Drop;
+        _view.OnInteractWithItem -= InteractWithItem;
+        _view.OnDrop -= Drop;
         if (_equipmentPanelController != null)
         {
             _equipmentPanelController.OnContainerClick -= ClickOnEquipment;
@@ -44,9 +37,9 @@ public class InventoryWindowController : WindowController
         }
     }
 
-    public override void OpenWindow()
+    public override void Show()
     {
-        base.OpenWindow();
+        base.Show();
         
         Refresh();
 
@@ -54,9 +47,9 @@ public class InventoryWindowController : WindowController
         Inventory.Instance.OnInventoryDeleted += DeleteItem;
     }
 
-    public override void CloseWindow()
+    public override void Hide()
     {
-        base.CloseWindow();
+        base.Hide();
         
         Inventory.Instance.OnInventoryAdded -= AddNewItem;
         Inventory.Instance.OnInventoryDeleted -= DeleteItem;
@@ -108,11 +101,11 @@ public class InventoryWindowController : WindowController
         _localInventoryData = Inventory.Instance.GetInventory();
         
         RefreshActionButtons();
-        _itemInformationPanelView.SetNewInformation();
+        _view.SetItemInformation();
         _cells.Clear();
         _currentCellView = null;
 
-        var content = _inventoryLayoutGroup.gameObject;
+        var content = _view.GetInventoryLayout();
         foreach (Transform child in content.transform)
         {
             Destroy(child.gameObject);
@@ -126,7 +119,7 @@ public class InventoryWindowController : WindowController
 
     private void CreateCell(InventoryCell cell)
     {
-        var newCell = Instantiate(_inventoryCellView, _inventoryLayoutGroup.transform);
+        var newCell = Instantiate(_inventoryCellView, _view.GetInventoryLayout().transform);
         var cellItem = cell.GetItem();
         newCell.Init(cellItem, cell.count);
         newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
@@ -138,7 +131,7 @@ public class InventoryWindowController : WindowController
         var cellItem = cellView.GetItem();
         _currentCellView = _currentCellView == cellView ? null : cellView;
         if (_currentCellView != null)
-            _itemInformationPanelView.SetNewInformation(cellItem.icon, cellItem.name, cellItem.description);
+            _view.SetItemInformation(cellItem.icon, cellItem.name, cellItem.description);
 
         RefreshActionButtons(cellItem);
         OnClickCell?.Invoke();
@@ -147,13 +140,13 @@ public class InventoryWindowController : WindowController
     private void ClickOnEquipment(IEquip equip)
     {
         var item = (Item) equip;
-        _itemInformationPanelView.SetNewInformation(item.icon, item.name, item.description);
+        _view.SetItemInformation(item.icon, item.name, item.description);
         RefreshActionButtons();
     }
 
     private void RemoveEquipment()
     {
-        _itemInformationPanelView.SetNewInformation();
+        _view.SetItemInformation();
         RefreshActionButtons();
     }
 
@@ -165,13 +158,13 @@ public class InventoryWindowController : WindowController
             return;
         }
 
-        _actionButtonsView.SetActiveButtons(item is IUse, item is IEquip,
+        _view.SetActionButtonVisible(item is IUse, item is IEquip,
             true, true);
     }
 
     private void SetActiveActionButton(bool isActive)
     {
-        _actionButtonsView.SetActiveButtons(isActive, isActive,
+        _view.SetActionButtonVisible(isActive, isActive,
             isActive, isActive);
     }
 
@@ -186,6 +179,6 @@ public class InventoryWindowController : WindowController
         var item = _currentCellView.GetItem();
         Destroy(_currentCellView.gameObject);
         Inventory.Instance.DeleteItem(item, _currentCellView.GetCount());
-        _itemInformationPanelView.SetNewInformation();
+        _view.SetItemInformation();
     }
 }

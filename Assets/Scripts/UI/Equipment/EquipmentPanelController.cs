@@ -1,59 +1,59 @@
 ﻿using System;
 using Base;
-using UI.Inventory;
 using UnityEngine;
 
-public class EquipmentPanelController : MonoBehaviour
+public class EquipmentPanelController : UIController<EquipmentPanelView>
 {
     public event Action<IEquip> OnContainerClick;
     public event Action OnRemoveButtonClick;
+
     [SerializeField] private InventoryWindowController _inventoryWindowController;
-    [SerializeField] private EquipmentPanelView _equipmentPanelView;
 
     private void OnEnable()
     {
-        _equipmentPanelView.OnContainerClick += ClickOnContainer;
-        _equipmentPanelView.OnRemoveButtonClick += ClickOnRemoveButton;
+        _view.OnContainerClick += ClickOnContainer;
+        _view.OnRemoveButtonClick += ClickOnRemoveButton;
+        _view.OnRemoveButtonClick += ClickOnRemoveButton;
 
         if (_inventoryWindowController != null)
         {
-            _inventoryWindowController.OnClickCell += _equipmentPanelView.Refresh;
+            _inventoryWindowController.OnClickCell += _view.Refresh;
         }
     }
 
     private void OnDisable()
     {
         Equipment.Instance.OnEquipmentChanged -= UpdateView;
-        _equipmentPanelView.OnContainerClick -= ClickOnContainer;
-        _equipmentPanelView.OnRemoveButtonClick -= ClickOnRemoveButton;
-        
+        _view.OnContainerClick -= ClickOnContainer;
+        _view.OnRemoveButtonClick -= ClickOnRemoveButton;
+
         if (_inventoryWindowController != null)
         {
-            _inventoryWindowController.OnClickCell -= _equipmentPanelView.Refresh;
+            _inventoryWindowController.OnClickCell -= _view.Refresh;
         }
     }
 
     private void Start()
     {
-        _equipmentPanelView.ChangeViews();
+        _view.ChangeViews();
 
         Equipment.Instance.OnEquipmentChanged += UpdateView;
-        
+
         UpdateView(Equipment.Instance.GetEquipment());
     }
 
     private void UpdateView(EquipmentData equipmentData)
     {
-        _equipmentPanelView.Refresh();
+        _view.Refresh();
 
         var data = GenerateNewWindowData(equipmentData);
 
-        _equipmentPanelView.ChangeViews(data);
+        _view.ChangeViews(data);
     }
 
     private void ClickOnContainer(EquipmentTabView equipmentTabView)
     {
-        _equipmentPanelView.Refresh();
+        _view.Refresh();
         equipmentTabView.OpenActionButton();
         OnContainerClick?.Invoke(equipmentTabView.GetItem());
     }
@@ -61,7 +61,7 @@ public class EquipmentPanelController : MonoBehaviour
     private void ClickOnRemoveButton(IEquip equipmentItem)
     {
         Equipment.Instance.RemoveEquipment(equipmentItem);
-        _equipmentPanelView.Refresh();
+        _view.Refresh();
         OnRemoveButtonClick?.Invoke();
     }
 
@@ -76,7 +76,7 @@ public class EquipmentPanelController : MonoBehaviour
         var backpack = (Weapon) equipmentData.GetEquipment(EquipmentType.backpack);
         var firstWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
         var secondWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
-        
+
         if (kevlar != null)
         {
             kevlarData = new WeaponContainerData

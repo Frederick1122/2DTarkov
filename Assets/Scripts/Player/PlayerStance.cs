@@ -17,11 +17,6 @@ public class PlayerStance : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnEnable()
-    {
-        Equipment.Instance.OnEquipmentChanged += SetStance; 
-    }
-
     private void OnDisable()
     {
         Equipment.Instance.OnEquipmentChanged -= SetStance;
@@ -29,6 +24,7 @@ public class PlayerStance : MonoBehaviour
 
     private void Start()
     {
+        Equipment.Instance.OnEquipmentChanged += SetStance; 
         SetStance(Equipment.Instance.GetEquipment());
     }
 

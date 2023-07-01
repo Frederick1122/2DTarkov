@@ -2,7 +2,7 @@
 using Base;
 using UnityEngine;
 
-public class EquipmentPanelView : MonoBehaviour
+public class EquipmentPanelView : UIView
 {
     public event Action<EquipmentTabView> OnContainerClick;
     public event Action<IEquip> OnRemoveButtonClick;

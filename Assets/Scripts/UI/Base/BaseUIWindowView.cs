@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Base
 {
-    public class BaseUIWindowView : MonoBehaviour
+    public class BaseUIWindowView : UIView
     {
         [SerializeField] private ExitInfoView _exitInfoViewPrefab;
         [Space]
+        [SerializeField] private TimerView _timer;
+        [Space]
         [SerializeField] private Button _inventoryButton;
         [SerializeField] private Button _interactButton;
-        [SerializeField] private TimerView _timer;
+        [Space]
         [SerializeField] private Button _exitInfosButton;
         [SerializeField] private VerticalLayoutGroup _exitInfosPanel;
 
-        private void OnEnable()
+        private void Start()
         {
             _inventoryButton.onClick.AddListener(UIMainController.Instance.OpenInventoryUI);
             _exitInfosButton.onClick.AddListener(ChangeActivityExitInfosPanel);
+            _exitInfosPanel.gameObject.SetActive(false);
         }
 
         private void OnDisable()
@@ -31,18 +33,28 @@ namespace UI.Base
 
         public void Init(List<string> exitNames, TimeSpan remainingTime)
         {
-            SetActiveInteractButton(false);
             UpdateExitInfosPanel(exitNames);
             _timer.Init(remainingTime);
+            SetActiveInteractButton(false);
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+            _exitInfosPanel.gameObject.SetActive(false);
         }
 
         public void InitInteractButton(IInteract interact)
         {
             _interactButton.onClick.RemoveAllListeners();
-            
             _interactButton.onClick.AddListener(interact.Interact);
         }
 
+        public void SetActiveInteractButton(bool canInteract)
+        {
+            _interactButton.gameObject.SetActive(canInteract);
+        }
+        
         private void UpdateExitInfosPanel(List<string> exitNames)
         {
             var panel = _exitInfosPanel.gameObject;
@@ -50,8 +62,7 @@ namespace UI.Base
             {
                 Destroy(panel.transform.GetChild(0)); 
             }
-            
-            
+
             foreach (var exitName in exitNames)
             {
                var exitInfo = Instantiate(_exitInfoViewPrefab, panel.transform);
@@ -59,14 +70,9 @@ namespace UI.Base
             }
         }
 
-        public void SetActiveInteractButton(bool canInteract)
+        private void ChangeActivityExitInfosPanel()
         {
-            _interactButton.gameObject.SetActive(canInteract);
-        }
-
-        public void ChangeActivityExitInfosPanel()
-        {
-            _exitInfosPanel.gameObject.SetActive(_exitInfosPanel.gameObject.activeSelf);
+            _exitInfosPanel.gameObject.SetActive(!_exitInfosPanel.gameObject.activeSelf);
         }
     }
 }

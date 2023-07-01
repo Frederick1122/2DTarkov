@@ -19,7 +19,7 @@ namespace UI
       CloseAllUI();
     
       GameBus.Instance.GetPlayer().isFreeze = false;
-      _baseUIWindowController.OpenWindow();
+      _baseUIWindowController.Show();
     }
 
     public void OpenInventoryUI()
@@ -28,7 +28,7 @@ namespace UI
       
       GameBus.Instance.GetPlayer().isFreeze = true;
       
-      _inventoryWindowController.OpenWindow();
+      _inventoryWindowController.Show();
     }
 
     public void OpenLootBoxUI(int lootBoxIndex, List<Item> lootItems)
@@ -37,7 +37,7 @@ namespace UI
       
       GameBus.Instance.GetPlayer().isFreeze = true;
       
-      _lootBoxWindowController.OpenWindow();
+      _lootBoxWindowController.Show();
       _lootBoxWindowController.Init(lootBoxIndex, lootItems);
     }
 
@@ -45,9 +45,9 @@ namespace UI
     
     private void CloseAllUI()
     {
-      _baseUIWindowController.CloseWindow();
-      _inventoryWindowController.CloseWindow();
-      _lootBoxWindowController.CloseWindow();
+      _baseUIWindowController.Hide();
+      _inventoryWindowController.Hide();
+      _lootBoxWindowController.Hide();
     }
   }
 }

@@ -1,15 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Base;
 using UnityEngine;
 
 namespace UI.Base
 {
-    public class BaseUIWindowController : WindowController
+    public class BaseUIWindowController : WindowController<BaseUIWindowView>
     {
-        [SerializeField] private BaseUIWindowView _baseUIWindowView;
         [SerializeField] private HealthBarView _healthBarView;
+        
         private void Start()
+        {
+            GameBus.Instance.OnLevelSet += SetLevelInfo;
+            Player.Instance.OnHpChanged += SetHp;
+            SetHp(Player.Instance.GetHp());
+        }
+
+        private void OnDisable()
+        {
+            GameBus.Instance.OnLevelSet -= SetLevelInfo;
+            Player.Instance.OnHpChanged -= SetHp;
+        }
+
+        public void InitInteractButton(IInteract interact)
+        {
+            _view.InitInteractButton(interact);
+        }
+
+        public void SetActiveInteractButton(bool isActive)
+        {
+            _view.SetActiveInteractButton(isActive);
+        }
+
+        private void SetHp(int hp)
+        {
+            _healthBarView.SetHp(hp);
+        }
+
+        private void SetLevelInfo(Level currentLevel)
         {
             var lastLevelData = Player.Instance.GetLastLevelData();
             var exits = GameBus.Instance.GetLevel().GetEntryExits();
@@ -19,34 +46,7 @@ namespace UI.Base
                 exitNames.Add(exits[exitIndex].GetName());
             }
             
-            _baseUIWindowView.Init(exitNames, lastLevelData.lastRemainingTime);
-            
-            SetHp(Player.Instance.GetHp());
-        }
-
-        private void OnEnable()
-        {
-            Player.Instance.OnHpChanged += SetHp;
-        }
-
-        private void OnDisable()
-        {
-            Player.Instance.OnHpChanged -= SetHp;
-        }
-
-        public void InitInteractButton(IInteract interact)
-        {
-            _baseUIWindowView.InitInteractButton(interact);
-        }
-
-        public void SetActiveInteractButton(bool isActive)
-        {
-            _baseUIWindowView.SetActiveInteractButton(isActive);
-        }
-
-        private void SetHp(int hp)
-        {
-            _healthBarView.SetHp(hp);
+            _view.Init(exitNames, lastLevelData.lastRemainingTime);
         }
     }
 }

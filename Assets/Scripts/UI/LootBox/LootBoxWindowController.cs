@@ -4,9 +4,8 @@ using UI;
 using UI.Inventory;
 using UnityEngine;
 
-public class LootBoxWindowController : WindowController
+public class LootBoxWindowController : WindowController<LootBoxWindowView>
 {
-    [SerializeField] private LootBoxWindowView _lootBoxWindowView;
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
     
     private ItemCellView _currentCellView;
@@ -15,16 +14,16 @@ public class LootBoxWindowController : WindowController
 
     private void Start()
     {
-        _lootBoxWindowView.ClickOnCellAction += ClickOnCellAction;
-        _lootBoxWindowView.OnTakeAction += Take;
+        _view.ClickOnCellAction += ClickOnCellAction;
+        _view.OnTakeAction += Take;
 
         _itemInformationPanelView.SetNewInformation();
     }
 
     private void OnDisable()
     {
-        _lootBoxWindowView.ClickOnCellAction -= ClickOnCellAction;
-        _lootBoxWindowView.OnTakeAction -= Take;
+        _view.ClickOnCellAction -= ClickOnCellAction;
+        _view.OnTakeAction -= Take;
     }
 
     public void Init(int lootBoxIndex, List<Item> lootItems)
@@ -37,7 +36,7 @@ public class LootBoxWindowController : WindowController
         _lootItems = lootItems;
         _lootBoxIndex = lootBoxIndex;
         
-        _lootBoxWindowView.Init(lootItems);
+        _view.Init(lootItems);
     }
 
     private void ClickOnCellAction(ItemCellView cellView)
@@ -48,13 +47,13 @@ public class LootBoxWindowController : WindowController
         if (_currentCellView != null) 
             _itemInformationPanelView.SetNewInformation(cellItem.icon, cellItem.name, cellItem.description);
 
-        _lootBoxWindowView.Refresh(_currentCellView != null);
+        _view.Refresh(_currentCellView != null);
     }
 
     private void Take()
     {
         Inventory.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount());
-        _lootBoxWindowView.DeleteCell(_currentCellView);
+        _view.DeleteCell(_currentCellView);
         _itemInformationPanelView.SetNewInformation();
         
         _lootItems.Remove(_currentCellView.GetItem());
@@ -67,14 +66,14 @@ public class LootBoxWindowController : WindowController
 
     }
 
-    public override void OpenWindow()
+    public override void Show()
     {
-        base.OpenWindow();
+        base.Show();
         
         _itemInformationPanelView.SetNewInformation();
     }
 
-    public override void CloseWindow()
+    public override void Hide()
     {
         if (_lootBoxIndex != 0)
         {
@@ -82,6 +81,6 @@ public class LootBoxWindowController : WindowController
             _lootBoxIndex = 0;
         }
         
-        base.CloseWindow();
+        base.Hide();
     }
 }

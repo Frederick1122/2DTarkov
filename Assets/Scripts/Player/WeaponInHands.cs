@@ -35,7 +35,6 @@ public class WeaponInHands : MonoBehaviour
 
     private void OnEnable()
     {
-        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
         _shootArea.onEnter += AddEnemy;
         _shootArea.onExit += RemoveEnemy;
     }
@@ -49,6 +48,7 @@ public class WeaponInHands : MonoBehaviour
 
     private void Start()
     {
+        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
         SetWeapon(Equipment.Instance.GetEquipment());
         UpdateFields();
     }

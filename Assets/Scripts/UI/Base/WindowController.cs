@@ -1,23 +1,19 @@
-using UnityEngine;
-
 namespace UI
 {
-    public class WindowController : MonoBehaviour
+    public class WindowController<T> : UIController<T> where T : UIView
     {
-        [SerializeField] internal GameObject _windowView;
-    
         internal bool _isOpen = false;
 
-        public virtual void OpenWindow()
+        public override void Show()
         {
-            _windowView.SetActive(true);
             _isOpen = true;
+            base.Show();
         }
     
-        public virtual void CloseWindow()
+        public override void Hide()
         {
-            _windowView.SetActive(false);
             _isOpen = false;
+            base.Hide();
         }
     }
 }

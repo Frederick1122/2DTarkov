@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TimerView : MonoBehaviour
+public class TimerView : UIView
 {
     [SerializeField] private TMP_Text _text;
     

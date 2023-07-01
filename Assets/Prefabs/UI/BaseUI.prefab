@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 258271529082039950}
   - component: {fileID: 2506313486617699546}
   - component: {fileID: 1557301425}
+  - component: {fileID: 8854044432548415549}
   m_Layer: 0
   m_Name: BaseUI
   m_TagString: Untagged
@@ -307,8 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9265a96fa96e5a148b393df43ba0789e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowView: {fileID: 615788426888356999}
-  _baseUIWindowView: {fileID: 1653362453}
+  _view: {fileID: 8854044432548415549}
   _healthBarView: {fileID: 1942464121266237350}
 --- !u!114 &1557301425
 MonoBehaviour:
@@ -323,6 +323,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponTabView: {fileID: 11280449696332038}
+--- !u!114 &8854044432548415549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258271529082039951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48f3e1d14fc94205bb03322a335c7c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _exitInfoViewPrefab: {fileID: 1753395361761749985, guid: ca3308a04a9bc8645b81f940f8288262, type: 3}
+  _timer: {fileID: 13112871336859184}
+  _inventoryButton: {fileID: 258271528603321545}
+  _interactButton: {fileID: 258271528300004533}
+  _exitInfosButton: {fileID: 7551803358661184373}
+  _exitInfosPanel: {fileID: 5094747011094360798}
 --- !u!1 &258271529220092656
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +755,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4631709992596927129}
-  - component: {fileID: 1653362453}
   m_Layer: 0
   m_Name: WindowView
   m_TagString: Untagged
@@ -776,24 +793,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.010009766, y: 0}
   m_SizeDelta: {x: -0.02002, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1653362453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615788426888356999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f3e1d14fc94205bb03322a335c7c2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _exitInfoViewPrefab: {fileID: 1753395361761749985, guid: ca3308a04a9bc8645b81f940f8288262, type: 3}
-  _inventoryButton: {fileID: 258271528603321545}
-  _interactButton: {fileID: 258271528300004533}
-  _timer: {fileID: 13112871336859184}
-  _exitInfosButton: {fileID: 7551803358661184373}
-  _exitInfosPanel: {fileID: 5094747011094360798}
 --- !u!1 &1091483134279147257
 GameObject:
   m_ObjectHideFlags: 0

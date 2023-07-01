@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UIController : MonoBehaviour
+public class UIController<T> : MonoBehaviour where T : UIView  
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   [SerializeField] protected T _view;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   virtual public void Show()
+   {
+      _view.Show();
+   }
+
+   virtual public void Hide()
+   {
+      _view.Hide();
+   }
+      
+   virtual public void Init()
+   {
+      
+   }
+
+   virtual public void Terminate()
+   {
+      
+   }
 }

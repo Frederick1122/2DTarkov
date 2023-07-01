@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6803265177236546473}
-  - component: {fileID: 5637139460840319465}
   m_Layer: 0
   m_Name: WindowView
   m_TagString: Untagged
@@ -42,21 +41,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.010009766, y: 0}
   m_SizeDelta: {x: -0.02002, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5637139460840319465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062944770821029796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a714ba5d4c54499fbd4ae726bacdf6a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cellViewPrefab: {fileID: 3523136498789725488, guid: a0953fe3762e3c04fa7039d6b49cfa9c, type: 3}
-  _itemLayoutGroup: {fileID: 3480895874009632456}
-  _takeButton: {fileID: 3480895872831407061}
 --- !u!1 &3480895872720341812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3480895874609562187}
   - component: {fileID: 5670581840690039079}
+  - component: {fileID: 2679017896219828212}
   m_Layer: 0
   m_Name: LootBoxUI
   m_TagString: Untagged
@@ -1486,9 +1471,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3eef4bf11444008bcc2265bbec5478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowView: {fileID: 1062944770821029796}
-  _lootBoxWindowView: {fileID: 5637139460840319465}
+  _view: {fileID: 2679017896219828212}
   _itemInformationPanelView: {fileID: 3480895872730482535}
+--- !u!114 &2679017896219828212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480895874609562188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a714ba5d4c54499fbd4ae726bacdf6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cellViewPrefab: {fileID: 3523136498789725488, guid: a0953fe3762e3c04fa7039d6b49cfa9c, type: 3}
+  _itemLayoutGroup: {fileID: 3480895874009632456}
+  _takeButton: {fileID: 3480895872831407061}
 --- !u!1 &4083981542035763543
 GameObject:
   m_ObjectHideFlags: 0

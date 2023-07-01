@@ -1,11 +1,12 @@
 using System;
-using System.Collections.Generic;
 using Base;
 using InteractObjects;
 using UnityEngine;
 
 public class GameBus : Singleton<GameBus>
 {
+    public event Action<Level> OnLevelSet;
+    
     [SerializeField] private PlayerHumanoid _playerHumanoid;
     [SerializeField] private Level _level;
     [SerializeField] private InteractItem _baseItem;
@@ -42,5 +43,6 @@ public class GameBus : Singleton<GameBus>
     public void SetLevel(Level currentLevel)
     {
         _level = currentLevel;
+        OnLevelSet?.Invoke(_level);
     }
 }

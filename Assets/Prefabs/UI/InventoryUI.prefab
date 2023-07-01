@@ -1860,8 +1860,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00018310547, y: -291.35587}
-  m_SizeDelta: {x: -0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0.00018310547, y: -291.35593}
+  m_SizeDelta: {x: -0.0001, y: 582.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3480895874009632456
 MonoBehaviour:
@@ -1900,7 +1900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &3480895874029880971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,6 +2350,7 @@ GameObject:
   - component: {fileID: 3480895874609562187}
   - component: {fileID: 3480895874609562186}
   - component: {fileID: 564383001798384513}
+  - component: {fileID: 2025068233935051171}
   m_Layer: 0
   m_Name: InventoryUI
   m_TagString: Untagged
@@ -2390,12 +2391,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d371031491401749848f55fb49f63f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windowView: {fileID: 1062944770821029796}
+  _view: {fileID: 2025068233935051171}
   _inventoryCellView: {fileID: 3523136498789725488, guid: a0953fe3762e3c04fa7039d6b49cfa9c, type: 3}
   _equipmentPanelController: {fileID: 564383001798384513}
-  _inventoryLayoutGroup: {fileID: 3480895874009632456}
-  _itemInformationPanelView: {fileID: 3480895872730482535}
-  _actionButtonsView: {fileID: 9053602183381421149}
 --- !u!114 &564383001798384513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2408,8 +2406,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d60327db624ef5946a21cf025eee77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _view: {fileID: 7389036966378781377}
   _inventoryWindowController: {fileID: 3480895874609562186}
-  _equipmentPanelView: {fileID: 7389036966378781377}
+--- !u!114 &2025068233935051171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480895874609562188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69206e7d9d3b15842a4c35fbb06d7abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryLayoutGroup: {fileID: 3480895874009632456}
+  _itemInformationPanelView: {fileID: 3480895872730482535}
+  _actionButtonsView: {fileID: 9053602183381421149}
 --- !u!1 &4083981542035763543
 GameObject:
   m_ObjectHideFlags: 0
