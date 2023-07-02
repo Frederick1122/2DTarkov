@@ -13,7 +13,10 @@ public class SceneLoader : Singleton<SceneLoader>
         {
             if (GameBus.Instance.GetLevel().GetEntryExits()[exitIndex] == exit)
             {
+                Chunks.Instance.ClearChunksData();
+                Player.Instance.ClearPlayerData();
                 SceneManager.LoadScene(0);
+                return;
             }
         }
     }

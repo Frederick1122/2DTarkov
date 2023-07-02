@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 2506313486617699546}
   - component: {fileID: 1557301425}
   - component: {fileID: 8854044432548415549}
+  - component: {fileID: 498141997086346679}
   m_Layer: 0
   m_Name: BaseUI
   m_TagString: Untagged
@@ -336,11 +337,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _exitInfoViewPrefab: {fileID: 1753395361761749985, guid: ca3308a04a9bc8645b81f940f8288262, type: 3}
-  _timer: {fileID: 13112871336859184}
+  _timerController: {fileID: 498141997086346679}
   _inventoryButton: {fileID: 258271528603321545}
   _interactButton: {fileID: 258271528300004533}
   _exitInfosButton: {fileID: 7551803358661184373}
   _exitInfosPanel: {fileID: 5094747011094360798}
+--- !u!114 &498141997086346679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258271529082039951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60066c50d9e83de46a2b6ea1e66206f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _view: {fileID: 13112871336859184}
 --- !u!1 &258271529220092656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,8 +1535,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

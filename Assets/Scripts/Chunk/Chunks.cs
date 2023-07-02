@@ -17,6 +17,12 @@ public class Chunks : SaveLoadManager<ChunksData, Chunks>
 
     private Dictionary<int, SaveInChunkLootBox> _lootBoxes = new Dictionary<int, SaveInChunkLootBox>();
 
+    public void ClearChunksData()
+    {
+        _saveData = new ChunksData();
+        Save();
+    }
+    
     public void SetLevelInfo(List<int> lootBoxIndexes, List<SaveInChunkLootBox> saveInChunkLootBoxes)
     {
         _lootBoxes.Clear();

@@ -10,7 +10,7 @@ namespace UI.Base
     {
         [SerializeField] private ExitInfoView _exitInfoViewPrefab;
         [Space]
-        [SerializeField] private TimerView _timer;
+        [SerializeField] private TimerController _timerController;
         [Space]
         [SerializeField] private Button _inventoryButton;
         [SerializeField] private Button _interactButton;
@@ -34,7 +34,7 @@ namespace UI.Base
         public void Init(List<string> exitNames, TimeSpan remainingTime)
         {
             UpdateExitInfosPanel(exitNames);
-            _timer.Init(remainingTime);
+            _timerController.Init(remainingTime);
             SetActiveInteractButton(false);
         }
 

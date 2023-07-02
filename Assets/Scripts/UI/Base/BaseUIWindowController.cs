@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Base;
 using UnityEngine;
 
@@ -45,8 +46,11 @@ namespace UI.Base
             {
                 exitNames.Add(exits[exitIndex].GetName());
             }
+
+            var newTimeSpan = new TimeSpan(0, lastLevelData.lastRemainingMinutes,
+                lastLevelData.lastRemainingSeconds);
             
-            _view.Init(exitNames, lastLevelData.lastRemainingTime);
+            _view.Init(exitNames, newTimeSpan);
         }
     }
 }

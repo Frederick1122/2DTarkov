@@ -40,6 +40,11 @@ public class PlayerHumanoid : Humanoid
     {
         UpdateFields();
     }
+    
+    private void OnDisable()
+    {
+        Player.Instance.SetPlayerTransformData(transform.position, transform.rotation.eulerAngles.z); 
+    }
 
     private void Start()
     {

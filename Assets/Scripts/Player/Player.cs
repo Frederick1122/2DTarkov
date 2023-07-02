@@ -10,7 +10,7 @@ public class Player : SaveLoadManager<PlayerData, Player>
     public event Action<int> OnHpChanged;
 
     [ContextMenu("Clear Player Data")]
-    private void ClearPlayerData()
+    public void ClearPlayerData()
     {
         _saveData = new PlayerData();
         Save();
@@ -27,22 +27,30 @@ public class Player : SaveLoadManager<PlayerData, Player>
     {
         return _saveData.hp;
     }
+
+    public void SetPlayerTransformData(Vector3 playerPosition, float playerRotation)
+    {
+        _saveData.levelData.lastPosition = playerPosition;
+        _saveData.levelData.lastRotation = playerRotation;
+        Save();
+    }
     
-    public void SetLastLevelData(LastLevelData levelData)
+    public void SetLastLevelData(LevelData levelData)
     {
-        _saveData.lastLevelData = levelData;
+        _saveData.levelData = levelData;
         Save();
     }
 
-    public void SetExitIndexes(List<int> indexes)
+    public void SetLastRemainingTime(TimeSpan timeSpan)
     {
-        _saveData.lastLevelData.exitIndexes = indexes;
+        _saveData.levelData.lastRemainingMinutes = timeSpan.Minutes;
+        _saveData.levelData.lastRemainingSeconds = timeSpan.Seconds;
         Save();
     }
 
-    public LastLevelData GetLastLevelData()
+    public LevelData GetLastLevelData()
     {
-        return _saveData.lastLevelData;
+        return _saveData.levelData;
     }
     
     protected override void Load()
@@ -68,7 +76,7 @@ public class PlayerData
     private const string LEVEL_DIRECTORY = "";
     
     public int hp;
-    public LastLevelData lastLevelData;
+    public LevelData levelData;
 
     public PlayerData(int hp = 100)
     {
@@ -77,11 +85,15 @@ public class PlayerData
 }
 
 [Serializable]
-public class LastLevelData
+public class LevelData
 {
     public string lastLevelPath = "";
+    
     public Vector3 lastPosition;
-    public TimeSpan lastRemainingTime;
+    public float lastRotation;
+    
+    public int lastRemainingMinutes;
+    public int lastRemainingSeconds;
 
     public List<int> exitIndexes;
 }
