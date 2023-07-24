@@ -2,7 +2,7 @@
 using Base;
 using UnityEngine;
 
-public class EquipmentPanelView : UIView
+public class EquipmentPanelView : UIView<EquipmentWindowModel>
 {
     public event Action<EquipmentTabView> OnContainerClick;
     public event Action<IEquip> OnRemoveButtonClick;
@@ -38,14 +38,13 @@ public class EquipmentPanelView : UIView
         _weapon2Container.OnRemoveButtonClick -= OnRemoveButtonClick;
     }
 
-    public void ChangeViews( EquipmentWindowData data = null)
+    public override void UpdateView(EquipmentWindowModel uiModel)
     {
-        data ??= new EquipmentWindowData();
-        
-        _kevlarContainer.ChangeView(data.kevlarContainerData);
-        _backpackContainer.ChangeView(data.backpackContainerData);
-        _weaponContainer.ChangeView(data.firstWeaponContainerData);
-        _weapon2Container.ChangeView(data.secondWeaponContainerData);
+        _kevlarContainer.ChangeView(uiModel.kevlarContainerData);
+        _backpackContainer.ChangeView(uiModel.backpackContainerData);
+        _weaponContainer.ChangeView(uiModel.firstWeaponContainerData);
+        _weapon2Container.ChangeView(uiModel.secondWeaponContainerData);
+        base.UpdateView(uiModel);
     }
 
     public void Refresh()
@@ -57,10 +56,20 @@ public class EquipmentPanelView : UIView
     }
 }
 
-public class EquipmentWindowData
+public class EquipmentWindowModel : UIModel
 {
     public WeaponContainerData kevlarContainerData;
     public WeaponContainerData backpackContainerData;
     public WeaponContainerData firstWeaponContainerData;
     public WeaponContainerData secondWeaponContainerData;
+
+    public EquipmentWindowModel(WeaponContainerData kevlarContainerData = null,
+        WeaponContainerData backpackContainerData = null, WeaponContainerData firstWeaponContainerData = null,
+        WeaponContainerData secondWeaponContainerData = null)
+    {
+        this.kevlarContainerData = kevlarContainerData ?? new WeaponContainerData();
+        this.backpackContainerData = backpackContainerData ?? new WeaponContainerData();
+        this.firstWeaponContainerData = firstWeaponContainerData ?? new WeaponContainerData();
+        this.secondWeaponContainerData = secondWeaponContainerData ?? new WeaponContainerData();
+    }
 }

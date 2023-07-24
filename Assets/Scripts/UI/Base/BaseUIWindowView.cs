@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI.Base
 {
-    public class BaseUIWindowView : UIView
+    public class BaseUIWindowView : UIView<BaseUIWindowModel>
     {
         [SerializeField] private ExitInfoView _exitInfoViewPrefab;
         [Space]
@@ -65,8 +65,8 @@ namespace UI.Base
 
             foreach (var exitName in exitNames)
             {
-               var exitInfo = Instantiate(_exitInfoViewPrefab, panel.transform);
-               exitInfo.UpdateInfo(exitName);
+               var exitInfoView = Instantiate(_exitInfoViewPrefab, panel.transform);
+               exitInfoView.UpdateView( new ExitInfoModel(exitName));
             }
         }
 
@@ -74,5 +74,10 @@ namespace UI.Base
         {
             _exitInfosPanel.gameObject.SetActive(!_exitInfosPanel.gameObject.activeSelf);
         }
+    }
+
+    public class BaseUIWindowModel : UIModel
+    {
+        
     }
 }

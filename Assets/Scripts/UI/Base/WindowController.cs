@@ -1,6 +1,6 @@
 namespace UI
 {
-    public class WindowController<T> : UIController<T> where T : UIView
+    public class WindowController<T, T2> : UIController<T, T2> where T : UIView<T2> where T2 : UIModel
     {
         internal bool _isOpen = false;
 

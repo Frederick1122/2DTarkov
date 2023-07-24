@@ -1,14 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ExitInfoView : UIView
+public class ExitInfoView : UIView<ExitInfoModel>
 {
     [SerializeField] private TMP_Text text;
 
-    public void UpdateInfo(string exitName)
+    public override void UpdateView(ExitInfoModel uiModel)
     {
-        text.text = exitName;
+        text.text = uiModel.exitName;
+        base.UpdateView(uiModel);
+    }
+}
+
+public class ExitInfoModel : UIModel
+{
+    public string exitName;
+
+    public ExitInfoModel(string exitName)
+    {
+        this.exitName = this.exitName;
     }
 }

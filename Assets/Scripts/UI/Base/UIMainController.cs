@@ -11,7 +11,7 @@ namespace UI
     [SerializeField] private BaseUIWindowController _baseUIWindowController;
     [SerializeField] private InventoryWindowController _inventoryWindowController;
     [SerializeField] private LootBoxWindowController _lootBoxWindowController;
-
+    [SerializeField] private EndGameUIController _endGameUIController;
     private void Start() => OpenBaseUI();
 
     public void OpenBaseUI()
@@ -37,17 +37,28 @@ namespace UI
       
       GameBus.Instance.GetPlayer().isFreeze = true;
       
-      _lootBoxWindowController.Show();
       _lootBoxWindowController.Init(lootBoxIndex, lootItems);
+      _lootBoxWindowController.Show();
     }
 
-    public BaseUIWindowController GetBaseUI() => _baseUIWindowController;
-    
+    public void OpenEndGameUI(string endText)
+    {
+        CloseAllUI();
+        _endGameUIController.Init(endText);
+        _endGameUIController.Show();
+    }
+
+    public BaseUIWindowController GetBaseUI()
+    {
+      return _baseUIWindowController;
+    }
+
     private void CloseAllUI()
     {
       _baseUIWindowController.Hide();
       _inventoryWindowController.Hide();
       _lootBoxWindowController.Hide();
+      _endGameUIController.Hide();
     }
   }
 }

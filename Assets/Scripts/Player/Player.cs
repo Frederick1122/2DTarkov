@@ -20,6 +20,7 @@ public class Player : SaveLoadManager<PlayerData, Player>
     {
         _saveData.hp = Mathf.Clamp( _saveData.hp + change, 0, 100);
         OnHpChanged?.Invoke(_saveData.hp);
+        
         Save();
     }
 

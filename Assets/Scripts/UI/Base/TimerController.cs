@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class TimerController : UIController<TimerView>
+public class TimerController : UIController<TimerView, TimerModel>
 {
     private TimeSpan _remainingTime;
     
@@ -11,13 +11,22 @@ public class TimerController : UIController<TimerView>
     
     private void OnDisable()
     {
-        Player.Instance.SetLastRemainingTime(_remainingTime);
         if (_timerRoutine != null)
         {
             StopCoroutine(_timerRoutine);
         }
     }
-    
+
+    private void OnApplicationQuit()
+    {
+        Player.Instance.SetLastRemainingTime(_remainingTime);
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        Player.Instance.SetLastRemainingTime(_remainingTime);
+    }
+
     public void Init(TimeSpan remainingTime)
     {
         if (_timerRoutine != null)
@@ -30,9 +39,11 @@ public class TimerController : UIController<TimerView>
 
     private IEnumerator TimerRoutine()
     {
+        var timerData = new TimerModel();
         while (_remainingTime.TotalSeconds > 0)
         {
-            _view.GenerateTimeText(_remainingTime);
+            timerData.remainingTime = _remainingTime;
+            _view.UpdateView(timerData);
             yield return new WaitForSeconds(1f);
             _remainingTime -= TimeSpan.FromSeconds(1);
         }

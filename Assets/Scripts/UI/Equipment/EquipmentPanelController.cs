@@ -2,7 +2,7 @@
 using Base;
 using UnityEngine;
 
-public class EquipmentPanelController : UIController<EquipmentPanelView>
+public class EquipmentPanelController : UIController<EquipmentPanelView, EquipmentWindowModel>
 {
     public event Action<IEquip> OnContainerClick;
     public event Action OnRemoveButtonClick;
@@ -35,7 +35,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView>
 
     private void Start()
     {
-        _view.ChangeViews();
+        _view.UpdateView(new EquipmentWindowModel());
 
         Equipment.Instance.OnEquipmentChanged += UpdateView;
 
@@ -48,7 +48,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView>
 
         var data = GenerateNewWindowData(equipmentData);
 
-        _view.ChangeViews(data);
+        _view.UpdateView(data);
     }
 
     private void ClickOnContainer(EquipmentTabView equipmentTabView)
@@ -65,7 +65,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView>
         OnRemoveButtonClick?.Invoke();
     }
 
-    private EquipmentWindowData GenerateNewWindowData(EquipmentData equipmentData)
+    private EquipmentWindowModel GenerateNewWindowData(EquipmentData equipmentData)
     {
         var kevlarData = new WeaponContainerData();
         var backpackData = new WeaponContainerData();
@@ -129,13 +129,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView>
             };
         }
 
-        var data = new EquipmentWindowData
-        {
-            kevlarContainerData = kevlarData,
-            backpackContainerData = backpackData,
-            firstWeaponContainerData = firstWeaponData,
-            secondWeaponContainerData = secondWeaponData,
-        };
+        var data = new EquipmentWindowModel(kevlarData, backpackData, firstWeaponData, secondWeaponData);
         return data;
     }
 }

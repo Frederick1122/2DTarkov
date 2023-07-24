@@ -5,7 +5,7 @@ using UI;
 using UI.Inventory;
 using UnityEngine;
 
-public class InventoryWindowController : WindowController<InventoryWindowView>
+public class InventoryWindowController : WindowController<InventoryWindowView, InventoryWindowModel>
 {
     public event Action OnClickCell;
     
@@ -101,7 +101,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView>
         _localInventoryData = Inventory.Instance.GetInventory();
         
         RefreshActionButtons();
-        _view.SetItemInformation();
+        _view.UpdateView(new InventoryWindowModel());
         _cells.Clear();
         _currentCellView = null;
 
@@ -131,7 +131,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView>
         var cellItem = cellView.GetItem();
         _currentCellView = _currentCellView == cellView ? null : cellView;
         if (_currentCellView != null)
-            _view.SetItemInformation(cellItem.icon, cellItem.name, cellItem.description);
+            _view.UpdateView(new InventoryWindowModel(cellItem.icon, cellItem.name, cellItem.description));
 
         RefreshActionButtons(cellItem);
         OnClickCell?.Invoke();
@@ -140,13 +140,13 @@ public class InventoryWindowController : WindowController<InventoryWindowView>
     private void ClickOnEquipment(IEquip equip)
     {
         var item = (Item) equip;
-        _view.SetItemInformation(item.icon, item.name, item.description);
+        _view.UpdateView(new InventoryWindowModel(item.icon, item.name, item.description));
         RefreshActionButtons();
     }
 
     private void RemoveEquipment()
     {
-        _view.SetItemInformation();
+        _view.UpdateView(new InventoryWindowModel());
         RefreshActionButtons();
     }
 
@@ -158,14 +158,14 @@ public class InventoryWindowController : WindowController<InventoryWindowView>
             return;
         }
 
-        _view.SetActionButtonVisible(item is IUse, item is IEquip,
-            true, true);
+        _view.UpdateView(new InventoryWindowModel(item is IUse, item is IEquip,
+            true, true));
     }
 
     private void SetActiveActionButton(bool isActive)
     {
-        _view.SetActionButtonVisible(isActive, isActive,
-            isActive, isActive);
+        _view.UpdateView(new InventoryWindowModel(isActive, isActive,
+            isActive, isActive));
     }
 
     private void DropCurrentItem()
@@ -179,6 +179,6 @@ public class InventoryWindowController : WindowController<InventoryWindowView>
         var item = _currentCellView.GetItem();
         Destroy(_currentCellView.gameObject);
         Inventory.Instance.DeleteItem(item, _currentCellView.GetCount());
-        _view.SetItemInformation();
+        _view.UpdateView(new InventoryWindowModel());
     }
 }

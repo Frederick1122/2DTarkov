@@ -2,14 +2,20 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class TimerView : UIView
+public class TimerView : UIView<TimerModel>
 {
     [SerializeField] private TMP_Text _text;
-
-    public void GenerateTimeText(TimeSpan remainingTime)
+    
+    public override void UpdateView(TimerModel uiModel)
     {
         _text.text =
-            remainingTime.Minutes.ToString("D2")  +
-            ":" + remainingTime.Seconds.ToString("D2"); //$"{SetTimeText(remainingTime.Minutes)}:{SetTimeText(remainingTime.Seconds)}";
+            uiModel.remainingTime.Minutes.ToString("D2")  +
+            ":" + uiModel.remainingTime.Seconds.ToString("D2");
+        base.UpdateView(uiModel);
     }
+}
+
+public class TimerModel : UIModel
+{
+    public TimeSpan remainingTime = new TimeSpan();
 }

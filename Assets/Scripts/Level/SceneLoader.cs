@@ -6,18 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    public void TryExitTheLocation(EntryExit exit)
+    private const string MAIN_MENU_SCENE_NAME = "MainMenu";
+    
+    public void GoToMainMenu()
     {
-        var exitIndexes = Player.Instance.GetLastLevelData().exitIndexes;
-        foreach (var exitIndex in exitIndexes)
-        {
-            if (GameBus.Instance.GetLevel().GetEntryExits()[exitIndex] == exit)
-            {
-                Chunks.Instance.ClearChunksData();
-                Player.Instance.ClearPlayerData();
-                SceneManager.LoadScene(0);
-                return;
-            }
-        }
+        SceneManager.LoadScene(MAIN_MENU_SCENE_NAME);
     }
+    
 }

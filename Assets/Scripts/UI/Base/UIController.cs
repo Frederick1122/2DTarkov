@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIController<T> : MonoBehaviour where T : UIView  
+public class UIController<T, T2> : MonoBehaviour where T : UIView<T2> where T2 : UIModel
 {
    [SerializeField] protected T _view;
 
@@ -15,6 +15,11 @@ public class UIController<T> : MonoBehaviour where T : UIView
    }
       
    virtual public void Init()
+   {
+      
+   }
+
+   virtual public void UpdateView()
    {
       
    }

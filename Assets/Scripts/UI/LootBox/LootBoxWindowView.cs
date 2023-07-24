@@ -5,7 +5,7 @@ using UI.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LootBoxWindowView : UIView
+public class LootBoxWindowView : UIView<LootWindowModel>
 {
     public event Action<ItemCellView> ClickOnCellAction;
     public event Action OnTakeAction;
@@ -17,8 +17,8 @@ public class LootBoxWindowView : UIView
     private List<ItemCellView> _cells = new List<ItemCellView>();
 
     private void Start() => _takeButton.onClick.AddListener(() => OnTakeAction?.Invoke());
-
-    public void Init(List<Item> lootItems)
+    
+    public override void UpdateView(LootWindowModel uiModel)
     {
         for (int i = _cells.Count - 1; i >= 0; i--)
         {
@@ -30,13 +30,15 @@ public class LootBoxWindowView : UIView
         _cells.Clear();
         Refresh(false);
         
-        foreach (var item in lootItems)
+        foreach (var item in uiModel.lootItems)
         {
             var newCell = Instantiate(_cellViewPrefab, _itemLayoutGroup.transform);
             newCell.Init(item, item.baseStack);
             newCell.GetButton().onClick.AddListener(() => ClickOnCellAction?.Invoke(newCell));
             _cells.Add(newCell);
         }
+        
+        base.UpdateView(uiModel);
     }
 
     public void Refresh(bool isItemSelected)
@@ -49,5 +51,15 @@ public class LootBoxWindowView : UIView
         _cells.Remove(cell);
         Destroy(cell.gameObject);
         Refresh(false);
+    }
+}
+
+public class LootWindowModel : UIModel
+{
+    public List<Item> lootItems;
+
+    public LootWindowModel(List<Item> lootItems)
+    {
+        this.lootItems = lootItems;
     }
 }

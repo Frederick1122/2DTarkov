@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI.Base
 {
-    public class BaseUIWindowController : WindowController<BaseUIWindowView>
+    public class BaseUIWindowController : WindowController<BaseUIWindowView, BaseUIWindowModel>
     {
         [SerializeField] private HealthBarView _healthBarView;
         

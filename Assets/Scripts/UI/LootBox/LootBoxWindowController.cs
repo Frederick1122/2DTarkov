@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Base;
 using UI;
 using UI.Inventory;
 using UnityEngine;
 
-public class LootBoxWindowController : WindowController<LootBoxWindowView>
+public class LootBoxWindowController : WindowController<LootBoxWindowView, LootWindowModel>
 {
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
     
@@ -17,7 +16,7 @@ public class LootBoxWindowController : WindowController<LootBoxWindowView>
         _view.ClickOnCellAction += ClickOnCellAction;
         _view.OnTakeAction += Take;
 
-        _itemInformationPanelView.SetNewInformation();
+        _itemInformationPanelView.UpdateView(new ItemInformationPanelModel());
     }
 
     private void OnDisable()
@@ -30,13 +29,13 @@ public class LootBoxWindowController : WindowController<LootBoxWindowView>
     {
         if (lootItems.Count == 0)
         {
-            _itemInformationPanelView.SetNewInformation(null,"","Box is empty");
+            _itemInformationPanelView.UpdateView(new ItemInformationPanelModel(null,"","Box is empty"));
             return;
         }
         _lootItems = lootItems;
         _lootBoxIndex = lootBoxIndex;
         
-        _view.Init(lootItems);
+        _view.UpdateView(new LootWindowModel(lootItems));
     }
 
     private void ClickOnCellAction(ItemCellView cellView)
@@ -45,7 +44,7 @@ public class LootBoxWindowController : WindowController<LootBoxWindowView>
         _currentCellView = _currentCellView == cellView ? null : cellView;
         
         if (_currentCellView != null) 
-            _itemInformationPanelView.SetNewInformation(cellItem.icon, cellItem.name, cellItem.description);
+            _itemInformationPanelView.UpdateView(new ItemInformationPanelModel(cellItem.icon, cellItem.name, cellItem.description));
 
         _view.Refresh(_currentCellView != null);
     }
@@ -54,23 +53,22 @@ public class LootBoxWindowController : WindowController<LootBoxWindowView>
     {
         Inventory.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount());
         _view.DeleteCell(_currentCellView);
-        _itemInformationPanelView.SetNewInformation();
+        _itemInformationPanelView.UpdateView(new ItemInformationPanelModel());
         
         _lootItems.Remove(_currentCellView.GetItem());
         Chunks.Instance.SaveLootBox(_lootBoxIndex, _lootItems);
         
         if (_lootItems.Count == 0) 
-            _itemInformationPanelView.SetNewInformation(null, "", "Box is empty");
+            _itemInformationPanelView.UpdateView(new ItemInformationPanelModel(null, "", "Box is empty"));
         else
-            _itemInformationPanelView.SetNewInformation();
-
+            _itemInformationPanelView.UpdateView(new ItemInformationPanelModel());
     }
 
     public override void Show()
     {
         base.Show();
         
-        _itemInformationPanelView.SetNewInformation();
+        _itemInformationPanelView.UpdateView(new ItemInformationPanelModel());
     }
 
     public override void Hide()

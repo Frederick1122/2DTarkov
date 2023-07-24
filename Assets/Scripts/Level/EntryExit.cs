@@ -1,12 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class EntryExit : MonoBehaviour
 {
+    private const string TEXT_ON_EXIT = "You survived this time";
+    
     [SerializeField] private string _name;
     [Space]
     [SerializeField] private List<EntryExit> _currentExits = new List<EntryExit>();
@@ -25,7 +26,17 @@ public class EntryExit : MonoBehaviour
     {
         if (col.gameObject.GetComponent<PlayerHumanoid>())
         {
-            SceneLoader.Instance.TryExitTheLocation(this);
+            var exitIndexes = Player.Instance.GetLastLevelData().exitIndexes;
+            foreach (var exitIndex in exitIndexes)
+            {
+                if (GameBus.Instance.GetLevel().GetEntryExits()[exitIndex] == this)
+                {
+                    Chunks.Instance.ClearChunksData();
+                    Player.Instance.ClearPlayerData();
+                    UIMainController.Instance.OpenEndGameUI(TEXT_ON_EXIT);
+                    return;
+                }
+            }
         }
     }
 }

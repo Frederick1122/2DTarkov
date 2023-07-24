@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIView : MonoBehaviour
+public class UIView<T> : MonoBehaviour where T : UIModel
 {
     virtual public void Show()
     {
@@ -19,6 +19,11 @@ public class UIView : MonoBehaviour
     }
 
     virtual public void Init()
+    {
+        
+    }
+
+    virtual public void UpdateView(T uiModel)
     {
         
     }
