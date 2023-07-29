@@ -8,18 +8,22 @@ using UnityEngine;
 public class InventoryWindowController : WindowController<InventoryWindowView, InventoryWindowModel>
 {
     public event Action OnClickCell;
-    [SerializeField] private InventoryType _inventoryType;
-    
+
     [SerializeField] private ItemCellView _inventoryCellView;
     [SerializeField] private EquipmentPanelController _equipmentPanelController;
-    
+
     private ItemCellView _currentCellView;
     private List<ItemCellView> _cells = new List<ItemCellView>();
     private List<InventoryCell> _inventoryCells;
+    private InventoryType _inventoryType;
+    private bool _isStorageWindow;
+
     private void OnEnable()
     {
         _view.OnInteractWithItem += InteractWithItem;
         _view.OnDrop += Drop;
+        _view.OnMoveToStorage += Move;
+
         if (_equipmentPanelController != null)
         {
             _equipmentPanelController.OnContainerClick += ClickOnEquipment;
@@ -31,6 +35,8 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
     {
         _view.OnInteractWithItem -= InteractWithItem;
         _view.OnDrop -= Drop;
+        _view.OnMoveToStorage -= Move;
+
         if (_equipmentPanelController != null)
         {
             _equipmentPanelController.OnContainerClick -= ClickOnEquipment;
@@ -38,10 +44,22 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         }
     }
 
+    public void Init(InventoryType inventoryType, bool isStorageWindow)
+    {
+        _inventoryType = inventoryType;
+        _isStorageWindow = isStorageWindow;
+        base.Init();
+    }
+
+    public void ClearCurrentCell()
+    {
+        _currentCellView = null;
+    }
+
     public override void Show()
     {
         base.Show();
-        
+
         Refresh();
 
         Inventory.Instance.OnInventoryAdded += AddNewItem;
@@ -51,41 +69,41 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
     public override void Hide()
     {
         base.Hide();
-        
+
         Inventory.Instance.OnInventoryAdded -= AddNewItem;
         Inventory.Instance.OnInventoryDeleted -= DeleteItem;
     }
 
     private void AddNewItem(Item item, int count, InventoryType inventoryType)
     {
-        if(inventoryType != _inventoryType)
+        if (inventoryType != _inventoryType)
             return;
-        
+
         var newItem = new InventoryCell(item, count);
         CreateCell(newItem);
     }
 
     private void DeleteItem(Item item, int count, InventoryType inventoryType)
     {
-        if(inventoryType == _inventoryType)
+        if (inventoryType == _inventoryType)
             Refresh();
     }
 
     private void InteractWithItem()
     {
+        if (_currentCellView == null)
+            return;
+
         RefreshActionButtons();
 
         var item = _currentCellView.GetItem();
         var count = _currentCellView.GetCount();
-        
+
         if (item is IEquip)
             ((IEquip) item).Equip();
         else if (item is IUse)
             ((IUse) item).Use();
 
-        if (_currentCellView == null) 
-            return;
-        
         if (count <= 1)
         {
             DestroyCurrentItem();
@@ -100,14 +118,32 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
     private void Drop()
     {
+        if (_currentCellView == null)
+            return;
+
         RefreshActionButtons();
-        DropCurrentItem();
+
+        GameBus.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
+        DestroyCurrentItem();
+    }
+
+    private void Move()
+    {
+        if (_currentCellView == null)
+            return;
+
+        RefreshActionButtons();
+
+        var inventoryTypeToTransfer =
+            _inventoryType == InventoryType.Inventory ? InventoryType.Storage : InventoryType.Inventory;
+        Inventory.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount(), inventoryTypeToTransfer);
+        DestroyCurrentItem();
     }
 
     private void Refresh()
     {
         _inventoryCells = Inventory.Instance.GetInventoryCells(_inventoryType);
-        
+
         RefreshActionButtons();
         _view.UpdateView(new InventoryWindowModel());
         _cells.Clear();
@@ -118,7 +154,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         {
             Destroy(child.gameObject);
         }
-        
+
         foreach (var cell in _inventoryCells)
         {
             CreateCell(cell);
@@ -133,7 +169,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
         _cells.Add(newCell);
     }
-    
+
     private void ClickOnCell(ItemCellView cellView)
     {
         var cellItem = cellView.GetItem();
@@ -162,28 +198,20 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
     {
         if (item == null)
         {
-            SetActiveActionButton(false);
+            _view.UpdateView(new InventoryWindowModel());
             return;
         }
 
-        _view.UpdateView(new InventoryWindowModel(item is IUse, item is IEquip,
-            true, true));
-    }
-
-    private void SetActiveActionButton(bool isActive)
-    {
-        _view.UpdateView(new InventoryWindowModel(isActive, isActive,
-            isActive, isActive));
-    }
-
-    private void DropCurrentItem()
-    {
-        GameBus.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
-        DestroyCurrentItem();
+        _view.UpdateView(new InventoryWindowModel(new ItemInformationPanelModel(item.icon, item.name, item.description),
+            item is IUse, item is IEquip,
+            true, !_isStorageWindow, _isStorageWindow));
     }
 
     private void DestroyCurrentItem()
     {
+        if (_currentCellView == null)
+            return;
+
         var item = _currentCellView.GetItem();
         Destroy(_currentCellView.gameObject);
         Inventory.Instance.DeleteItem(item, _currentCellView.GetCount(), _inventoryType);

@@ -1,30 +1,32 @@
 using System;
-using InteractObjects;
 using UI.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryWindowView : UIView<InventoryWindowModel>
+public class InventoryWindowView : WindowView<InventoryWindowModel>
 {
     public event Action OnInteractWithItem;
     public event Action OnDrop;
+    public event Action OnMoveToStorage;
 
     [SerializeField] private GridLayoutGroup _inventoryLayoutGroup;
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
     [SerializeField] private ActionButtonsView _actionButtonsView;
 
-    private void OnEnable()
+    internal void OnEnable()
     {
         _actionButtonsView.OnUseAction += Interact;
         _actionButtonsView.OnEquipAction += Interact;
         _actionButtonsView.OnDropAction += Drop;
+        _actionButtonsView.OnMoveToStorageAction += MoveToStorage;
     }
 
-    private void OnDisable()
+    internal void OnDisable()
     {
         _actionButtonsView.OnUseAction -= Interact;
         _actionButtonsView.OnEquipAction -= Interact;
         _actionButtonsView.OnDropAction -= Drop;
+        _actionButtonsView.OnMoveToStorageAction -= MoveToStorage;
     }
 
     public override void UpdateView(InventoryWindowModel uiModel)
@@ -32,7 +34,7 @@ public class InventoryWindowView : UIView<InventoryWindowModel>
         base.UpdateView(uiModel);
         _itemInformationPanelView.UpdateView(uiModel.itemInformationPanelModel);
         _actionButtonsView.SetActiveButtons(uiModel.isActiveUseButton, uiModel.isActiveEquipButton,
-            uiModel.isActiveDivideButton, uiModel.isActiveDropButton);
+            uiModel.isActiveDivideButton, uiModel.isActiveDropButton, uiModel.isActiveMoveToStorageButton);
     }
 
     public GameObject GetInventoryLayout()
@@ -49,6 +51,11 @@ public class InventoryWindowView : UIView<InventoryWindowModel>
     {
         OnDrop?.Invoke();
     }
+
+    private void MoveToStorage()
+    {
+        OnMoveToStorage?.Invoke();
+    }
 }
 
 public class InventoryWindowModel : UIModel
@@ -58,7 +65,8 @@ public class InventoryWindowModel : UIModel
     public bool isActiveEquipButton;
     public bool isActiveDivideButton;
     public bool isActiveDropButton;
-
+    public bool isActiveMoveToStorageButton;
+    
     public InventoryWindowModel()
     {
         this.itemInformationPanelModel = new ItemInformationPanelModel();
@@ -66,29 +74,21 @@ public class InventoryWindowModel : UIModel
         this.isActiveEquipButton = false;
         this.isActiveDivideButton = false;
         this.isActiveDropButton = false;
+        this.isActiveMoveToStorageButton = false;
     }
     
     public InventoryWindowModel(ItemInformationPanelModel itemInformationPanelModel = null,
         bool isActiveUseButton = false, bool isActiveEquipButton = false, bool isActiveDivideButton = false,
-        bool isActiveDropButton = false)
+        bool isActiveDropButton = false, bool isActiveMoveToStorageButton = false)
     {
         this.itemInformationPanelModel = itemInformationPanelModel ?? new ItemInformationPanelModel();
         this.isActiveUseButton = isActiveUseButton;
         this.isActiveEquipButton = isActiveEquipButton;
         this.isActiveDivideButton = isActiveDivideButton;
         this.isActiveDropButton = isActiveDropButton;
+        this.isActiveMoveToStorageButton = isActiveMoveToStorageButton;
     }
 
-    public InventoryWindowModel(bool isActiveUseButton = false, bool isActiveEquipButton = false,
-        bool isActiveDivideButton = false, bool isActiveDropButton = false)
-    {
-        itemInformationPanelModel = new ItemInformationPanelModel();
-        this.isActiveUseButton = isActiveUseButton;
-        this.isActiveEquipButton = isActiveEquipButton;
-        this.isActiveDivideButton = isActiveDivideButton;
-        this.isActiveDropButton = isActiveDropButton;
-    }
-    
     public InventoryWindowModel(Sprite icon = null, string name = "", string description = "")
     {
         itemInformationPanelModel = new ItemInformationPanelModel(icon, name, description);

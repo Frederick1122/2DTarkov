@@ -5,7 +5,7 @@ using UI.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LootBoxWindowView : UIView<LootWindowModel>
+public class LootBoxWindowView : WindowView<LootWindowModel>
 {
     public event Action<ItemCellView> ClickOnCellAction;
     public event Action OnTakeAction;

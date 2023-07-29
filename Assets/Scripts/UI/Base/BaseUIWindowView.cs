@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI.Base
 {
-    public class BaseUIWindowView : UIView<BaseUIWindowModel>
+    public class BaseUIWindowView : WindowView<BaseUIWindowModel>
     {
         [SerializeField] private ExitInfoView _exitInfoViewPrefab;
         [Space]

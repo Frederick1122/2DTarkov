@@ -1,23 +1,28 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : MonoBehaviour
+public class MainMenuController : UIController<MainMenuView, MainMenuModel>
 {
-    [SerializeField] private MainMenuView _mainMenuView;
-    
+    [SerializeField] private StorageWindowController _storageWindowUI;
     private void OnEnable()
     {
-        _mainMenuView.OnClickSortie += ClickOnSortie;
-        _mainMenuView.OnClickStorage += ClickOnStorage;
-        _mainMenuView.OnClickMerchants += ClickOnMerchants;
+        _view.OnClickSortie += ClickOnSortie;
+        _view.OnClickStorage += ClickOnStorage;
+        _view.OnClickMerchants += ClickOnMerchants;
+
+        _storageWindowUI.OnClickExitWindow += ReturnToMainMenu;
+        _storageWindowUI.Init();
+        
+        ReturnToMainMenu();
     }
 
     private void OnDisable()
     {
-        _mainMenuView.OnClickSortie -= ClickOnSortie;
-        _mainMenuView.OnClickStorage -= ClickOnStorage;
-        _mainMenuView.OnClickMerchants -= ClickOnMerchants;
+        _view.OnClickSortie -= ClickOnSortie;
+        _view.OnClickStorage -= ClickOnStorage;
+        _view.OnClickMerchants -= ClickOnMerchants;
+        
+        _storageWindowUI.OnClickExitWindow -= ReturnToMainMenu;
     }
     
     private void ClickOnSortie()
@@ -27,11 +32,18 @@ public class MainMenuController : MonoBehaviour
     
     private void ClickOnStorage()
     {
-        
+        _storageWindowUI.Show();
+        _view.Hide();
     }
     
     private void ClickOnMerchants()
     {
         
+    }
+
+    private void ReturnToMainMenu()
+    {
+        _storageWindowUI.Hide();
+        _view.Show();
     }
 }

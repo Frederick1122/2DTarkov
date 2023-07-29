@@ -1,19 +1,19 @@
+using System;
+
 namespace UI
 {
-    public class WindowController<T, T2> : UIController<T, T2> where T : UIView<T2> where T2 : UIModel
+    public class WindowController<T, T2> : UIController<T, T2> where T : WindowView<T2> where T2 : UIModel
     {
-        internal bool _isOpen = false;
+        public event Action OnClickExitWindow;
 
-        public override void Show()
+        private void Start()
         {
-            _isOpen = true;
-            base.Show();
+            _view.OnClickExitWindow += OnClickExitWindow;
         }
-    
-        public override void Hide()
+
+        private void OnDestroy()
         {
-            _isOpen = false;
-            base.Hide();
+            _view.OnClickExitWindow -= OnClickExitWindow;
         }
     }
 }

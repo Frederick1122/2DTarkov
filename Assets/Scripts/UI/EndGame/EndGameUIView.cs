@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameUIView : UIView<EndGameUIModel>
+public class EndGameUIView : WindowView<EndGameUIModel>
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Button _goToMainMenuButton;

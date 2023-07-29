@@ -9,7 +9,6 @@ public class GameBus : Singleton<GameBus>
     
     [SerializeField] private PlayerHumanoid _playerHumanoid;
     [SerializeField] private Level _level;
-    [SerializeField] private InteractItem _baseItem;
     [SerializeField] private Joystick _joystick;
 
     public PlayerHumanoid GetPlayer()
@@ -20,13 +19,14 @@ public class GameBus : Singleton<GameBus>
         return _playerHumanoid;
     }
 
-    public InteractItem GetBaseItem()
-    {
-        return _baseItem;
-    }
-
     public Joystick GetJoystick()
     {
+        if(_joystick == null || _joystick == default)
+            _joystick = FindObjectOfType<Joystick>();
+        
+        if(_joystick == null)
+            Debug.LogError("GameBus doesn't found joystick");
+
         return _joystick;
     }
 

@@ -34,7 +34,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
     {
         var countCopy = count;
 
-        var currentCellsByType = GetInventoryCells(_inventoryType);
+        var currentCellsByType = GetInventoryCells(inventoryType);
 
         foreach (var inventoryCellWithItem in currentCellsByType.FindAll(cell => cell.GetItem() == newItem))
         {
@@ -65,7 +65,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
         else
             _saveData.storageCells = currentCellsByType;
 
-        OnInventoryAdded?.Invoke(newItem, countCopy, _inventoryType);
+        OnInventoryAdded?.Invoke(newItem, countCopy, inventoryType);
         Save();
     }
 
@@ -73,7 +73,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
     {
         var deletedCells = new List<InventoryCell>();
         
-        var currentCellsByType = GetInventoryCells(_inventoryType);
+        var currentCellsByType = GetInventoryCells(inventoryType);
 
         foreach (var cell in currentCellsByType.FindAll(cell => cell.GetItem() == item))
         {
@@ -109,7 +109,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 
     public int GetItemCount(Item item, InventoryType inventoryType = InventoryType.Inventory)
     {
-        var currentCellsByType = GetInventoryCells(_inventoryType);
+        var currentCellsByType = GetInventoryCells(inventoryType);
         
         var count = 0;
         foreach (var cell in currentCellsByType.Where(cell => cell.GetItem() == item))

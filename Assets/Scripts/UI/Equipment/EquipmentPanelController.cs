@@ -13,7 +13,6 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
     {
         _view.OnContainerClick += ClickOnContainer;
         _view.OnRemoveButtonClick += ClickOnRemoveButton;
-        _view.OnRemoveButtonClick += ClickOnRemoveButton;
 
         if (_inventoryWindowController != null)
         {

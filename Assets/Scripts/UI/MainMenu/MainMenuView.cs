@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuView : MonoBehaviour
+public class MainMenuView : UIView<MainMenuModel>
 {
     [SerializeField] private Button _sortie;
     [SerializeField] private Button _storage;
@@ -27,4 +25,9 @@ public class MainMenuView : MonoBehaviour
         _storage.onClick.RemoveAllListeners();
         _merchants.onClick.RemoveAllListeners();
     }
+}
+
+public class MainMenuModel : UIModel
+{
+    
 }

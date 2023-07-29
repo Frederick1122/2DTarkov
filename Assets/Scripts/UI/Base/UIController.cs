@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 
 public class UIController<T, T2> : MonoBehaviour where T : UIView<T2> where T2 : UIModel
 {
    [SerializeField] protected T _view;
+
+   private void OnDestroy()
+   {
+      Terminate();
+   }
 
    virtual public void Show()
    {

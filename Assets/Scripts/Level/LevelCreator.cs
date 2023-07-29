@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -47,12 +46,14 @@ public class LevelCreator : MonoBehaviour
                 }
             }
              
-            var newLevelData = new LevelData();
-            newLevelData.lastPosition = playerContainer.transform.position;
-            newLevelData.exitIndexes = currentExitIndexes;
-            newLevelData.lastLevelPath = $"Levels/{_testLevel.name}";
-            newLevelData.lastRemainingMinutes = 10;
-            
+            var newLevelData = new LevelData
+            {
+                lastPosition = playerContainer.transform.position,
+                exitIndexes = currentExitIndexes,
+                lastLevelPath = $"Levels/{_testLevel.name}",
+                lastRemainingMinutes = 10
+            };
+
             Player.Instance.SetLastLevelData(newLevelData);
         }
         

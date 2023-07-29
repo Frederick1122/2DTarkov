@@ -77,7 +77,7 @@ public class PlayerData
     private const string LEVEL_DIRECTORY = "";
     
     public int hp;
-    public LevelData levelData;
+    public LevelData levelData = new LevelData();
 
     public PlayerData(int hp = 100)
     {
