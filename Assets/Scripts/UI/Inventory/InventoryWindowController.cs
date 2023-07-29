@@ -8,13 +8,14 @@ using UnityEngine;
 public class InventoryWindowController : WindowController<InventoryWindowView, InventoryWindowModel>
 {
     public event Action OnClickCell;
+    [SerializeField] private InventoryType _inventoryType;
     
     [SerializeField] private ItemCellView _inventoryCellView;
     [SerializeField] private EquipmentPanelController _equipmentPanelController;
     
     private ItemCellView _currentCellView;
     private List<ItemCellView> _cells = new List<ItemCellView>();
-    private InventoryData _localInventoryData;
+    private List<InventoryCell> _inventoryCells;
     private void OnEnable()
     {
         _view.OnInteractWithItem += InteractWithItem;
@@ -55,13 +56,20 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         Inventory.Instance.OnInventoryDeleted -= DeleteItem;
     }
 
-    private void AddNewItem(Item item, int count)
+    private void AddNewItem(Item item, int count, InventoryType inventoryType)
     {
+        if(inventoryType != _inventoryType)
+            return;
+        
         var newItem = new InventoryCell(item, count);
         CreateCell(newItem);
     }
 
-    private void DeleteItem(Item item, int count) => Refresh();
+    private void DeleteItem(Item item, int count, InventoryType inventoryType)
+    {
+        if(inventoryType == _inventoryType)
+            Refresh();
+    }
 
     private void InteractWithItem()
     {
@@ -86,7 +94,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         {
             count--;
             _currentCellView.SetCount(count);
-            Inventory.Instance.DeleteItem(item, 1);
+            Inventory.Instance.DeleteItem(item, 1, _inventoryType);
         }
     }
 
@@ -98,7 +106,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
     private void Refresh()
     {
-        _localInventoryData = Inventory.Instance.GetInventory();
+        _inventoryCells = Inventory.Instance.GetInventoryCells(_inventoryType);
         
         RefreshActionButtons();
         _view.UpdateView(new InventoryWindowModel());
@@ -111,7 +119,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
             Destroy(child.gameObject);
         }
         
-        foreach (var cell in _localInventoryData.inventoryCells)
+        foreach (var cell in _inventoryCells)
         {
             CreateCell(cell);
         }
@@ -178,7 +186,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
     {
         var item = _currentCellView.GetItem();
         Destroy(_currentCellView.gameObject);
-        Inventory.Instance.DeleteItem(item, _currentCellView.GetCount());
+        Inventory.Instance.DeleteItem(item, _currentCellView.GetCount(), _inventoryType);
         _view.UpdateView(new InventoryWindowModel());
     }
 }

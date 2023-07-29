@@ -52,7 +52,7 @@ public class WeaponTabController : MonoBehaviour
         }
     }
 
-    private void UpdateReverse(Item item, int count)
+    private void UpdateReverse(Item item, int count, InventoryType inventoryType)
     {
         if(_currentWeapon == null || item != _currentWeapon.bullet)
             return;

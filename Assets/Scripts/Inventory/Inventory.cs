@@ -9,18 +9,18 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 {
     private const string INVENTORY_JSON_PATH = "Inventory.json";
 
-    public event Action<Item, int> OnInventoryAdded;
-    public event Action<Item, int> OnInventoryDeleted;
+    public event Action<Item, int, InventoryType> OnInventoryAdded;
+    public event Action<Item, int, InventoryType> OnInventoryDeleted;
 
-    [Header("Fields for tests")] [SerializeField]
-    private Item _item;
-
+    [Header("Fields for tests")] 
+    [SerializeField] private Item _item;
     [SerializeField] private int _count;
+    [SerializeField] private InventoryType _inventoryType;
 
     [ContextMenu("AddItem")]
     private void AddItem()
     {
-        AddItem(_item, _count);
+        AddItem(_item, _count, _inventoryType);
     }
 
     [ContextMenu("ClearInventory")]
@@ -30,10 +30,13 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
         Save();
     }
 
-    public void AddItem(Item newItem, int count = 1)
+    public void AddItem(Item newItem, int count = 1, InventoryType inventoryType = InventoryType.Inventory)
     {
         var countCopy = count;
-        foreach (var inventoryCellWithItem in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == newItem))
+
+        var currentCellsByType = GetInventoryCells(_inventoryType);
+
+        foreach (var inventoryCellWithItem in currentCellsByType.FindAll(cell => cell.GetItem() == newItem))
         {
             if (inventoryCellWithItem.count < newItem.maxStack)
             {
@@ -53,18 +56,26 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 
         while (count > 0)
         {
-            _saveData.inventoryCells.Add(new InventoryCell(newItem, math.clamp(count, 1, newItem.maxStack)));
+            currentCellsByType.Add(new InventoryCell(newItem, math.clamp(count, 1, newItem.maxStack)));
             count -= newItem.maxStack;
         }
 
+        if (inventoryType == InventoryType.Inventory)
+            _saveData.inventoryCells = currentCellsByType;
+        else
+            _saveData.storageCells = currentCellsByType;
+
+        OnInventoryAdded?.Invoke(newItem, countCopy, _inventoryType);
         Save();
-        OnInventoryAdded?.Invoke(newItem, countCopy);
     }
 
-    public void DeleteItem(Item item, int count = 1)
+    public void DeleteItem(Item item, int count = 1, InventoryType inventoryType = InventoryType.Inventory)
     {
         var deletedCells = new List<InventoryCell>();
-        foreach (var cell in _saveData.inventoryCells.FindAll(cell => cell.GetItem() == item))
+        
+        var currentCellsByType = GetInventoryCells(_inventoryType);
+
+        foreach (var cell in currentCellsByType.FindAll(cell => cell.GetItem() == item))
         {
             if (cell.count > count)
             {
@@ -80,18 +91,28 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
         }
 
         foreach (var deletedCell in deletedCells)
-            _saveData.inventoryCells.Remove(deletedCell);
-        
+            currentCellsByType.Remove(deletedCell);
+
+        if (inventoryType == InventoryType.Inventory)
+            _saveData.inventoryCells = currentCellsByType;
+        else
+            _saveData.storageCells = currentCellsByType;
+
+        OnInventoryDeleted?.Invoke(item, count, _inventoryType);
         Save();
-        OnInventoryDeleted?.Invoke(item, count);
     }
     
-    public InventoryData GetInventory() => _saveData;
-
-    public int GetItemCount(Item item)
+    public List<InventoryCell> GetInventoryCells(InventoryType inventoryType = InventoryType.Inventory)
     {
+        return inventoryType == InventoryType.Inventory ? _saveData.inventoryCells : _saveData.storageCells;
+    }
+
+    public int GetItemCount(Item item, InventoryType inventoryType = InventoryType.Inventory)
+    {
+        var currentCellsByType = GetInventoryCells(_inventoryType);
+        
         var count = 0;
-        foreach (var cell in _saveData.inventoryCells.Where(cell => cell.GetItem() == item))
+        foreach (var cell in currentCellsByType.Where(cell => cell.GetItem() == item))
         {
             count += cell.count;
         }
@@ -119,6 +140,7 @@ public class Inventory : SaveLoadManager<InventoryData, Inventory>
 public class InventoryData
 {
     public List<InventoryCell> inventoryCells = new List<InventoryCell>();
+    public List<InventoryCell> storageCells = new List<InventoryCell>();
 }
 
 [Serializable]
@@ -142,4 +164,10 @@ public class InventoryCell
 
         return _item;
     }
+}
+
+public enum InventoryType
+{
+    Inventory,
+    Storage
 }
