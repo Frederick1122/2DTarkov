@@ -58,10 +58,8 @@ namespace UI.Base
         private void UpdateExitInfosPanel(List<string> exitNames)
         {
             var panel = _exitInfosPanel.gameObject;
-            while (panel.transform.childCount > 0)
-            {
-                Destroy(panel.transform.GetChild(0)); 
-            }
+            while (panel.transform.childCount > 0) 
+                Destroy(panel.transform.GetChild(0));
 
             foreach (var exitName in exitNames)
             {

@@ -22,31 +22,30 @@ public class Equipment : SaveLoadManager<EquipmentData, Equipment>
     {
         var equipmentType = item.GetEquipmentType();
         var currentEquip = _saveData.GetEquipment(equipmentType);
-        _saveData.SetEquipment(item, equipmentType);
-
-        Inventory.Instance.DeleteItem((Item) item);
-        
         if (currentEquip != null)
         {
-            var ammoInMagazine = _saveData.GetAmmoInMagazine(equipmentType);
-            if (ammoInMagazine > 0)
-            {
-                var ammoItem = ((Weapon) currentEquip).bullet;
-                Inventory.Instance.AddItem(ammoItem, ammoInMagazine);
-            }
-            
-            Inventory.Instance.AddItem((Item) currentEquip);
+            RemoveEquipment(currentEquip);    
         }
+        
+        Inventory.Instance.DeleteItem((Item) item);
+        _saveData.SetEquipment(item, equipmentType);
 
         OnEquipmentChanged?.Invoke(_saveData);
     }
 
     public void RemoveEquipment(IEquip item)
     {
-        _saveData.SetEquipment(default, item.GetEquipmentType());
-
+        var equipmentType = item.GetEquipmentType();
+        var ammoInMagazine = _saveData.GetAmmoInMagazine(equipmentType);
+        if (ammoInMagazine > 0)
+        {
+            var ammoItem = ((Weapon) item).bullet;
+            Inventory.Instance.AddItem(ammoItem, ammoInMagazine);
+        }
+        
         Inventory.Instance.AddItem((Item) item);
 
+        _saveData.SetEquipment(default, item.GetEquipmentType());
         OnEquipmentChanged?.Invoke(_saveData);
     }
 

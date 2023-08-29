@@ -18,6 +18,6 @@ public class ExitInfoModel : UIModel
 
     public ExitInfoModel(string exitName)
     {
-        this.exitName = this.exitName;
+        this.exitName = exitName;
     }
 }
