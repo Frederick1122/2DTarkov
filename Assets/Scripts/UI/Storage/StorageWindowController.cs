@@ -7,6 +7,8 @@ public class StorageWindowController : WindowController<StorageView, StorageMode
     [SerializeField] private InventoryWindowController _storageController;
     [SerializeField] private StorageTabsController _storageTabsController;
     [SerializeField] private EquipmentPanelController _equipmentPanelController;
+
+    private bool _isStorageState;
     public override void Init()
     {
         base.Init();
@@ -44,6 +46,11 @@ public class StorageWindowController : WindowController<StorageView, StorageMode
         base.Show();
         _inventoryWindowController.Show();
         _storageController.Show();
+        
+        if(_isStorageState)
+            OpenStorageTab();
+        else
+            OpenEquipmentTab();
     }
     
     public override void Hide()
@@ -67,11 +74,15 @@ public class StorageWindowController : WindowController<StorageView, StorageMode
     {
         _storageController.Show();
         _equipmentPanelController.Hide();
+
+        _isStorageState = true;
     }
     
     private void OpenEquipmentTab()
     {
         _equipmentPanelController.Show();
         _storageController.Hide();
+
+        _isStorageState = false;
     }
 }
