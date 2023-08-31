@@ -7,7 +7,7 @@ public class InventoryWindowView : WindowView<InventoryWindowModel>
 {
     public event Action OnInteractWithItem;
     public event Action OnDrop;
-    public event Action OnMoveToStorage;
+    public event Action OnMove;
 
     [SerializeField] private GridLayoutGroup _inventoryLayoutGroup;
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
@@ -18,7 +18,7 @@ public class InventoryWindowView : WindowView<InventoryWindowModel>
         _actionButtonsView.OnUseAction += Interact;
         _actionButtonsView.OnEquipAction += Interact;
         _actionButtonsView.OnDropAction += Drop;
-        _actionButtonsView.OnMoveToStorageAction += MoveToStorage;
+        _actionButtonsView.OnMoveAction += Move;
     }
 
     internal void OnDisable()
@@ -26,7 +26,7 @@ public class InventoryWindowView : WindowView<InventoryWindowModel>
         _actionButtonsView.OnUseAction -= Interact;
         _actionButtonsView.OnEquipAction -= Interact;
         _actionButtonsView.OnDropAction -= Drop;
-        _actionButtonsView.OnMoveToStorageAction -= MoveToStorage;
+        _actionButtonsView.OnMoveAction -= Move;
     }
 
     public override void UpdateView(InventoryWindowModel uiModel)
@@ -52,9 +52,9 @@ public class InventoryWindowView : WindowView<InventoryWindowModel>
         OnDrop?.Invoke();
     }
 
-    private void MoveToStorage()
+    private void Move()
     {
-        OnMoveToStorage?.Invoke();
+        OnMove?.Invoke();
     }
 }
 

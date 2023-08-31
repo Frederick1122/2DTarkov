@@ -10,14 +10,14 @@ namespace UI.Inventory
         public event Action OnEquipAction;
         public event Action OnDivideAction;
         public event Action OnDropAction;
-        public event Action OnMoveToStorageAction;
+        public event Action OnMoveAction;
     
         [Space] [Header("Action Buttons")]
         [SerializeField] private Button _useButton;
         [SerializeField] private Button _equipButton;
         [SerializeField] private Button _divideButton;
         [SerializeField] private Button _dropButton;
-        [SerializeField] private Button _moveToStorageButton;
+        [SerializeField] private Button _moveButton;
 
         private void Start()
         {
@@ -25,7 +25,7 @@ namespace UI.Inventory
             _equipButton.onClick.AddListener(() => OnEquipAction?.Invoke());
             _divideButton.onClick.AddListener(() => OnDivideAction?.Invoke());
             _dropButton.onClick.AddListener(() => OnDropAction?.Invoke());
-            _moveToStorageButton.onClick.AddListener(() => OnMoveToStorageAction?.Invoke());
+            _moveButton.onClick.AddListener(() => OnMoveAction?.Invoke());
         }
 
         public void SetActiveButtons(bool isActiveUseButton = false, bool isActiveEquipButton = false,
@@ -35,7 +35,7 @@ namespace UI.Inventory
             _equipButton.gameObject.SetActive(isActiveEquipButton);
             _divideButton.gameObject.SetActive(isActiveDivideButton);
             _dropButton.gameObject.SetActive(isActiveDropButton);
-            _moveToStorageButton.gameObject.SetActive(isMoveToStorageButton);
+            _moveButton.gameObject.SetActive(isMoveToStorageButton);
         }
     }
 }

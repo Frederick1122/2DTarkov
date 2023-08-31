@@ -169,5 +169,6 @@ public class InventoryCell
 public enum InventoryType
 {
     Inventory,
-    Storage
+    Storage,
+    LootBox
 }

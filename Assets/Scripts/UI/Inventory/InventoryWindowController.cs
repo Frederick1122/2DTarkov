@@ -11,6 +11,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
     [SerializeField] private ItemCellView _inventoryCellView;
     [SerializeField] private EquipmentPanelController _equipmentPanelController;
+    [SerializeField] private LootBoxWindowController _lootBoxWindowController;
 
     private ItemCellView _currentCellView;
     private List<ItemCellView> _cells = new List<ItemCellView>();
@@ -22,7 +23,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
     {
         _view.OnInteractWithItem += InteractWithItem;
         _view.OnDrop += Drop;
-        _view.OnMoveToStorage += Move;
+        _view.OnMove += Move;
 
         if (_equipmentPanelController != null)
         {
@@ -35,7 +36,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
     {
         _view.OnInteractWithItem -= InteractWithItem;
         _view.OnDrop -= Drop;
-        _view.OnMoveToStorage -= Move;
+        _view.OnMove -= Move;
 
         if (_equipmentPanelController != null)
         {
@@ -134,6 +135,11 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
         RefreshActionButtons();
 
+        if (_lootBoxWindowController != null)
+        {
+            
+        }
+        
         var inventoryTypeToTransfer =
             _inventoryType == InventoryType.Inventory ? InventoryType.Storage : InventoryType.Inventory;
         Inventory.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount(), inventoryTypeToTransfer);
@@ -204,7 +210,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
         _view.UpdateView(new InventoryWindowModel(new ItemInformationPanelModel(item.icon, item.name, item.description),
             item is IUse, item is IEquip,
-            true, !_isStorageWindow, _isStorageWindow));
+            true, !_isStorageWindow, _isStorageWindow || _lootBoxWindowController != null));
     }
 
     private void DestroyCurrentItem()
