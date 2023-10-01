@@ -9,7 +9,7 @@ EditorUserSettings:
       value: 515250075c0c595e5f5a5e71122159444e4e4a2f7a7d7f602f284d66b4b76661
       flags: 0
     RecentlyUsedSceneGuid-1:
-      value: 06525702520d5a03585f5b73407a094443161a2e752b73337f7c1964bbe5323a
+      value: 5504020252060a035d5e597416770c44424f407b782b22687f2f4a61b2b53061
       flags: 0
     RecentlyUsedSceneGuid-2:
       value: 02070650550d5b5e555a5f7644740844464f4b79797a7464752d4b30e0b06d6e
@@ -22,7 +22,7 @@ EditorUserSettings:
   m_VCDebugCmd: 0
   m_VCDebugOut: 0
   m_SemanticMergeMode: 2
-  m_DesiredImportWorkerCount: 6
+  m_DesiredImportWorkerCount: 3
   m_StandbyImportWorkerCount: 2
   m_IdleImportWorkerShutdownDelay: 60000
   m_VCShowFailedCheckout: 1

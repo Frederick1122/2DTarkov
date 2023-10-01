@@ -1,6 +1,7 @@
 using System;
 using Base;
 using InteractObjects;
+using NavMeshPlus.Components;
 using UnityEngine;
 
 public class GameBus : Singleton<GameBus>
@@ -10,6 +11,7 @@ public class GameBus : Singleton<GameBus>
     [SerializeField] private PlayerHumanoid _playerHumanoid;
     [SerializeField] private Level _level;
     [SerializeField] private Joystick _joystick;
+    [SerializeField] private NavMeshSurface _navMeshSurface;
 
     public PlayerHumanoid GetPlayer()
     {
@@ -35,6 +37,11 @@ public class GameBus : Singleton<GameBus>
         return _level;
     }
     
+    public NavMeshSurface GetNavMeshSurface()
+    {
+        return _navMeshSurface;
+    }
+    
     public void SetPlayer( PlayerHumanoid playerHumanoid )
     {
         _playerHumanoid = playerHumanoid;
@@ -44,5 +51,10 @@ public class GameBus : Singleton<GameBus>
     {
         _level = currentLevel;
         OnLevelSet?.Invoke(_level);
+    }
+
+    public void SetNavMeshSurface(NavMeshSurface navMeshSurface)
+    {
+        _navMeshSurface = navMeshSurface;
     }
 }
