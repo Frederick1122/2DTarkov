@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5808866210604750755}
   - component: {fileID: 1604999111772146407}
   m_Layer: 0
-  m_Name: Take
+  m_Name: Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Take
+  m_text: 'Move
 
 '
   m_isRightToLeft: 0
@@ -799,7 +799,7 @@ MonoBehaviour:
   _equipButton: {fileID: 2439443141070528734}
   _divideButton: {fileID: 2113813403517207969}
   _dropButton: {fileID: 4264089444171649476}
-  _takeButton: {fileID: 1604999111772146407}
+  _moveButton: {fileID: 1604999111772146407}
 --- !u!1 &4675508156975335983
 GameObject:
   m_ObjectHideFlags: 0
