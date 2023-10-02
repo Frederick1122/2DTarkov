@@ -1,8 +1,8 @@
-public abstract class FsmState<T> where T : Fsm
+public abstract class FsmState
 {
-    protected readonly T _fsm;
+    protected readonly Fsm _fsm;
 
-    public FsmState(T fsm)
+    public FsmState(Fsm fsm)
     {
         _fsm = fsm;
     }
