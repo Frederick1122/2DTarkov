@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 
-public class Fsm
+public abstract class Fsm
 {
-   private FsmState _currentState;
-   private Dictionary<Type, FsmState> _states = new Dictionary<Type, FsmState>();
+   private FsmState<Fsm> _currentState;
+   private Dictionary<Type, FsmState<Fsm>> _states = new Dictionary<Type, FsmState<Fsm>>();
 
-   public void AddState(FsmState state)
+   public void AddState(FsmState<Fsm> state)
    {
       _states.Add(state.GetType(), state);
    }
 
-   public void SetState<T>() where T : FsmState
+   public void SetState<T>() where T : FsmState<Fsm>
    {
       var type = typeof(T);
       
