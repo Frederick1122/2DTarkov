@@ -2,11 +2,16 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public abstract class Fsm
+public class Fsm
 {
    protected FsmState _currentState;
    protected Dictionary<Type, FsmState> _states = new Dictionary<Type, FsmState>();
 
+   public virtual void Init()
+   {
+      
+   }
+   
    public void AddState<T>(FsmState state) where T : FsmState
    {
       _states.Add(typeof(T), state);

@@ -1,6 +1,8 @@
-﻿public class EnemyFsmStateSearch : FsmState
+﻿using UnityEngine.AI;
+
+public class EnemyFsmStateSearch : EnemyFsmState
 {
-    public EnemyFsmStateSearch(EnemyFsm fsm) : base(fsm)
+    public EnemyFsmStateSearch(EnemyFsm fsm, NavMeshAgent meshAgent) : base(fsm, meshAgent)
     {
     }
 }

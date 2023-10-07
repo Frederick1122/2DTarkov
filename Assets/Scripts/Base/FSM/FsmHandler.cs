@@ -4,7 +4,23 @@ using UnityEngine;
 
 public class FsmHandler : MonoBehaviour
 {
-     [SerializeField] private List<FsmCase> _fsms = new List<FsmCase>();
+     [SerializeField] private List<FsmCase> _fsmCases = new List<FsmCase>();
+
+     private void Start()
+     {
+          foreach (var fsmCase in _fsmCases)
+          {
+               fsmCase.Fsm.Init();
+          }
+     }
+
+     private void Update()
+     {
+          foreach (var fsmCase in _fsmCases)
+          {
+               fsmCase.Fsm.Update();
+          }
+     }
 }
 
  [Serializable]
