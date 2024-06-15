@@ -2,7 +2,7 @@
 using Base;
 using UnityEngine;
 
-public class Equipment : SaveLoadManager<EquipmentData, Equipment>
+public class EquipmentSaveLoadManager : SaveLoadManager<EquipmentData, EquipmentSaveLoadManager>
 {
     private const string EQUIPMENT_JSON_PATH = "Equipment.json";
 
@@ -27,7 +27,7 @@ public class Equipment : SaveLoadManager<EquipmentData, Equipment>
             RemoveEquipment(currentEquip);    
         }
         
-        Inventory.Instance.DeleteItem((Item) item);
+        InventorySaveLoadManager.Instance.DeleteItem((Item) item);
         _saveData.SetEquipment(item, equipmentType);
 
         OnEquipmentChanged?.Invoke(_saveData);
@@ -40,10 +40,10 @@ public class Equipment : SaveLoadManager<EquipmentData, Equipment>
         if (ammoInMagazine > 0)
         {
             var ammoItem = ((Weapon) item).bullet;
-            Inventory.Instance.AddItem(ammoItem, ammoInMagazine);
+            InventorySaveLoadManager.Instance.AddItem(ammoItem, ammoInMagazine);
         }
         
-        Inventory.Instance.AddItem((Item) item);
+        InventorySaveLoadManager.Instance.AddItem((Item) item);
 
         _saveData.SetEquipment(default, item.GetEquipmentType());
         OnEquipmentChanged?.Invoke(_saveData);

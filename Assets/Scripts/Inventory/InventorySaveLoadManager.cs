@@ -5,7 +5,7 @@ using Base;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Inventory : SaveLoadManager<InventoryData, Inventory>
+public class InventorySaveLoadManager : SaveLoadManager<InventoryData, InventorySaveLoadManager>
 {
     private const string INVENTORY_JSON_PATH = "Inventory.json";
 

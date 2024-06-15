@@ -12,14 +12,14 @@ namespace UI.Base
         private void Start()
         {
             GameBus.Instance.OnLevelSet += SetLevelInfo;
-            Player.Instance.OnHpChanged += SetHp;
-            SetHp(Player.Instance.GetHp());
+            PlayerSaveLoadManager.Instance.OnHpChanged += SetHp;
+            SetHp(PlayerSaveLoadManager.Instance.GetHp());
         }
 
         private void OnDisable()
         {
             GameBus.Instance.OnLevelSet -= SetLevelInfo;
-            Player.Instance.OnHpChanged -= SetHp;
+            PlayerSaveLoadManager.Instance.OnHpChanged -= SetHp;
         }
 
         public void InitInteractButton(IInteract interact)
@@ -39,7 +39,7 @@ namespace UI.Base
 
         private void SetLevelInfo(Level currentLevel)
         {
-            var lastLevelData = Player.Instance.GetLastLevelData();
+            var lastLevelData = PlayerSaveLoadManager.Instance.GetLastLevelData();
             var exits = GameBus.Instance.GetLevel().GetEntryExits();
             var exitNames = new List<string>();
             foreach (var exitIndex in lastLevelData.exitIndexes)

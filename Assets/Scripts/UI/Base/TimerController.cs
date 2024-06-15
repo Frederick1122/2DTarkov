@@ -19,12 +19,12 @@ public class TimerController : UIController<TimerView, TimerModel>
 
     private void OnApplicationQuit()
     {
-        Player.Instance.SetLastRemainingTime(_remainingTime);
+        PlayerSaveLoadManager.Instance.SetLastRemainingTime(_remainingTime);
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        Player.Instance.SetLastRemainingTime(_remainingTime);
+        PlayerSaveLoadManager.Instance.SetLastRemainingTime(_remainingTime);
     }
 
     public void Init(TimeSpan remainingTime)

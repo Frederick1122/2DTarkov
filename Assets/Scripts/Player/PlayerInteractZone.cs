@@ -19,7 +19,7 @@ using UnityEngine.UI;
         private void Start()
         {
             _playerHumanoid = GameBus.Instance.GetPlayer();
-            _baseUIWindowController = UIMainController.Instance.GetBaseUI();   
+            _baseUIWindowController = UIManager.Instance.GetBaseUI();   
         }
 
         private void OnTriggerEnter2D(Collider2D col)

@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FsmHandler : MonoBehaviour
+namespace Base.FSM
 {
-     [SerializeField] private List<FsmCase> _fsmCases = new List<FsmCase>();
-
-     private void Start()
+     public class FsmHandler : MonoBehaviour
      {
-          foreach (var fsmCase in _fsmCases)
+          [SerializeField] private List<FsmCase> _fsmCases = new List<FsmCase>();
+
+          private void Start()
           {
-               fsmCase.Fsm.Init();
+               foreach (var fsmCase in _fsmCases)
+               {
+                    fsmCase.Fsm.Init();
+               }
+          }
+
+          private void Update()
+          {
+               foreach (var fsmCase in _fsmCases)
+               {
+                    fsmCase.Fsm.Update();
+               }
           }
      }
 
-     private void Update()
+     [Serializable]
+     public class FsmCase
      {
-          foreach (var fsmCase in _fsmCases)
-          {
-               fsmCase.Fsm.Update();
-          }
+          [SerializeReference, SubclassPicker] public Fsm Fsm;
      }
 }
-
- [Serializable]
- public class FsmCase
- {
-      [SerializeReference, SubclassPicker] public Fsm Fsm;
- }

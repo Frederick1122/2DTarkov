@@ -20,7 +20,7 @@ namespace UI.Base
 
         private void Start()
         {
-            _inventoryButton.onClick.AddListener(UIMainController.Instance.OpenInventoryUI);
+            _inventoryButton.onClick.AddListener(UIManager.Instance.OpenInventoryUI);
             _exitInfosButton.onClick.AddListener(ChangeActivityExitInfosPanel);
             _exitInfosPanel.gameObject.SetActive(false);
         }

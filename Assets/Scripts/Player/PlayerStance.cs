@@ -19,13 +19,13 @@ public class PlayerStance : MonoBehaviour
 
     private void OnDisable()
     {
-        Equipment.Instance.OnEquipmentChanged -= SetStance;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= SetStance;
     }
 
     private void Start()
     {
-        Equipment.Instance.OnEquipmentChanged += SetStance; 
-        SetStance(Equipment.Instance.GetEquipment());
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged += SetStance; 
+        SetStance(EquipmentSaveLoadManager.Instance.GetEquipment());
     }
 
     private void SetStance(EquipmentData equipmentData)

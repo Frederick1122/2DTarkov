@@ -8,14 +8,14 @@ public class WeaponTabController : MonoBehaviour
 
     private void Start()
     {
-        Equipment.Instance.OnEquipmentChanged += UpdateView;
-        Inventory.Instance.OnInventoryAdded += UpdateReverse;
-        Inventory.Instance.OnInventoryDeleted += UpdateReverse;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged += UpdateView;
+        InventorySaveLoadManager.Instance.OnInventoryAdded += UpdateReverse;
+        InventorySaveLoadManager.Instance.OnInventoryDeleted += UpdateReverse;
 
         _weaponTabView.onClickReload += ReloadCurrentWeapon;
         _weaponTabView.onClickSwipeWeapon += SwipeWeapon;
         
-        UpdateView(Equipment.Instance.GetEquipment());
+        UpdateView(EquipmentSaveLoadManager.Instance.GetEquipment());
     }
 
     private void OnDisable()
@@ -23,9 +23,9 @@ public class WeaponTabController : MonoBehaviour
         _weaponTabView.onClickReload -= ReloadCurrentWeapon;
         _weaponTabView.onClickSwipeWeapon -= SwipeWeapon;
         
-        Equipment.Instance.OnEquipmentChanged -= UpdateView;
-        Inventory.Instance.OnInventoryAdded -= UpdateReverse;
-        Inventory.Instance.OnInventoryDeleted -= UpdateReverse;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= UpdateView;
+        InventorySaveLoadManager.Instance.OnInventoryAdded -= UpdateReverse;
+        InventorySaveLoadManager.Instance.OnInventoryDeleted -= UpdateReverse;
     }
 
     private void UpdateView(EquipmentData equipmentData)
@@ -37,7 +37,7 @@ public class WeaponTabController : MonoBehaviour
             : equipmentData.firstWeaponAmmoInMagazine;
         if (_currentWeapon != null)
         {
-            var reserve = Inventory.Instance.GetItemCount(_currentWeapon.bullet);
+            var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeapon.bullet);
             var weaponTabModel = new WeaponTabModel(_currentWeapon.icon,
                 _currentWeapon.itemName,
                 _currentWeapon.maxAmmoInMagazine,
@@ -57,7 +57,7 @@ public class WeaponTabController : MonoBehaviour
         if(_currentWeapon == null || item != _currentWeapon.bullet)
             return;
         
-        var reserve = Inventory.Instance.GetItemCount(_currentWeapon.bullet);
+        var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeapon.bullet);
 
         var weaponTabModel = new WeaponTabModel(reserve: reserve);
         
@@ -70,20 +70,20 @@ public class WeaponTabController : MonoBehaviour
             return;
         
         var maxAmmoInMagazine = _currentWeapon.maxAmmoInMagazine;
-        var ammoInMagazine = Equipment.Instance.GetAmmoInMagazine(_currentWeapon);
+        var ammoInMagazine = EquipmentSaveLoadManager.Instance.GetAmmoInMagazine(_currentWeapon);
         
-        var reserve = Inventory.Instance.GetItemCount(_currentWeapon.bullet);
+        var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeapon.bullet);
 
         if (reserve > 0 && maxAmmoInMagazine != ammoInMagazine)
         {
             var addedAmmo = Mathf.Clamp(maxAmmoInMagazine - ammoInMagazine, 0, reserve);
-            Inventory.Instance.DeleteItem(_currentWeapon.bullet, addedAmmo);
-            Equipment.Instance.SetAmmoInMagazine( _currentWeapon, ammoInMagazine + addedAmmo);
+            InventorySaveLoadManager.Instance.DeleteItem(_currentWeapon.bullet, addedAmmo);
+            EquipmentSaveLoadManager.Instance.SetAmmoInMagazine( _currentWeapon, ammoInMagazine + addedAmmo);
         }
     }
 
     private void SwipeWeapon()
     {
-        Equipment.Instance.SwipeWeapon();
+        EquipmentSaveLoadManager.Instance.SwipeWeapon();
     }
 }

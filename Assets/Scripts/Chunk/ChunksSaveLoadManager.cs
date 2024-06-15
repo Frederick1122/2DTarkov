@@ -4,7 +4,7 @@ using Base;
 using UnityEditor;
 using UnityEngine;
 
-public class Chunks : SaveLoadManager<ChunksData, Chunks>
+public class ChunksSaveLoadManager : SaveLoadManager<ChunksData, ChunksSaveLoadManager>
 {
     private const string CHUNK_INFO_JSON_PATH = "GameChunkInfo.json";
 
@@ -175,12 +175,12 @@ public class LootBoxData
 
 #if UNITY_EDITOR
 
-[CustomEditor(typeof(Chunks))]
+[CustomEditor(typeof(ChunksSaveLoadManager))]
 public class ChunkEditor : Editor
 {
     public void OnSceneGUI()
     {
-        var chunkManager = target as Chunks;
+        var chunkManager = target as ChunksSaveLoadManager;
 
         if (chunkManager == null)
             return;

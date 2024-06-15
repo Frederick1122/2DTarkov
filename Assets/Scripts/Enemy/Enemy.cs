@@ -75,7 +75,7 @@ public class Enemy : Humanoid
         {
             yield return _cooldownTime;
             var damage = Random.Range(_minDamage, _maxDamage);
-            Player.Instance.ChangeHp(-damage);        
+            PlayerSaveLoadManager.Instance.ChangeHp(-damage);        
         }
     }
     

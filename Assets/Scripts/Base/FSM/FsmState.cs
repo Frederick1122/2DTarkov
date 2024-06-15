@@ -1,13 +1,13 @@
-public abstract class FsmState
+﻿namespace Base.FSM
 {
-    protected readonly Fsm _fsm;
-
-    public FsmState(Fsm fsm)
+    public abstract class FsmState
     {
-        _fsm = fsm;
+        protected Fsm _fsm;
+
+        public FsmState(Fsm fsm) => _fsm = fsm;
+
+        public virtual void Enter() { }
+        public virtual void Exit() { }
+        public virtual void Update() { }
     }
-    
-    public virtual void Enter() { }
-    public virtual void Exit() { }
-    public virtual void Update() { }
 }

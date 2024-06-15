@@ -42,12 +42,12 @@ public class PlayerHumanoid : Humanoid
     
     private void OnApplicationQuit()
     {
-        Player.Instance.SetPlayerTransformData(transform.position, transform.rotation.eulerAngles.z); 
+        PlayerSaveLoadManager.Instance.SetPlayerTransformData(transform.position, transform.rotation.eulerAngles.z); 
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        Player.Instance.SetPlayerTransformData(transform.position, transform.rotation.eulerAngles.z);
+        PlayerSaveLoadManager.Instance.SetPlayerTransformData(transform.position, transform.rotation.eulerAngles.z);
     }
 
     private void Start()

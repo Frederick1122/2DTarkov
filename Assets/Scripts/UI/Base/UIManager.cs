@@ -1,17 +1,22 @@
 using System.Collections.Generic;
 using Base;
 using UI.Base;
-using UI.Inventory;
 using UnityEngine;
 
 namespace UI
 {
-  public class UIMainController : Singleton<UIMainController>
+  public class UIManager : Singleton<UIManager>
   {
     [SerializeField] private BaseUIWindowController _baseUIWindowController;
     [SerializeField] private InventoryWindowController _inventoryWindowController;
     [SerializeField] private LootBoxWindowController _lootBoxWindowController;
     [SerializeField] private EndGameUIController _endGameUIController;
+    
+    public void Init()
+    {
+      //
+    }
+    
     private void Start() => OpenBaseUI();
 
     public void OpenBaseUI()

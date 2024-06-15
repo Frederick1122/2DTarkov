@@ -8,7 +8,7 @@ public class CloseWindow : MonoBehaviour
 
     private void Start()
     {
-        var uiMainController = UIMainController.Instance;
+        var uiMainController = UIManager.Instance;
         
         if(uiMainController != null)
             _button.onClick.AddListener(() => uiMainController.OpenBaseUI());
