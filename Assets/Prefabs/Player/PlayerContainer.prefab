@@ -401,6 +401,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4943175574909740382}
     - target: {fileID: 6278537344806991757, guid: 9c59f91fefb0a5841806c64c0caa830c, type: 3}
+      propertyPath: _rotationSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278537344806991757, guid: 9c59f91fefb0a5841806c64c0caa830c, type: 3}
       propertyPath: _movementJoystick
       value: 
       objectReference: {fileID: 0}

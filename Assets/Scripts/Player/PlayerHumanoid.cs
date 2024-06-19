@@ -1,4 +1,5 @@
 using System;
+using Player.InputSystem;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -22,17 +23,18 @@ public class PlayerHumanoid : Humanoid
     [Header("AUTOSERIALIZED FIELD")] [SerializeField]
     private Rigidbody2D _rigidbody2D;
 
-    private Joystick _movementJoystick;
+    private IInputSystem _inputSystem;
+    // private Joystick _movementJoystick;
 
     private Vector2 _tapPosition;
-    private bool _isMobile;
-    private bool _isSwiping;
+    // private bool _isMobile;
+    // private bool _isSwiping;
 
     private readonly float _deadZone = 0.1f;
     private Vector2 _resolution;
-    private float _nonRotationZone;
+    // private float _nonRotationZone;
     private int _touchNumber;
-    private Vector3 _joystickParameters = Vector3.zero;
+    // private Vector3 _joystickParameters = Vector3.zero;
     private float _fovDifference;
 
     private void OnValidate()
@@ -52,12 +54,14 @@ public class PlayerHumanoid : Humanoid
 
     private void Start()
     {
-        _isMobile = Application.isMobilePlatform;
+        _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
+        _inputSystem.IsActive = true;
+        // _isMobile = Application.isMobilePlatform;
         _resolution = new Vector2(Screen.width, Screen.height);
-        _nonRotationZone = _resolution.x / 4;
+        // _nonRotationZone = _resolution.x / 4;
         _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
         dropAction += _dropPoint.SpawnItem;
-        _movementJoystick = GameBus.Instance.GetJoystick();
+        // _movementJoystick = GameBus.InKCstance.GetJoystick();
         UpdateFields();
     }
 
@@ -66,14 +70,14 @@ public class PlayerHumanoid : Humanoid
         if(isFreeze) 
             return;
         
-        _joystickParameters = GetJoystickParameters();
+        // _joystickParameters = GetJoystickParameters();
         RotateLogic();
         UpdateFOV();
     }
     
     private void FixedUpdate()
     {
-        if(isFreeze) 
+        if (isFreeze) 
             return;
         
         MovementLogic();
@@ -83,97 +87,89 @@ public class PlayerHumanoid : Humanoid
     {
         _fieldOfView.SetAimDirection(Utils.GetVectorFromAngle(transform.rotation.eulerAngles.z + 90));
         _fieldOfView.SetOrigin(transform.position);
-        _fieldOfView.SetFov(_maxFov - _fovDifference * math.clamp(math.abs(_joystickParameters.x)  + math.abs(_joystickParameters.y), 0f, 1f));
+        _fieldOfView.SetFov(_maxFov - _fovDifference * math.clamp(math.abs(_inputSystem.HorizontalMoveInput)  + math.abs(_inputSystem.VerticalMoveInput), 0f, 1f));
     }
 
     private void MovementLogic()
     {
-        var movement = transform.TransformVector(_joystickParameters.x, _joystickParameters.y, transform.position.z);
+        var movement = transform.TransformVector(_inputSystem.HorizontalMoveInput, _inputSystem.VerticalMoveInput, transform.position.z);
         _rigidbody2D.velocity = movement * _movementSpeed * Time.fixedDeltaTime;
-    }
-
-    private Vector3 GetJoystickParameters()
-    {
-        if (_movementJoystick == null)
-            return Vector3.zero;
-        var xMovement = _movementJoystick.Horizontal;
-        var yMovement = _movementJoystick.Vertical;
-        
-        return new Vector3(xMovement, yMovement, 0);
     }
 
     private void RotateLogic()
     {
-        if (!_isMobile)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                _isSwiping = true;
-                _tapPosition = Input.mousePosition;
-            }
-            else if (Input.GetMouseButtonUp(0))
-                ResetSwipe();
-        }
-        else
-        {
-            for (var i = 0; i < Input.touchCount; i++)
-            {
-                var touch = Input.GetTouch(i);
-                if(touch.position.x < _nonRotationZone)
-                    continue;
+        // if (!_isMobile)
+        // {
+        //     if (Input.GetMouseButtonDown(0))
+        //     {
+        //         _isSwiping = true;
+        //         _tapPosition = Input.mousePosition;
+        //     }
+        //     else if (Input.GetMouseButtonUp(0))
+        //         ResetSwipe();
+        // }
+        // else
+        // {
+        //     for (var i = 0; i < Input.touchCount; i++)
+        //     {
+        //         var touch = Input.GetTouch(i);
+        //         if(touch.position.x < _nonRotationZone)
+        //             continue;
+        //
+        //         switch (touch.phase)
+        //         {
+        //             case TouchPhase.Began:
+        //                 _isSwiping = true;
+        //                 _tapPosition = touch.position;
+        //                 _touchNumber = i;
+        //                 break;
+        //             case TouchPhase.Ended:
+        //             case TouchPhase.Canceled:
+        //                 ResetSwipe();
+        //                 break;
+        //         }
+        //     }
+        // }
 
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        _isSwiping = true;
-                        _tapPosition = touch.position;
-                        _touchNumber = i;
-                        break;
-                    case TouchPhase.Ended:
-                    case TouchPhase.Canceled:
-                        ResetSwipe();
-                        break;
-                }
-            }
-        }
-
-        var swipeDelta = Vector2.zero;
+        // var swipeDelta = Vector2.zero;
         
-        if(_tapPosition.x < _nonRotationZone) 
-            return;
+        // if(_tapPosition.x < _nonRotationZone) 
+        //     return;
 
-        if (_isSwiping)
-        {
-            var newTapPosition = new Vector2();
-
-            if (!_isMobile && Input.GetMouseButton(0))
-            {
-                newTapPosition = Input.mousePosition;
-                swipeDelta = newTapPosition - _tapPosition;
-            }
-            else if (Input.touchCount > _touchNumber)
-            {
-                newTapPosition = Input.GetTouch(_touchNumber).position;
-                
-                if(newTapPosition.x < _nonRotationZone)
-                    return;
-                
-                swipeDelta = newTapPosition - _tapPosition;
-            }
-
-            if (swipeDelta.x * swipeDelta.x > _deadZone * _deadZone)
-            {
-                 transform.Rotate(new Vector3(0,0, -swipeDelta.x * _rotationSpeed * Time.deltaTime));
-                _tapPosition = newTapPosition;
-            }
-        }
+        // if (_isSwiping)
+        // {
+        //     var newTapPosition = new Vector2();
+        //
+        //     if (!_isMobile && Input.GetMouseButton(0))
+        //     {
+        //         newTapPosition = Input.mousePosition;
+        //         swipeDelta = newTapPosition - _tapPosition;
+        //     }
+        //     else if (Input.touchCount > _touchNumber)
+        //     {
+        //         newTapPosition = Input.GetTouch(_touchNumber).position;
+        //         
+        //         if(newTapPosition.x < _nonRotationZone)
+        //             return;
+        //         
+        //         swipeDelta = newTapPosition - _tapPosition;
+        //     }
+        //
+        //     if (swipeDelta.x * swipeDelta.x > _deadZone * _deadZone)
+        //     {
+        //          transform.Rotate(new Vector3(0,0, -swipeDelta.x * _rotationSpeed * Time.deltaTime));
+        //         _tapPosition = newTapPosition;
+        //     }
+        // }
+        
+        transform.Rotate(new Vector3(0,0, _inputSystem.HorizontalRotateInput  * _rotationSpeed * Time.deltaTime));
     }
 
-    private void ResetSwipe()
-    {
-        _isSwiping = false;
-        _tapPosition = Vector2.zero;
-    }
+    // private void ResetSwipe()
+    // {
+    //     _isSwiping = false;
+    //     _tapPosition = Vector2.zero;
+    // }
 
     private void UpdateFields()
     {
