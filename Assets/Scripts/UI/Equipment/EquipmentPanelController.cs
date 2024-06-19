@@ -22,7 +22,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
 
     private void OnDisable()
     {
-        Equipment.Instance.OnEquipmentChanged -= UpdateView;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= UpdateView;
         _view.OnContainerClick -= ClickOnContainer;
         _view.OnRemoveButtonClick -= ClickOnRemoveButton;
 
@@ -36,9 +36,9 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
     {
         _view.UpdateView(new EquipmentWindowModel());
 
-        Equipment.Instance.OnEquipmentChanged += UpdateView;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged += UpdateView;
 
-        UpdateView(Equipment.Instance.GetEquipment());
+        UpdateView(EquipmentSaveLoadManager.Instance.GetEquipment());
     }
 
     private void UpdateView(EquipmentData equipmentData)
@@ -59,7 +59,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
 
     private void ClickOnRemoveButton(IEquip equipmentItem)
     {
-        Equipment.Instance.RemoveEquipment(equipmentItem);
+        EquipmentSaveLoadManager.Instance.RemoveEquipment(equipmentItem);
         _view.Refresh();
         OnRemoveButtonClick?.Invoke();
     }

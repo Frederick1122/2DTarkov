@@ -29,7 +29,7 @@ namespace InteractObjects
         
         public void Interact()
         {
-            Inventory.Instance.AddItem(_item, _count);
+            InventorySaveLoadManager.Instance.AddItem(_item, _count);
             Destroy(gameObject);
         }
 

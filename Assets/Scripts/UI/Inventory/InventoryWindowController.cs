@@ -63,16 +63,16 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
         Refresh();
 
-        Inventory.Instance.OnInventoryAdded += AddNewItem;
-        Inventory.Instance.OnInventoryDeleted += DeleteItem;
+        InventorySaveLoadManager.Instance.OnInventoryAdded += AddNewItem;
+        InventorySaveLoadManager.Instance.OnInventoryDeleted += DeleteItem;
     }
 
     public override void Hide()
     {
         base.Hide();
 
-        Inventory.Instance.OnInventoryAdded -= AddNewItem;
-        Inventory.Instance.OnInventoryDeleted -= DeleteItem;
+        InventorySaveLoadManager.Instance.OnInventoryAdded -= AddNewItem;
+        InventorySaveLoadManager.Instance.OnInventoryDeleted -= DeleteItem;
     }
 
     private void AddNewItem(Item item, int count, InventoryType inventoryType)
@@ -113,7 +113,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         {
             count--;
             _currentCellView.SetCount(count);
-            Inventory.Instance.DeleteItem(item, 1, _inventoryType);
+            InventorySaveLoadManager.Instance.DeleteItem(item, 1, _inventoryType);
         }
     }
 
@@ -142,13 +142,13 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         
         var inventoryTypeToTransfer =
             _inventoryType == InventoryType.Inventory ? InventoryType.Storage : InventoryType.Inventory;
-        Inventory.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount(), inventoryTypeToTransfer);
+        InventorySaveLoadManager.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount(), inventoryTypeToTransfer);
         DestroyCurrentItem();
     }
 
     private void Refresh()
     {
-        _inventoryCells = Inventory.Instance.GetInventoryCells(_inventoryType);
+        _inventoryCells = InventorySaveLoadManager.Instance.GetInventoryCells(_inventoryType);
 
         RefreshActionButtons();
         _view.UpdateView(new InventoryWindowModel());
@@ -220,7 +220,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
         var item = _currentCellView.GetItem();
         Destroy(_currentCellView.gameObject);
-        Inventory.Instance.DeleteItem(item, _currentCellView.GetCount(), _inventoryType);
+        InventorySaveLoadManager.Instance.DeleteItem(item, _currentCellView.GetCount(), _inventoryType);
         _view.UpdateView(new InventoryWindowModel());
     }
 }

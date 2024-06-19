@@ -31,7 +31,7 @@ public class Weapon : Item, IEquip
     public void Equip()
     {
         Debug.Log("EQUIP " + name);
-        Equipment.Instance.AddEquipment(this);
+        EquipmentSaveLoadManager.Instance.AddEquipment(this);
     }
 
     public EquipmentType GetEquipmentType()

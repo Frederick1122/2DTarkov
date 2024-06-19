@@ -38,7 +38,7 @@ public class InteractLootBox : MonoBehaviour, IInteract
         if (!_isOpen)
             GenerateNewItems();
 
-        UIMainController.Instance.OpenLootBoxUI(_index, _items);
+        UIManager.Instance.OpenLootBoxUI(_index, _items);
     }
 
     private void GenerateNewItems()

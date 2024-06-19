@@ -44,15 +44,15 @@ public class WeaponInHands : MonoBehaviour
 
     private void OnDisable()
     {
-        Equipment.Instance.OnEquipmentChanged -= SetWeapon; 
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= SetWeapon; 
         _shootArea.onEnter -= AddEnemy;
         _shootArea.onExit -= RemoveEnemy;
     }
 
     private void Start()
     {
-        Equipment.Instance.OnEquipmentChanged += SetWeapon; 
-        SetWeapon(Equipment.Instance.GetEquipment());
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged += SetWeapon; 
+        SetWeapon(EquipmentSaveLoadManager.Instance.GetEquipment());
         UpdateFields();
     }
     
@@ -145,7 +145,7 @@ public class WeaponInHands : MonoBehaviour
         var bullet = Instantiate(_weaponPool[_activeWeapon.itemName], _bulletSpawnPoint.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
         _ammo--;
-        Equipment.Instance.SetAmmoInMagazine(_activeWeapon, _ammo);
+        EquipmentSaveLoadManager.Instance.SetAmmoInMagazine(_activeWeapon, _ammo);
         bullet.transform.Rotate(0,0,currentDispersion);
         bullet.GetComponent<BulletLogic>().Init(_activeWeapon.bullet.speed, _activeWeapon.bullet.damage);
     }
