@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using Base;
 using UnityEngine;
 
-<<<<<<<< HEAD:Assets/Scripts/Player/PlayerManager.cs
-public class PlayerManager : SaveLoadManager<PlayerData, PlayerManager>
-========
 public class PlayerSaveLoadManager : SaveLoadManager<PlayerData, PlayerSaveLoadManager>
->>>>>>>> 8cf9770682781e20a819abd705a85c967a1613b5:Assets/Scripts/Player/PlayerSaveLoadManager.cs
 {
     private const string PLAYER_JSON_PATH = "Player.json";
     
