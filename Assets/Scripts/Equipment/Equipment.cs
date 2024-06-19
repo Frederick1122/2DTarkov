@@ -192,5 +192,6 @@ public enum EquipmentType
     backpack,
     kevlar,
     firstWeapon,
-    secondWeapon
+    secondWeapon,
+    knife
 }

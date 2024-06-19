@@ -17,14 +17,14 @@ public class LevelCreator : MonoBehaviour
     {
         Level level;
         var playerContainer = Instantiate(_playerContainer);
-        var lastLevelPath = Player.Instance.GetLastLevelData().lastLevelPath;
+        var lastLevelPath = PlayerManager.Instance.GetLastLevelData().lastLevelPath;
         
         if (lastLevelPath != "")
         {
             level = Instantiate(Resources.Load(lastLevelPath), transform, true).GetComponent<Level>();
 
-            var playerPosition = Player.Instance.GetLastLevelData().lastPosition;
-            var playerRotation = Player.Instance.GetLastLevelData().lastRotation;
+            var playerPosition = PlayerManager.Instance.GetLastLevelData().lastPosition;
+            var playerRotation = PlayerManager.Instance.GetLastLevelData().lastRotation;
             var playerTransform = playerContainer.GetPlayer().transform;
             playerTransform.position = new Vector3(playerPosition.x, playerPosition.y);
             playerTransform.Rotate(new Vector3(0,0, playerRotation));
@@ -55,7 +55,7 @@ public class LevelCreator : MonoBehaviour
                 lastRemainingMinutes = 10
             };
 
-            Player.Instance.SetLastLevelData(newLevelData);
+            PlayerManager.Instance.SetLastLevelData(newLevelData);
         }
         
         Chunks.Instance.SetLevelInfo(level.GetLootBoxIndexes, level.GetLootBoxes);

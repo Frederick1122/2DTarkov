@@ -26,13 +26,13 @@ public class EntryExit : MonoBehaviour
     {
         if (col.gameObject.GetComponent<PlayerHumanoid>())
         {
-            var exitIndexes = Player.Instance.GetLastLevelData().exitIndexes;
+            var exitIndexes = PlayerManager.Instance.GetLastLevelData().exitIndexes;
             foreach (var exitIndex in exitIndexes)
             {
                 if (GameBus.Instance.GetLevel().GetEntryExits()[exitIndex] == this)
                 {
                     Chunks.Instance.ClearChunksData();
-                    Player.Instance.ClearPlayerData();
+                    PlayerManager.Instance.ClearPlayerData();
                     UIMainController.Instance.OpenEndGameUI(TEXT_ON_EXIT);
                     return;
                 }

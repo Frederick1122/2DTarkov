@@ -46,7 +46,7 @@ public class ManagerGenerator<T> : MonoBehaviour where T : MonoBehaviour
 
 public class GameBusGenerator : ManagerGenerator<GameBus> {}
 public class SceneLoaderGenerator : ManagerGenerator<SceneLoader> {}
-public class PlayerGenerator : ManagerGenerator<Player> {}
+public class PlayerGenerator : ManagerGenerator<PlayerManager> {}
 public class EquipmentGenerator : ManagerGenerator<Equipment> {}
 public class InventoryGenerator : ManagerGenerator<Inventory> {}
 public class ChunksGenerator : ManagerGenerator<Chunks> {}

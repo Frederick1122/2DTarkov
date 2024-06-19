@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class PlayerStance : MonoBehaviour
+public class PlayerView : MonoBehaviour
 {
     [SerializeField] private Sprite _firstWeaponSprite;
     [SerializeField] private Sprite _secondWeaponSprite;
@@ -16,19 +13,22 @@ public class PlayerStance : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
-    private void OnDisable()
+    
+    private void OnDestroy()
     {
-        Equipment.Instance.OnEquipmentChanged -= SetStance;
+        if (Equipment.Instance == null)
+            return;
+        
+        Equipment.Instance.OnEquipmentChanged -= SetView;
     }
 
     private void Start()
     {
-        Equipment.Instance.OnEquipmentChanged += SetStance; 
-        SetStance(Equipment.Instance.GetEquipment());
+        Equipment.Instance.OnEquipmentChanged += SetView; 
+        SetView(Equipment.Instance.GetEquipment());
     }
 
-    private void SetStance(EquipmentData equipmentData)
+    private void SetView(EquipmentData equipmentData)
     {
         if (!equipmentData.isSecondWeapon)
         {

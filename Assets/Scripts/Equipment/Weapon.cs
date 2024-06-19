@@ -9,14 +9,16 @@ public class Weapon : Item, IEquip
     [Space]
     public Bullet bullet;
     [Space]
+    public Sprite topSprite;
+    [Space] 
+    public bool isKnife;
     public bool isSecondWeapon;
     public int maxAmmoInMagazine;
     public float rateOfFire;
     public float bulletDispersion;
     public float maxFiringDistance;
-    public Vector3 bulletSpawnPointPosition;
-    [Space]
-    public Sprite topSprite;
+
+    public bool noNeedAmmo;
     
     internal override void OnValidate()
     {
@@ -37,6 +39,9 @@ public class Weapon : Item, IEquip
         if (isSecondWeapon)
             return EquipmentType.secondWeapon;
 
+        if (isKnife)
+            return EquipmentType.knife;
+        
         return EquipmentType.firstWeapon;
     }
 }

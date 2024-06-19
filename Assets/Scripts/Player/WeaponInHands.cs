@@ -9,12 +9,15 @@ using Random = UnityEngine.Random;
 public class WeaponInHands : MonoBehaviour
 {
     private static string OBSTACLE_TAG = "Obstacle";
+
+    [SerializeField] private Weapon _knife;
+    [Space]
     [SerializeField] private Vector3 _firstWeaponPosition;
     [SerializeField] private Vector3 _secondWeaponPosition;
-    
+    [Space]
     [SerializeField] private ShootArea _shootArea;
-    [SerializeField] private GameObject _bulletSpawnPoint;
-
+    [SerializeField] private Transform _bulletSpawnPoint;
+    [Space]
     [SerializeField] private SpriteRenderer _spriteRenderer;
     
     private GameObject _player;
@@ -71,37 +74,19 @@ public class WeaponInHands : MonoBehaviour
         
         if (newWeapon == null)
         {
-            _activeWeapon = null;
+            _activeWeapon = _knife;
             _spriteRenderer.enabled = false;
         }
         else
         {
+            if (newWeapon == _activeWeapon)
+                return;
+            
+            _activeWeapon = newWeapon;
             _spriteRenderer.enabled = true;
         }
         
-        if (newWeapon == _activeWeapon)
-        {
-            return;
-        }
-        
-        _bulletDispersion = newWeapon.bulletDispersion;
-        _rateOfFireInstruction = new WaitForSeconds(newWeapon.rateOfFire);
-        
-        if (!_weaponPool.ContainsKey(newWeapon.itemName))
-        {
-            var newBulletLogic = Resources.Load(newWeapon.bullet.bulletPrefabPath).GetComponent<BulletLogic>();
-            _weaponPool.Add(newWeapon.itemName, newBulletLogic);
-        }
-        
-        _spriteRenderer.sprite = newWeapon.topSprite;
-
-        var bulletSpawnPointX = _spriteRenderer.localBounds.max.x;
-        var bulletSpawnPointY = _spriteRenderer.localBounds.center.y;
-        _bulletSpawnPoint.transform.localPosition = new Vector3(bulletSpawnPointX, bulletSpawnPointY);
-
-        _shootArea.SetDistance(newWeapon.maxFiringDistance, _bulletSpawnPoint.transform.position);
-        
-        _activeWeapon = newWeapon;
+        UpdateWeapon();
     }
 
     private void AddEnemy(GameObject enemy)
@@ -117,31 +102,63 @@ public class WeaponInHands : MonoBehaviour
     
     private void Update()
     {
-        if (_enemies.Count == 0 || _ammo <= 0 || _activeWeapon == null)
+        if (IsNeedAttack())
         {
             if (_attackRoutine != null)
             {
                 StopCoroutine(_attackRoutine);
                 _attackRoutine = null;
             }
+            
             return;
         }
 
         _attackRoutine ??= StartCoroutine(AttackRoutine());
-        
+
         #if UNITY_EDITOR
         DrawRays();
         #endif
     }
 
+    private void UpdateWeapon()
+    {
+        _bulletDispersion = _activeWeapon.bulletDispersion;
+        _rateOfFireInstruction = new WaitForSeconds(_activeWeapon.rateOfFire);
+        
+        if (!_weaponPool.ContainsKey(_activeWeapon.itemName) && !_activeWeapon.noNeedAmmo)
+        {
+            var newBulletLogic = Resources.Load(_activeWeapon.bullet.bulletPrefabPath).GetComponent<BulletLogic>();
+            _weaponPool.Add(_activeWeapon.itemName, newBulletLogic);
+        }
+        
+        _spriteRenderer.sprite = _activeWeapon.topSprite;
+
+        var bulletSpawnPointX = _spriteRenderer.localBounds.max.x;
+        var bulletSpawnPointY = _spriteRenderer.localBounds.center.y;
+        _bulletSpawnPoint.localPosition = new Vector3(bulletSpawnPointX, bulletSpawnPointY);
+
+        _shootArea.SetDistance(_activeWeapon.maxFiringDistance, _bulletSpawnPoint.position);
+    }
+    
     private void Shoot()
     {
-        var bullet = Instantiate(_weaponPool[_activeWeapon.itemName], _bulletSpawnPoint.transform.position, _player.transform.localRotation);
+        var bullet = Instantiate(_weaponPool[_activeWeapon.itemName], _bulletSpawnPoint.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
         _ammo--;
         Equipment.Instance.SetAmmoInMagazine(_activeWeapon, _ammo);
         bullet.transform.Rotate(0,0,currentDispersion);
         bullet.GetComponent<BulletLogic>().Init(_activeWeapon.bullet.speed, _activeWeapon.bullet.damage);
+    }
+
+    private bool IsNeedAttack()
+    {
+        if (_enemies.Count == 0 || _activeWeapon == null)
+            return false;
+
+        if (!_activeWeapon.noNeedAmmo && _ammo <= 0)
+            return false;
+
+        return true;
     }
     
     private IEnumerator AttackRoutine()
@@ -174,7 +191,7 @@ public class WeaponInHands : MonoBehaviour
     {
         foreach (var enemy in _enemies)
         {
-            var hit = Physics2D.Raycast(_bulletSpawnPoint.transform.position, enemy.transform.position - _bulletSpawnPoint.transform.position);
+            var hit = Physics2D.Raycast(_bulletSpawnPoint.position, enemy.transform.position - _bulletSpawnPoint.transform.position);
 
             if (hit.collider != null)
             {
@@ -193,7 +210,7 @@ public class WeaponInHands : MonoBehaviour
     {
         foreach (var enemy in _enemies)
         {
-            Debug.DrawRay(_bulletSpawnPoint.transform.position, enemy.transform.position - _bulletSpawnPoint.transform.position, Color.yellow);
+            Debug.DrawRay(_bulletSpawnPoint.position, enemy.transform.position - _bulletSpawnPoint.position, Color.yellow);
         }
     }
     
