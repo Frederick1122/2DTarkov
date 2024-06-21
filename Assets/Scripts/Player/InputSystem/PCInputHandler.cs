@@ -27,16 +27,9 @@ namespace Player.InputSystem
         private float _horizontalMove = 0;
         private float _horizontalRotate = 0;
 
-        private float _lastMousePositionX;
-        
         public void Init()
         {
             IsActive = false;
-            _verticalMove = 0;
-            _horizontalMove = 0;
-            _horizontalRotate = 0;
-            _lastMousePositionX = Input.mousePosition.x;
-
             Cursor.lockState = CursorLockMode.Locked;
         }
 
@@ -77,17 +70,6 @@ namespace Player.InputSystem
                 _horizontalRotate = horA;
                 OnHorizontalRotateChange?.Invoke(-_horizontalRotate);
             }
-            
-            // var currentMousePositionX = Input.mousePosition.x; 
-            // var horizontalRotate = currentMousePositionX - _lastMousePositionX;
-            //
-            // if (_horizontalRotate != horizontalRotate)
-            // {
-            //     _horizontalRotate = horizontalRotate;
-            //     OnHorizontalRotateChange?.Invoke(Math.Clamp(_horizontalRotate, -1, 1) );
-            // }
-            //
-            // _lastMousePositionX = currentMousePositionX;
         }
 
         private void OtherInputsLogic()

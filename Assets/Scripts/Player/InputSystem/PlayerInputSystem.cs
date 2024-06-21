@@ -28,11 +28,11 @@ namespace Player.InputSystem
 
         private void Awake()
         {
-#if UNITY_ANDROID 
+// #if UNITY_ANDROID 
             _inputHandler = gameObject.AddComponent(typeof(MobileInputHandler)) as IInputHandler;
-#else
-            _inputHandler = gameObject.AddComponent(typeof(PCInputHandler)) as IInputHandler;
-#endif
+// #else
+//             _inputHandler = gameObject.AddComponent(typeof(PCInputHandler)) as IInputHandler;
+// #endif
             _inputHandler.Init();
 
             _inputHandler.OnVerticalMoveChange += OnVerticalMoveChange;
