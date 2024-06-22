@@ -475,7 +475,7 @@ MonoBehaviour:
   _hp: 100
   _armor: 10
   _movementSpeed: 200
-  _rotationSpeed: 10
+  _rotationSpeed: 100
   _fieldOfView: {fileID: 0}
   _minFov: 50
   _maxFov: 90
