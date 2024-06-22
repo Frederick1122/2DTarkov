@@ -52,7 +52,7 @@ public class Enemy : Humanoid
         
         if (!_agent.isOnNavMesh)
         {
-            Vector3 warpPosition = new Vector3(_agent.transform.position.x, _agent.transform.position.y,  GameBus.Instance.GetNavMeshSurface().transform.position.z + 1) ; //Set to position you want to warp to
+            Vector3 warpPosition = new Vector3(_agent.transform.position.x, _agent.transform.position.y,  GameBus.Instance.NavMeshSurface.transform.position.z + 1) ; //Set to position you want to warp to
             _agent.transform.position = warpPosition;
             _agent.enabled = false;
             _agent.enabled = true;
@@ -60,7 +60,7 @@ public class Enemy : Humanoid
         }
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
-        _player = GameBus.Instance.GetPlayer();
+        _player = GameBus.Instance.PlayerHumanoid;
     }
 
     private void Update()

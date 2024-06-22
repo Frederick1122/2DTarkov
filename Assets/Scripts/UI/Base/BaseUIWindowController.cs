@@ -40,7 +40,7 @@ namespace UI.Base
         private void SetLevelInfo(Level currentLevel)
         {
             var lastLevelData = PlayerSaveLoadManager.Instance.GetLastLevelData();
-            var exits = GameBus.Instance.GetLevel().GetEntryExits();
+            var exits = GameBus.Instance.Level.GetEntryExits();
             var exitNames = new List<string>();
             foreach (var exitIndex in lastLevelData.exitIndexes)
             {

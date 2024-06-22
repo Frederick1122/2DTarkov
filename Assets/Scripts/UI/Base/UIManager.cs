@@ -23,7 +23,7 @@ namespace UI
     {
       CloseAllUI();
     
-      GameBus.Instance.GetPlayer().isFreeze = false;
+      GameBus.Instance.PlayerHumanoid.isFreeze = false;
       _baseUIWindowController.Show();
     }
 
@@ -31,7 +31,7 @@ namespace UI
     {
       CloseAllUI();
       
-      GameBus.Instance.GetPlayer().isFreeze = true;
+      GameBus.Instance.PlayerHumanoid.isFreeze = true;
       
       _inventoryWindowController.Show();
     }
@@ -40,7 +40,7 @@ namespace UI
     {
       CloseAllUI();
       
-      GameBus.Instance.GetPlayer().isFreeze = true;
+      GameBus.Instance.PlayerHumanoid.isFreeze = true;
       
       _lootBoxWindowController.Init(lootBoxIndex, lootItems);
       _lootBoxWindowController.Show();

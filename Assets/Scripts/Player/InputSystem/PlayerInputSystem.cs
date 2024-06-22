@@ -10,7 +10,9 @@ namespace Player.InputSystem
             get { return _inputHandler.IsActive; }
             set { _inputHandler.IsActive = value; }
         }
-        
+
+        public InputType CurrentInputType { get; private set; }
+
         public event Action OnOpenInventoryAction;
         public event Action OnOpenIngameMenuAction;
         public event Action OnReloadWeaponAction;
@@ -28,11 +30,12 @@ namespace Player.InputSystem
 
         private void Awake()
         {
-// #if UNITY_ANDROID 
+#if UNITY_ANDROID 
             _inputHandler = gameObject.AddComponent(typeof(MobileInputHandler)) as IInputHandler;
-// #else
-//             _inputHandler = gameObject.AddComponent(typeof(PCInputHandler)) as IInputHandler;
-// #endif
+#else
+            _inputHandler = gameObject.AddComponent(typeof(PCInputHandler)) as IInputHandler;
+#endif
+            CurrentInputType = _inputHandler.InputType;
             _inputHandler.Init();
 
             _inputHandler.OnVerticalMoveChange += OnVerticalMoveChange;

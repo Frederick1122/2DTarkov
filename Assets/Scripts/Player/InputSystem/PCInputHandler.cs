@@ -21,6 +21,8 @@ namespace Player.InputSystem
         public event Action<float> OnHorizontalRotateChange;
         public event Action<bool> OnShootChange;
         
+        public InputType InputType => InputType.PC;
+
         public bool IsActive { get; set; }
         
         private float _verticalMove = 0;

@@ -29,7 +29,7 @@ public class EntryExit : MonoBehaviour
             var exitIndexes = PlayerSaveLoadManager.Instance.GetLastLevelData().exitIndexes;
             foreach (var exitIndex in exitIndexes)
             {
-                if (GameBus.Instance.GetLevel().GetEntryExits()[exitIndex] == this)
+                if (GameBus.Instance.Level.GetEntryExits()[exitIndex] == this)
                 {
                     ChunksSaveLoadManager.Instance.ClearChunksData();
                     PlayerSaveLoadManager.Instance.ClearPlayerData();

@@ -12,6 +12,8 @@ namespace Player.InputSystem
         public event Action<float> OnHorizontalMoveChange;
         public event Action<float> OnHorizontalRotateChange;
         public event Action<bool> OnShootChange;
+        
+        public InputType InputType => InputType.Mobile;
         public bool IsActive { get; set; }
 
         private readonly float _deadZone = 0.1f;
@@ -33,7 +35,7 @@ namespace Player.InputSystem
         
         public void Init()
         {
-            _joystick = GameBus.Instance.GetJoystick();
+            _joystick = GameBus.Instance.Joystick;
             
             _resolution = new Vector2(Screen.width, Screen.height);
             _nonRotationZone = _resolution.x / 4;

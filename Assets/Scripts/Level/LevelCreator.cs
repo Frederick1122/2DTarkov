@@ -59,9 +59,8 @@ public class LevelCreator : MonoBehaviour
         }
         
         ChunksSaveLoadManager.Instance.SetLevelInfo(level.GetLootBoxIndexes, level.GetLootBoxes);
-        GameBus.Instance.SetPlayer(playerContainer.GetPlayer());
-        GameBus.Instance.SetLevel(level);
-        GameBus.Instance.SetNavMeshSurface(level.GetNavMeshSurface());
+        GameBus.Instance.PlayerHumanoid = playerContainer.GetPlayer();
+        GameBus.Instance.Level = level;
         level.Init();
     }
 }

@@ -15,8 +15,16 @@ namespace Player.InputSystem
 
         public event Action<bool> OnShootChange;
 
+        public InputType InputType { get; }
+        
         public bool IsActive { get; set; }
 
         public void Init();
+    }
+
+    public enum InputType
+    {
+        PC,
+        Mobile
     }
 }

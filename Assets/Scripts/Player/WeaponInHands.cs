@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player.InputSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,8 +30,10 @@ public class WeaponInHands : MonoBehaviour
     private Weapon _activeWeapon;
     private Dictionary<string, BulletLogic> _weaponPool = new();
     private int _ammo = 0;
-    private float _bulletDispersion; 
+    private float _bulletDispersion;
 
+    private IInputSystem _inputSystem;
+    
     private void OnValidate()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -53,6 +56,7 @@ public class WeaponInHands : MonoBehaviour
     {
         EquipmentSaveLoadManager.Instance.OnEquipmentChanged += SetWeapon; 
         SetWeapon(EquipmentSaveLoadManager.Instance.GetEquipment());
+        _inputSystem = GameBus.Instance.PlayerInputSystem;
         UpdateFields();
     }
     
@@ -152,12 +156,19 @@ public class WeaponInHands : MonoBehaviour
 
     private bool IsNeedAttack()
     {
-        if (_enemies.Count == 0 || _activeWeapon == null)
+        if (_activeWeapon == null || !_activeWeapon.noNeedAmmo && _ammo <= 0)
             return false;
-
-        if (!_activeWeapon.noNeedAmmo && _ammo <= 0)
+        
+        if (_inputSystem.CurrentInputType == InputType.PC)
+        {
+            if (!_inputSystem.ShootInput)
+                return false;
+        }
+        else if (_enemies.Count == 0)
+        {
             return false;
-
+        }
+        
         return true;
     }
     

@@ -11,6 +11,8 @@ namespace Player.InputSystem
         
         public bool IsActive { get; set; }
 
+        public InputType CurrentInputType { get; }
+        
         public void Init() { }
 
         public float VerticalMoveInput { get; }

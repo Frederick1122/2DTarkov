@@ -1,60 +1,87 @@
 using System;
 using Base;
-using InteractObjects;
 using NavMeshPlus.Components;
+using Player.InputSystem;
 using UnityEngine;
 
 public class GameBus : Singleton<GameBus>
 {
     public event Action<Level> OnLevelSet;
-    
-    [SerializeField] private PlayerHumanoid _playerHumanoid;
-    [SerializeField] private Level _level;
-    [SerializeField] private Joystick _joystick;
-    [SerializeField] private NavMeshSurface _navMeshSurface;
 
-    public PlayerHumanoid GetPlayer()
+    public PlayerHumanoid PlayerHumanoid
     {
-        if(_playerHumanoid == null)
-            Debug.LogError("GameBus doesn't found player. Update this value");
+        get
+        {   
+            if(_playerHumanoid == null || _playerHumanoid == default)
+                _playerHumanoid = FindObjectOfType<PlayerHumanoid>();
+    
+            if(_playerHumanoid == null)
+                Debug.LogError("GameBus doesn't found player. Update this value");
 
-        return _playerHumanoid;
+            return _playerHumanoid;
+        }
+        set => _playerHumanoid = value;
     }
 
-    public Joystick GetJoystick()
+    public Level Level
     {
-        if(_joystick == null || _joystick == default)
-            _joystick = FindObjectOfType<Joystick>();
+        get
+        {
+            if (_level == null || _level == default) 
+                _level = FindObjectOfType<Level>();
+
+            if(_level == null)
+                Debug.LogError("GameBus doesn't found Level");
+            
+            return _level;
+        }
+        set
+        {
+            _level = value;
+            OnLevelSet?.Invoke(_level);
+        }
+    }
+
+    public NavMeshSurface NavMeshSurface
+    {
+        get
+        {
+            if (_navMeshSurface == null || _navMeshSurface == default)
+            {
+                _navMeshSurface = _level.GetNavMeshSurface();
+            }
+            
+            return _navMeshSurface;
+        }
+    }
+
+    public Joystick Joystick
+    {
+        get
+        {
+            if(_joystick == null || _joystick == default)
+                _joystick = FindObjectOfType<Joystick>();
         
-        if(_joystick == null)
-            Debug.LogError("GameBus doesn't found joystick");
-
-        return _joystick;
+            if(_joystick == null)
+                Debug.LogError("GameBus doesn't found joystick");
+            return _joystick;
+        }
     }
 
-    public Level GetLevel()
+    public PlayerInputSystem PlayerInputSystem
     {
-        return _level;
-    }
-    
-    public NavMeshSurface GetNavMeshSurface()
-    {
-        return _navMeshSurface;
-    }
-    
-    public void SetPlayer( PlayerHumanoid playerHumanoid )
-    {
-        _playerHumanoid = playerHumanoid;
+        get
+        {
+            if (_playerInputSystem == null) 
+                _playerInputSystem = gameObject.AddComponent<PlayerInputSystem>();
+
+            return _playerInputSystem;
+        }
     }
 
-    public void SetLevel(Level currentLevel)
-    {
-        _level = currentLevel;
-        OnLevelSet?.Invoke(_level);
-    }
-
-    public void SetNavMeshSurface(NavMeshSurface navMeshSurface)
-    {
-        _navMeshSurface = navMeshSurface;
-    }
+    private PlayerHumanoid _playerHumanoid;
+    private Level _level;
+    private Joystick _joystick;
+    private NavMeshSurface _navMeshSurface;
+    private PlayerInputSystem _playerInputSystem;
 }

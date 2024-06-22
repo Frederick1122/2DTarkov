@@ -124,7 +124,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
         RefreshActionButtons();
 
-        GameBus.Instance.GetPlayer().dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
+        GameBus.Instance.PlayerHumanoid.dropAction?.Invoke(_currentCellView.GetItem(), _currentCellView.GetCount());
         DestroyCurrentItem();
     }
 

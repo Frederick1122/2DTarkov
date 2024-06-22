@@ -44,7 +44,7 @@ public class PlayerHumanoid : Humanoid
 
     private void Start()
     {
-        _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
+        _inputSystem = GameBus.Instance.PlayerInputSystem;
         _inputSystem.IsActive = true;
         
         _fovDifference = _minFov < _maxFov ? _maxFov - _minFov : 0;
