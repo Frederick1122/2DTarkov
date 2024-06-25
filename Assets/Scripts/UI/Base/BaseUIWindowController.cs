@@ -22,9 +22,9 @@ namespace UI.Base
             PlayerSaveLoadManager.Instance.OnHpChanged -= SetHp;
         }
 
-        public void InitInteractButton(IInteract interact)
+        public void UpdateInteractButton(IInteract interact)
         {
-            _view.InitInteractButton(interact);
+            _view.UpdateInteractButton(interact);
         }
 
         public void SetActiveInteractButton(bool isActive)

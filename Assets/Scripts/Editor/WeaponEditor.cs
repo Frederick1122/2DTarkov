@@ -13,25 +13,45 @@ public class WeaponEditor : Editor
         var data = (Weapon) target;
 
         data.topSprite = (Sprite)EditorGUILayout.ObjectField("Top Sprite", data.topSprite, typeof(Sprite), true);
-
-        if (!data.isSecondWeapon)
-            data.isKnife = EditorGUILayout.Toggle("Is Knife", data.isKnife);
-        
-        if (!data.isKnife)
-            data.isSecondWeapon = EditorGUILayout.Toggle("Is Second Weapon", data.isSecondWeapon);
-
+        data.isMelee = EditorGUILayout.Toggle("Is Melee", data.isMelee);
         data.rateOfFire = EditorGUILayout.FloatField("Rate Of Fire", data.rateOfFire);
-        data.bulletDispersion = EditorGUILayout.FloatField("Bullet Dispersion", data.bulletDispersion);
-        data.maxFiringDistance = EditorGUILayout.FloatField("Max Firing Distance", data.maxFiringDistance);
 
-        data.noNeedAmmo = EditorGUILayout.Toggle("No Need Ammo", data.noNeedAmmo);
-
-        if (!data.noNeedAmmo)
+        if (!data.isMelee)
         {
-            data.bullet = (Bullet)EditorGUILayout.ObjectField("Bullet", data.bullet, typeof(Bullet), false);
-            data.maxAmmoInMagazine = EditorGUILayout.IntField("Max Ammo In Magazine", data.maxAmmoInMagazine);
+            data.isSecondWeapon = EditorGUILayout.Toggle("Is Second Weapon", data.isSecondWeapon);
+            data.bulletDispersion = EditorGUILayout.FloatField("Bullet Dispersion", data.bulletDispersion);
+            data.maxFiringDistance = EditorGUILayout.FloatField("Max Firing Distance", data.maxFiringDistance);
+            data.noNeedAmmo = EditorGUILayout.Toggle("No Need Ammo", data.noNeedAmmo);
+            
+            if (!data.noNeedAmmo)
+            {
+                data.bullet = (Bullet)EditorGUILayout.ObjectField("Bullet", data.bullet, typeof(Bullet), false);
+                data.maxAmmoInMagazine = EditorGUILayout.IntField("Max Ammo In Magazine", data.maxAmmoInMagazine);
+            }
         }
 
+        GUILayout.Space(5);
+        GUILayout.Label("Base Item Settings");
+        data.icon = (Sprite)EditorGUILayout.ObjectField("Icon", data.icon, typeof(Sprite), true);
+        data.dropIcon = (Sprite)EditorGUILayout.ObjectField("Drop Icon", data.dropIcon, typeof(Sprite), true);
+
+        data.itemName = EditorGUILayout.TextField("Item Name", data.itemName);
+        data.description = EditorGUILayout.TextField("Item Description", data.description);
+        
+        data.weight = EditorGUILayout.FloatField("Weight", data.weight);
+        
+        var maxStack = EditorGUILayout.IntField("Max Stack", data.maxStack);
+        var baseStack = EditorGUILayout.IntField("Base Stack", data.baseStack);
+
+        if (maxStack > baseStack)
+            baseStack = maxStack;
+
+        data.maxStack = maxStack;
+        data.baseStack = baseStack;
+        
+        data.configPath = EditorGUILayout.TextField("Сonfig Path", data.configPath);
+
+        
         if (GUI.changed)
         {
             EditorUtility.SetDirty(data);

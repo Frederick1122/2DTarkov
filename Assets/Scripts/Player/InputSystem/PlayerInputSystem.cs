@@ -13,9 +13,11 @@ namespace Player.InputSystem
 
         public InputType CurrentInputType { get; private set; }
 
-        public event Action OnOpenInventoryAction;
-        public event Action OnOpenIngameMenuAction;
-        public event Action OnReloadWeaponAction;
+        public event Action OnSwipeWeaponAction = delegate {  };
+        public event Action OnOpenInventoryAction = delegate {  };
+        public event Action OnInteractAction = delegate {  };
+        public event Action OnOpenIngameMenuAction = delegate {  };
+        public event Action OnReloadWeaponAction = delegate {  };
         public float VerticalMoveInput => _verticalMoveInput;
         public float HorizontalMoveInput => _horizontalMoveInput;
         public float HorizontalRotateInput => _horizontalRotateInput;
@@ -41,11 +43,13 @@ namespace Player.InputSystem
             _inputHandler.OnVerticalMoveChange += OnVerticalMoveChange;
             _inputHandler.OnHorizontalMoveChange += OnHorizontalMoveChange;
             _inputHandler.OnHorizontalRotateChange += OnHorizontalRotateChange;
-            _inputHandler.OnShootChange += OnShootChange;
+            _inputHandler.OnAttackChange += ShootChange;
 
-            _inputHandler.OnOpenInventoryAction += OnOpenInventory;
-            _inputHandler.OnOpenIngameMenuAction += OnOpenIngameMenu;
-            _inputHandler.OnReloadWeaponAction += OnReloadWeapon;
+            _inputHandler.OnOpenInventoryAction += OpenInventory;
+            _inputHandler.OnOpenIngameMenuAction += OpenIngameMenu;
+            _inputHandler.OnReloadWeaponAction += ReloadWeapon;
+            _inputHandler.OnInteractAction += Interact;
+            _inputHandler.OnSwipeWeaponAction += SwipeWeapon;
         }
         
         protected virtual void OnDestroy()
@@ -56,11 +60,13 @@ namespace Player.InputSystem
             _inputHandler.OnVerticalMoveChange -= OnVerticalMoveChange;
             _inputHandler.OnHorizontalMoveChange -= OnHorizontalMoveChange;
             _inputHandler.OnHorizontalRotateChange -= OnHorizontalRotateChange;
-            _inputHandler.OnShootChange -= OnShootChange;
+            _inputHandler.OnAttackChange -= ShootChange;
             
-            _inputHandler.OnOpenInventoryAction -= OnOpenInventory;
-            _inputHandler.OnOpenIngameMenuAction -= OnOpenIngameMenu;
-            _inputHandler.OnReloadWeaponAction -= OnReloadWeapon;
+            _inputHandler.OnOpenInventoryAction -= OpenInventory;
+            _inputHandler.OnOpenIngameMenuAction -= OpenIngameMenu;
+            _inputHandler.OnReloadWeaponAction -= ReloadWeapon;
+            _inputHandler.OnInteractAction -= Interact;
+            _inputHandler.OnSwipeWeaponAction -= SwipeWeapon;
         }
 
         private void OnVerticalMoveChange(float value) =>
@@ -72,16 +78,22 @@ namespace Player.InputSystem
         private void OnHorizontalRotateChange(float value) =>
             _horizontalRotateInput = value;
 
-        private void OnShootChange(bool value) =>
+        private void ShootChange(bool value) =>
             _shootInput = value;
 
-        private void OnOpenInventory() => 
+        private void OpenInventory() => 
             OnOpenInventoryAction?.Invoke();
         
-        private void OnOpenIngameMenu() => 
-            OnOpenInventoryAction?.Invoke();
+        private void OpenIngameMenu() => 
+            OnOpenIngameMenuAction?.Invoke();
         
-        private void OnReloadWeapon() => 
-            OnOpenInventoryAction?.Invoke();
+        private void ReloadWeapon() => 
+            OnReloadWeaponAction?.Invoke();
+
+        private void Interact() =>
+            OnInteractAction?.Invoke();
+
+        private void SwipeWeapon() =>
+            OnSwipeWeaponAction?.Invoke();
     }
 }

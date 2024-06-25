@@ -44,7 +44,7 @@ namespace UI.Base
             _exitInfosPanel.gameObject.SetActive(false);
         }
 
-        public void InitInteractButton(IInteract interact)
+        public void UpdateInteractButton(IInteract interact)
         {
             _interactButton.onClick.RemoveAllListeners();
             _interactButton.onClick.AddListener(interact.Interact);

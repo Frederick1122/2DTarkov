@@ -1,69 +1,89 @@
 using System.Collections.Generic;
 using Base;
+using Player.InputSystem;
 using UI.Base;
 using UnityEngine;
 
 namespace UI
 {
-  public class UIManager : Singleton<UIManager>
-  {
-    [SerializeField] private BaseUIWindowController _baseUIWindowController;
-    [SerializeField] private InventoryWindowController _inventoryWindowController;
-    [SerializeField] private LootBoxWindowController _lootBoxWindowController;
-    [SerializeField] private EndGameUIController _endGameUIController;
-    
-    public void Init()
+    public class UIManager : Singleton<UIManager>
     {
-      //
-    }
-    
-    private void Start() => OpenBaseUI();
+        [SerializeField] private BaseUIWindowController _baseUIWindowController;
+        [SerializeField] private InventoryWindowController _inventoryWindowController;
+        [SerializeField] private LootBoxWindowController _lootBoxWindowController;
+        [SerializeField] private EndGameUIController _endGameUIController;
 
-    public void OpenBaseUI()
-    {
-      CloseAllUI();
-    
-      GameBus.Instance.PlayerHumanoid.isFreeze = false;
-      _baseUIWindowController.Show();
-    }
+        private IInputSystem _inputSystem;
 
-    public void OpenInventoryUI()
-    {
-      CloseAllUI();
-      
-      GameBus.Instance.PlayerHumanoid.isFreeze = true;
-      
-      _inventoryWindowController.Show();
-    }
+        public void Init()
+        {
+            _inputSystem = GameBus.Instance.PlayerInputSystem;
+        }
 
-    public void OpenLootBoxUI(int lootBoxIndex, List<Item> lootItems)
-    {
-      CloseAllUI();
-      
-      GameBus.Instance.PlayerHumanoid.isFreeze = true;
-      
-      _lootBoxWindowController.Init(lootBoxIndex, lootItems);
-      _lootBoxWindowController.Show();
-    }
+        private void Start() => OpenBaseUI();
 
-    public void OpenEndGameUI(string endText)
-    {
-        CloseAllUI();
-        _endGameUIController.Init(endText);
-        _endGameUIController.Show();
-    }
+        public void OpenBaseUI()
+        {
+            CloseAllUI();
 
-    public BaseUIWindowController GetBaseUI()
-    {
-      return _baseUIWindowController;
-    }
+            Cursor.lockState = CursorLockMode.Locked;
 
-    private void CloseAllUI()
-    {
-      _baseUIWindowController.Hide();
-      _inventoryWindowController.Hide();
-      _lootBoxWindowController.Hide();
-      _endGameUIController.Hide();
+            GameBus.Instance.PlayerHumanoid.isFreeze = false;
+            
+            _inputSystem.OnOpenInventoryAction += OpenInventoryUI;
+            _inputSystem.OnSwipeWeaponAction += EquipmentSaveLoadManager.Instance.SwipeWeapon;
+            _inputSystem.OnReloadWeaponAction += EquipmentSaveLoadManager.Instance.ReloadWeapon;
+
+            _baseUIWindowController.Show();
+        }
+
+        public void OpenInventoryUI()
+        {
+            CloseAllUI();
+
+            Cursor.lockState = CursorLockMode.None;
+
+            GameBus.Instance.PlayerHumanoid.isFreeze = true;
+
+            _inventoryWindowController.Show();
+        }
+
+        public void OpenLootBoxUI(int lootBoxIndex, List<Item> lootItems)
+        {
+            CloseAllUI();
+
+            Cursor.lockState = CursorLockMode.None;
+
+            GameBus.Instance.PlayerHumanoid.isFreeze = true;
+
+            _lootBoxWindowController.Init(lootBoxIndex, lootItems);
+            _lootBoxWindowController.Show();
+        }
+
+        public void OpenEndGameUI(string endText)
+        {
+            Cursor.lockState = CursorLockMode.None;
+
+            CloseAllUI();
+            _endGameUIController.Init(endText);
+            _endGameUIController.Show();
+        }
+
+        public BaseUIWindowController GetBaseUI()
+        {
+            return _baseUIWindowController;
+        }
+
+        private void CloseAllUI()
+        {
+            _inputSystem.OnOpenInventoryAction -= OpenInventoryUI;
+            _inputSystem.OnSwipeWeaponAction -= EquipmentSaveLoadManager.Instance.SwipeWeapon;
+            _inputSystem.OnReloadWeaponAction -= EquipmentSaveLoadManager.Instance.ReloadWeapon;
+            
+            _baseUIWindowController.Hide();
+            _inventoryWindowController.Hide();
+            _lootBoxWindowController.Hide();
+            _endGameUIController.Hide();
+        }
     }
-  }
 }

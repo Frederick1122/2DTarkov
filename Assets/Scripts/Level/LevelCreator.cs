@@ -8,12 +8,7 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private PlayerContainer _playerContainer;
     [SerializeField] private Level _testLevel;
 
-    private void Start()
-    {
-        CreateLevel();
-    }
-
-    private void CreateLevel()
+    public void CreateLevel()
     {
         Level level;
         var playerContainer = Instantiate(_playerContainer);

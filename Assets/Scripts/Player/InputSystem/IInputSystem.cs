@@ -4,7 +4,9 @@ namespace Player.InputSystem
 {
     public interface IInputSystem
     {
+        public event Action OnSwipeWeaponAction;
         public event Action OnOpenInventoryAction;
+        public event Action OnInteractAction;
         public event Action OnOpenIngameMenuAction;
         
         public event Action OnReloadWeaponAction;

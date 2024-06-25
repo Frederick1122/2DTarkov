@@ -66,20 +66,7 @@ public class WeaponTabController : MonoBehaviour
     
     private void ReloadCurrentWeapon()
     {
-        if (_currentWeapon == null)
-            return;
         
-        var maxAmmoInMagazine = _currentWeapon.maxAmmoInMagazine;
-        var ammoInMagazine = EquipmentSaveLoadManager.Instance.GetAmmoInMagazine(_currentWeapon);
-        
-        var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeapon.bullet);
-
-        if (reserve > 0 && maxAmmoInMagazine != ammoInMagazine)
-        {
-            var addedAmmo = Mathf.Clamp(maxAmmoInMagazine - ammoInMagazine, 0, reserve);
-            InventorySaveLoadManager.Instance.DeleteItem(_currentWeapon.bullet, addedAmmo);
-            EquipmentSaveLoadManager.Instance.SetAmmoInMagazine( _currentWeapon, ammoInMagazine + addedAmmo);
-        }
     }
 
     private void SwipeWeapon()

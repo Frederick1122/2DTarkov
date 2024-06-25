@@ -24,7 +24,7 @@ public class WeaponInHands : MonoBehaviour
     private GameObject _player;
     private List<GameObject> _enemies = new List<GameObject>();
     
-    private YieldInstruction _rateOfFireInstruction;
+    private YieldInstruction _rateOfFire;
     private Coroutine _attackRoutine;
     
     private Weapon _activeWeapon;
@@ -106,7 +106,12 @@ public class WeaponInHands : MonoBehaviour
     
     private void Update()
     {
-        if (IsNeedAttack())
+#if UNITY_EDITOR
+        DrawRays();
+#endif
+        
+        Debug.Log($"IsNeedAttack {IsNeedAttack()}");
+        if (!IsNeedAttack())
         {
             if (_attackRoutine != null)
             {
@@ -118,16 +123,12 @@ public class WeaponInHands : MonoBehaviour
         }
 
         _attackRoutine ??= StartCoroutine(AttackRoutine());
-
-        #if UNITY_EDITOR
-        DrawRays();
-        #endif
     }
 
     private void UpdateWeapon()
     {
         _bulletDispersion = _activeWeapon.bulletDispersion;
-        _rateOfFireInstruction = new WaitForSeconds(_activeWeapon.rateOfFire);
+        _rateOfFire = new WaitForSeconds(_activeWeapon.rateOfFire);
         
         if (!_weaponPool.ContainsKey(_activeWeapon.itemName) && !_activeWeapon.noNeedAmmo)
         {
@@ -144,7 +145,7 @@ public class WeaponInHands : MonoBehaviour
         _shootArea.SetDistance(_activeWeapon.maxFiringDistance, _bulletSpawnPoint.position);
     }
     
-    private void Shoot()
+    private void Attack()
     {
         var bullet = Instantiate(_weaponPool[_activeWeapon.itemName], _bulletSpawnPoint.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
@@ -158,29 +159,22 @@ public class WeaponInHands : MonoBehaviour
     {
         if (_activeWeapon == null || !_activeWeapon.noNeedAmmo && _ammo <= 0)
             return false;
-        
+
         if (_inputSystem.CurrentInputType == InputType.PC)
-        {
-            if (!_inputSystem.ShootInput)
-                return false;
-        }
-        else if (_enemies.Count == 0)
-        {
-            return false;
-        }
+            return _inputSystem.ShootInput;
         
+        if (_enemies.Count == 0 || !IsEnemyVisible())
+            return false;
+
         return true;
     }
     
     private IEnumerator AttackRoutine()
     {
-        while (_enemies.Count != 0)
+        while (_ammo > 0)
         {
-            if(!IsEnemyVisible())
-                break;
-            
-            Shoot();
-            yield return _rateOfFireInstruction;
+            Attack();
+            yield return _rateOfFire;
         }
 
         if (_attackRoutine != null && _attackRoutine != default) 

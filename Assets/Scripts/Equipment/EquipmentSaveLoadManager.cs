@@ -74,13 +74,48 @@ public class EquipmentSaveLoadManager : SaveLoadManager<EquipmentData, Equipment
         OnEquipmentChanged?.Invoke(_saveData);
     }
 
+    public void ReloadWeapon()
+    {
+        ReloadWeapon(null);
+    }
+    
+    public void ReloadWeapon(Weapon currentWeapon)
+    {
+        //TODO: ADD LIBRARY AND REMOVE THIS SHIT
+        if (currentWeapon == null)
+        {
+            var currentType = _saveData.isSecondWeapon ? EquipmentType.secondWeapon : EquipmentType.firstWeapon;
+            currentWeapon = (Weapon) _saveData.GetEquipment(currentType);       
+            if (currentWeapon == null)
+                return;
+        }
+
+        if (_saveData.isSecondWeapon && currentWeapon.configPath != _saveData.secondWeaponConfigPath
+            || !_saveData.isSecondWeapon && currentWeapon.configPath != _saveData.firstWeaponConfigPath)
+        {
+            return;
+        }
+            
+        var maxAmmoInMagazine = currentWeapon.maxAmmoInMagazine;
+        var ammoInMagazine = GetAmmoInMagazine(currentWeapon);
+        
+        var reserve = InventorySaveLoadManager.Instance.GetItemCount(currentWeapon.bullet);
+
+        if (reserve > 0 && maxAmmoInMagazine != ammoInMagazine)
+        {
+            var addedAmmo = Mathf.Clamp(maxAmmoInMagazine - ammoInMagazine, 0, reserve);
+            InventorySaveLoadManager.Instance.DeleteItem(currentWeapon.bullet, addedAmmo);
+            SetAmmoInMagazine(currentWeapon, ammoInMagazine + addedAmmo);
+        }
+    }
+
     public void SwipeWeapon()
     {
         _saveData.isSecondWeapon = !_saveData.isSecondWeapon;
         Save();
         OnEquipmentChanged?.Invoke(_saveData);
     }
-    
+
     protected override void Load()
     {
         base.Load();
@@ -193,5 +228,5 @@ public enum EquipmentType
     kevlar,
     firstWeapon,
     secondWeapon,
-    knife
+    melee
 }

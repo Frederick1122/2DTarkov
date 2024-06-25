@@ -6,12 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "Item/Weapon")]
 public class Weapon : Item, IEquip
 {
-    [Space]
     public Bullet bullet;
     [Space]
     public Sprite topSprite;
     [Space] 
-    public bool isKnife;
+    public bool isMelee;
     public bool isSecondWeapon;
     public int maxAmmoInMagazine;
     public float rateOfFire;
@@ -39,9 +38,11 @@ public class Weapon : Item, IEquip
         if (isSecondWeapon)
             return EquipmentType.secondWeapon;
 
-        if (isKnife)
-            return EquipmentType.knife;
+        if (isMelee)
+            return EquipmentType.melee;
         
         return EquipmentType.firstWeapon;
     }
+    
+    
 }

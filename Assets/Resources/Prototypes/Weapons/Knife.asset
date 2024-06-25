@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   dropIcon: {fileID: 0}
-  itemName: 
-  description: 
+  itemName: Knife
+  description: Knife
   weight: 1
   maxStack: 1
   baseStack: 1
   configPath: Prototypes/Weapons/Knife
+  isMelee: 1
   bullet: {fileID: 0}
   topSprite: {fileID: 0}
   isKnife: 1
