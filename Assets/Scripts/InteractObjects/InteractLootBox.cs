@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base;
+using ConfigScripts;
 using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,7 +17,7 @@ public class InteractLootBox : MonoBehaviour, IInteract
     [Header("Auto-serialised field")] [SerializeField]
     private SaveInChunkLootBox _saveInChunkLootBox;
 
-    [SerializeField] private List<Item> _items = new List<Item>();
+    [SerializeField] private List<ItemConfig> _items = new List<ItemConfig>();
     private bool _isOpen = false;
     private int _index;
     
@@ -24,7 +25,7 @@ public class InteractLootBox : MonoBehaviour, IInteract
 
     private void Start() => _index = _saveInChunkLootBox.GetIndex();
 
-    public void Init(List<Item> items = null)
+    public void Init(List<ItemConfig> items = null)
     {
         if (items == null)
             return;

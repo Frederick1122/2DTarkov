@@ -1,5 +1,7 @@
 ﻿using System;
 using Base;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using UnityEngine;
 
 public class EquipmentPanelController : UIController<EquipmentPanelView, EquipmentWindowModel>
@@ -71,10 +73,10 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
         var firstWeaponData = new WeaponContainerData();
         var secondWeaponData = new WeaponContainerData();
 
-        var kevlar = (Weapon) equipmentData.GetEquipment(EquipmentType.kevlar);
-        var backpack = (Weapon) equipmentData.GetEquipment(EquipmentType.backpack);
-        var firstWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
-        var secondWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
+        var kevlar = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.kevlar);
+        var backpack = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.backpack);
+        var firstWeapon = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.firstWeapon);
+        var secondWeapon = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.secondWeapon);
 
         if (kevlar != null)
         {
@@ -108,7 +110,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
                 icon = firstWeapon.icon,
                 itemName = firstWeapon.itemName,
                 description = firstWeapon.description,
-                ammoDescription = firstWeapon.bullet.itemName,
+                ammoDescription = firstWeapon.bulletConfig.itemName,
                 maxAmmoInMagazine = firstWeapon.maxAmmoInMagazine,
                 ammoInMagazine = equipmentData.firstWeaponAmmoInMagazine
             };
@@ -122,7 +124,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
                 icon = secondWeapon.icon,
                 itemName = secondWeapon.itemName,
                 description = secondWeapon.description,
-                ammoDescription = secondWeapon.bullet.itemName,
+                ammoDescription = secondWeapon.bulletConfig.itemName,
                 maxAmmoInMagazine = secondWeapon.maxAmmoInMagazine,
                 ammoInMagazine = equipmentData.secondWeaponAmmoInMagazine
             };

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Base;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using Player.InputSystem;
 using UI.Base;
 using UnityEngine;
@@ -48,7 +50,7 @@ namespace UI
             _inventoryWindowController.Show();
         }
 
-        public void OpenLootBoxUI(int lootBoxIndex, List<Item> lootItems)
+        public void OpenLootBoxUI(int lootBoxIndex, List<ItemConfig> lootItems)
         {
             CloseAllUI();
 

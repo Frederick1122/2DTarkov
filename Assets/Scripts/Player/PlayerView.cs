@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -32,7 +34,7 @@ public class PlayerStance : MonoBehaviour
     {
         if (!equipmentData.isSecondWeapon)
         {
-            var weapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
+            var weapon = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.firstWeapon);
             if (weapon != null)
             {
                 _spriteRenderer.sprite = _firstWeaponSprite;
@@ -41,7 +43,7 @@ public class PlayerStance : MonoBehaviour
         }
         else
         {
-            var weapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
+            var weapon = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.secondWeapon);
             if (weapon != null)
             {
                 _spriteRenderer.sprite = _secondWeaponSprite;

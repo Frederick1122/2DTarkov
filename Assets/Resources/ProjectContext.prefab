@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameObjects:
+  - {fileID: 2164210242031350031, guid: 977dd1f88eb01ac47948df4c0c09d544, type: 3}
   - {fileID: 5326749138050000248, guid: 67ab9db7ae59aa84e800cf2a3a1059cc, type: 3}
   - {fileID: 4543015318199094014, guid: 50d0962645f6cd64dbcb2f19bff6002e, type: 3}
   - {fileID: 1857122547476586508, guid: 7519fd6f5690b24448d3754add5cf3ad, type: 3}

@@ -1,5 +1,7 @@
 using System;
 using Base;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using UnityEngine;
 
 namespace InteractObjects
@@ -7,14 +9,14 @@ namespace InteractObjects
     [RequireComponent(typeof(SpriteRenderer))]
     public class InteractItem : MonoBehaviour, IInteract
     {
-        [SerializeField] private Item _item;
+        [SerializeField] private ItemConfig _itemConfig;
         [SerializeField] private int _count;
         [Space]
         [SerializeField] private SpriteRenderer _spriteRenderer;
         
-        public void Init(Item item, int count, Vector3 position, Sprite sprite)
+        public void Init(ItemConfig itemConfig, int count, Vector3 position, Sprite sprite)
         {
-            _item = item;
+            _itemConfig = itemConfig;
             _count = count;
             transform.position = position;
             
@@ -29,7 +31,7 @@ namespace InteractObjects
         
         public void Interact()
         {
-            InventorySaveLoadManager.Instance.AddItem(_item, _count);
+            InventorySaveLoadManager.Instance.AddItem(_itemConfig, _count);
             Destroy(gameObject);
         }
 

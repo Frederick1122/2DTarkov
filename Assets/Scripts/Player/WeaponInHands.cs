@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ConfigScripts;
+using Managers.Libraries;
+using Managers.SaveLoadManagers;
 using Player.InputSystem;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,7 +14,7 @@ public class WeaponInHands : MonoBehaviour
 {
     private static string OBSTACLE_TAG = "Obstacle";
 
-    [SerializeField] private Weapon _knife;
+    [SerializeField] private WeaponConfig _knife;
     [Space]
     [SerializeField] private Vector3 _firstWeaponPosition;
     [SerializeField] private Vector3 _secondWeaponPosition;
@@ -27,7 +30,7 @@ public class WeaponInHands : MonoBehaviour
     private YieldInstruction _rateOfFire;
     private Coroutine _attackRoutine;
     
-    private Weapon _activeWeapon;
+    private WeaponConfig _activeWeaponConfig;
     private Dictionary<string, BulletLogic> _weaponPool = new();
     private int _ammo = 0;
     private float _bulletDispersion;
@@ -62,31 +65,31 @@ public class WeaponInHands : MonoBehaviour
     
     private void SetWeapon(EquipmentData equipmentData)
     {
-        Weapon newWeapon;
+        WeaponConfig newWeaponConfig;
         if (equipmentData.isSecondWeapon)
         {
-            newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.secondWeapon);
+            newWeaponConfig = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.secondWeapon);
             _ammo = equipmentData.secondWeaponAmmoInMagazine;
             transform.localPosition = _secondWeaponPosition;
         }
         else
         {
-            newWeapon = (Weapon) equipmentData.GetEquipment(EquipmentType.firstWeapon);
+            newWeaponConfig = (WeaponConfig) equipmentData.GetEquipment(EquipmentType.firstWeapon);
             _ammo = equipmentData.firstWeaponAmmoInMagazine;
             transform.localPosition = _firstWeaponPosition;
         }
         
-        if (newWeapon == null)
+        if (newWeaponConfig == null)
         {
-            _activeWeapon = _knife;
+            _activeWeaponConfig = _knife;
             _spriteRenderer.enabled = false;
         }
         else
         {
-            if (newWeapon == _activeWeapon)
+            if (newWeaponConfig == _activeWeaponConfig)
                 return;
             
-            _activeWeapon = newWeapon;
+            _activeWeaponConfig = newWeaponConfig;
             _spriteRenderer.enabled = true;
         }
         
@@ -127,37 +130,37 @@ public class WeaponInHands : MonoBehaviour
 
     private void UpdateWeapon()
     {
-        _bulletDispersion = _activeWeapon.bulletDispersion;
-        _rateOfFire = new WaitForSeconds(_activeWeapon.rateOfFire);
+        _bulletDispersion = _activeWeaponConfig.bulletDispersion;
+        _rateOfFire = new WaitForSeconds(_activeWeaponConfig.rateOfFire);
         
-        if (!_weaponPool.ContainsKey(_activeWeapon.itemName) && !_activeWeapon.noNeedAmmo)
+        if (!_weaponPool.ContainsKey(_activeWeaponConfig.itemName) && !_activeWeaponConfig.noNeedAmmo)
         {
-            var newBulletLogic = Resources.Load(_activeWeapon.bullet.bulletPrefabPath).GetComponent<BulletLogic>();
-            _weaponPool.Add(_activeWeapon.itemName, newBulletLogic);
+            var newBulletLogic = ItemLibrary.Instance.GetConfig(_activeWeaponConfig.bulletConfig.configKey).GetComponent<BulletLogic>();
+            _weaponPool.Add(_activeWeaponConfig.itemName, newBulletLogic);
         }
         
-        _spriteRenderer.sprite = _activeWeapon.topSprite;
+        _spriteRenderer.sprite = _activeWeaponConfig.topSprite;
 
         var bulletSpawnPointX = _spriteRenderer.localBounds.max.x;
         var bulletSpawnPointY = _spriteRenderer.localBounds.center.y;
         _bulletSpawnPoint.localPosition = new Vector3(bulletSpawnPointX, bulletSpawnPointY);
 
-        _shootArea.SetDistance(_activeWeapon.maxFiringDistance, _bulletSpawnPoint.position);
+        _shootArea.SetDistance(_activeWeaponConfig.maxFiringDistance, _bulletSpawnPoint.position);
     }
     
     private void Attack()
     {
-        var bullet = Instantiate(_weaponPool[_activeWeapon.itemName], _bulletSpawnPoint.position, _player.transform.localRotation);
+        var bullet = Instantiate(_weaponPool[_activeWeaponConfig.itemName], _bulletSpawnPoint.position, _player.transform.localRotation);
         var currentDispersion = Random.Range(0, _bulletDispersion) - _bulletDispersion / 2;
         _ammo--;
-        EquipmentSaveLoadManager.Instance.SetAmmoInMagazine(_activeWeapon, _ammo);
+        EquipmentSaveLoadManager.Instance.SetAmmoInMagazine(_activeWeaponConfig, _ammo);
         bullet.transform.Rotate(0,0,currentDispersion);
-        bullet.GetComponent<BulletLogic>().Init(_activeWeapon.bullet.speed, _activeWeapon.bullet.damage);
+        bullet.GetComponent<BulletLogic>().Init(_activeWeaponConfig.bulletConfig.speed, _activeWeaponConfig.bulletConfig.damage);
     }
 
     private bool IsNeedAttack()
     {
-        if (_activeWeapon == null || !_activeWeapon.noNeedAmmo && _ammo <= 0)
+        if (_activeWeaponConfig == null || !_activeWeaponConfig.noNeedAmmo && _ammo <= 0)
             return false;
 
         if (_inputSystem.CurrentInputType == InputType.PC)

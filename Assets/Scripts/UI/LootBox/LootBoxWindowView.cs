@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using ConfigScripts;
 using UI.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,9 +57,9 @@ public class LootBoxWindowView : WindowView<LootWindowModel>
 
 public class LootWindowModel : UIModel
 {
-    public List<Item> lootItems;
+    public List<ItemConfig> lootItems;
 
-    public LootWindowModel(List<Item> lootItems)
+    public LootWindowModel(List<ItemConfig> lootItems)
     {
         this.lootItems = lootItems;
     }

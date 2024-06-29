@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _secondPath: Inventory.json
   _path: C:/Repos/PRTTP/2DTarkov/2DTarkov/Assets/StreamingAssetsInventory.json
-  _item: {fileID: 0}
+  _itemConfig: {fileID: 0}
   _count: 0
   _inventoryType: 0
 --- !u!4 &520810781

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using UI;
 using UI.Inventory;
 using UnityEngine;
@@ -8,7 +10,7 @@ public class LootBoxWindowController : WindowController<LootBoxWindowView, LootW
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
     
     private ItemCellView _currentCellView;
-    private List<Item> _lootItems = new List<Item>();
+    private List<ItemConfig> _lootItems = new List<ItemConfig>();
     private int _lootBoxIndex;
 
     private void Start()
@@ -25,7 +27,7 @@ public class LootBoxWindowController : WindowController<LootBoxWindowView, LootW
         _view.OnTakeAction -= Take;
     }
 
-    public void Init(int lootBoxIndex, List<Item> lootItems)
+    public void Init(int lootBoxIndex, List<ItemConfig> lootItems)
     {
         if (lootItems.Count == 0)
         {

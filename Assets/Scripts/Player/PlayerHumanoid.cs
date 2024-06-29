@@ -1,4 +1,6 @@
 using System;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using Player.InputSystem;
 using Unity.Mathematics;
 using UnityEngine;
@@ -7,7 +9,7 @@ using UnityEngine;
 public class PlayerHumanoid : Humanoid
 {
     public bool isFreeze { get; set; }
-    public Action<Item, int> dropAction;
+    public Action<ItemConfig, int> dropAction;
     [Space]
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;

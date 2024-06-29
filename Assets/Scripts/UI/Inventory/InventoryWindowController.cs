@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Base;
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using UI;
 using UI.Inventory;
 using UnityEngine;
@@ -75,16 +77,16 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         InventorySaveLoadManager.Instance.OnInventoryDeleted -= DeleteItem;
     }
 
-    private void AddNewItem(Item item, int count, InventoryType inventoryType)
+    private void AddNewItem(ItemConfig itemConfig, int count, InventoryType inventoryType)
     {
         if (inventoryType != _inventoryType)
             return;
 
-        var newItem = new InventoryCell(item, count);
+        var newItem = new InventoryCell(itemConfig, count);
         CreateCell(newItem);
     }
 
-    private void DeleteItem(Item item, int count, InventoryType inventoryType)
+    private void DeleteItem(ItemConfig itemConfig, int count, InventoryType inventoryType)
     {
         if (inventoryType == _inventoryType)
             Refresh();
@@ -189,7 +191,7 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
 
     private void ClickOnEquipment(IEquip equip)
     {
-        var item = (Item) equip;
+        var item = (ItemConfig) equip;
         _view.UpdateView(new InventoryWindowModel(item.icon, item.name, item.description));
         RefreshActionButtons();
     }
@@ -200,16 +202,16 @@ public class InventoryWindowController : WindowController<InventoryWindowView, I
         RefreshActionButtons();
     }
 
-    private void RefreshActionButtons(Item item = null)
+    private void RefreshActionButtons(ItemConfig itemConfig = null)
     {
-        if (item == null)
+        if (itemConfig == null)
         {
             _view.UpdateView(new InventoryWindowModel());
             return;
         }
 
-        _view.UpdateView(new InventoryWindowModel(new ItemInformationPanelModel(item.icon, item.name, item.description),
-            item is IUse, item is IEquip,
+        _view.UpdateView(new InventoryWindowModel(new ItemInformationPanelModel(itemConfig.icon, itemConfig.name, itemConfig.description),
+            itemConfig is IUse, itemConfig is IEquip,
             true, !_isStorageWindow, _isStorageWindow || _lootBoxWindowController != null));
     }
 

@@ -1,10 +1,12 @@
+using ConfigScripts;
+using Managers.SaveLoadManagers;
 using UnityEngine;
 
 public class WeaponTabController : MonoBehaviour
 {
     [SerializeField] private WeaponTabView _weaponTabView;
 
-    private Weapon _currentWeapon;
+    private WeaponConfig _currentWeaponConfig;
 
     private void Start()
     {
@@ -31,16 +33,16 @@ public class WeaponTabController : MonoBehaviour
     private void UpdateView(EquipmentData equipmentData)
     {
         var currentType = equipmentData.isSecondWeapon ? EquipmentType.secondWeapon : EquipmentType.firstWeapon;
-        _currentWeapon = (Weapon) equipmentData.GetEquipment(currentType);
+        _currentWeaponConfig = (WeaponConfig) equipmentData.GetEquipment(currentType);
         var currentAmmo = equipmentData.isSecondWeapon
             ? equipmentData.secondWeaponAmmoInMagazine
             : equipmentData.firstWeaponAmmoInMagazine;
-        if (_currentWeapon != null)
+        if (_currentWeaponConfig != null)
         {
-            var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeapon.bullet);
-            var weaponTabModel = new WeaponTabModel(_currentWeapon.icon,
-                _currentWeapon.itemName,
-                _currentWeapon.maxAmmoInMagazine,
+            var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeaponConfig.bulletConfig);
+            var weaponTabModel = new WeaponTabModel(_currentWeaponConfig.icon,
+                _currentWeaponConfig.itemName,
+                _currentWeaponConfig.maxAmmoInMagazine,
                 currentAmmo,
                 reserve);
 
@@ -52,12 +54,12 @@ public class WeaponTabController : MonoBehaviour
         }
     }
 
-    private void UpdateReverse(Item item, int count, InventoryType inventoryType)
+    private void UpdateReverse(ItemConfig itemConfig, int count, InventoryType inventoryType)
     {
-        if(_currentWeapon == null || item != _currentWeapon.bullet)
+        if(_currentWeaponConfig == null || itemConfig != _currentWeaponConfig.bulletConfig)
             return;
         
-        var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeapon.bullet);
+        var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeaponConfig.bulletConfig);
 
         var weaponTabModel = new WeaponTabModel(reserve: reserve);
         

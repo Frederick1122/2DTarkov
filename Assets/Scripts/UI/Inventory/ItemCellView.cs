@@ -1,3 +1,4 @@
+using ConfigScripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,14 +11,14 @@ namespace UI.Inventory
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _countText;
 
-        private Item _item;
+        private ItemConfig _itemConfig;
         private Button _button;
         private int _count;
         
-        public void Init(Item item, int count = 1)
+        public void Init(ItemConfig itemConfig, int count = 1)
         {
-            _item = item;
-            _icon.sprite = item.icon;
+            _itemConfig = itemConfig;
+            _icon.sprite = itemConfig.icon;
             _count = count;
             _countText.text = count.ToString();
 
@@ -27,7 +28,7 @@ namespace UI.Inventory
 
         public Button GetButton() => _button;
 
-        public Item GetItem() => _item;
+        public ItemConfig GetItem() => _itemConfig;
 
         public int GetCount() => _count;
 

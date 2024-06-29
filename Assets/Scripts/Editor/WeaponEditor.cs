@@ -1,7 +1,8 @@
-﻿using UnityEditor;
+﻿using ConfigScripts;
+using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Weapon))]
+[CustomEditor(typeof(WeaponConfig))]
 public class WeaponEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -10,7 +11,7 @@ public class WeaponEditor : Editor
         EditorGUILayout.ObjectField("Script:", target, typeof(MonoScript), false);        
         EditorGUI.EndDisabledGroup();
         
-        var data = (Weapon) target;
+        var data = (WeaponConfig) target;
 
         data.topSprite = (Sprite)EditorGUILayout.ObjectField("Top Sprite", data.topSprite, typeof(Sprite), true);
         data.isMelee = EditorGUILayout.Toggle("Is Melee", data.isMelee);
@@ -25,13 +26,18 @@ public class WeaponEditor : Editor
             
             if (!data.noNeedAmmo)
             {
-                data.bullet = (Bullet)EditorGUILayout.ObjectField("Bullet", data.bullet, typeof(Bullet), false);
+                data.bulletConfig = (BulletConfig)EditorGUILayout.ObjectField("Bullet", data.bulletConfig, typeof(BulletConfig), false);
                 data.maxAmmoInMagazine = EditorGUILayout.IntField("Max Ammo In Magazine", data.maxAmmoInMagazine);
             }
         }
 
         GUILayout.Space(5);
         GUILayout.Label("Base Item Settings");
+
+        data.configKey = EditorGUILayout.TextField("Config Key", data.configKey);
+
+        GUILayout.Space(5);
+
         data.icon = (Sprite)EditorGUILayout.ObjectField("Icon", data.icon, typeof(Sprite), true);
         data.dropIcon = (Sprite)EditorGUILayout.ObjectField("Drop Icon", data.dropIcon, typeof(Sprite), true);
 

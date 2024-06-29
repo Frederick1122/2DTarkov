@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConfigScripts;
 using UnityEngine;
 
 [Serializable]
 [CreateAssetMenu(fileName = "ItemList", menuName = "Item/ItemList")]
 public class ItemList : ScriptableObject
 {
-    public List<Item> itemList = new List<Item>();
+    public List<ItemConfig> itemList = new List<ItemConfig>();
     [SerializeField] private List<string> _paths = new List<string>();
 
     [ContextMenu("GetAllItems")]
@@ -16,11 +17,11 @@ public class ItemList : ScriptableObject
 
         if (_paths.Count == 0)
         {
-            itemList.AddRange(Resources.LoadAll<Item>(""));
+            itemList.AddRange(Resources.LoadAll<ItemConfig>(""));
             return;
         }
 
         foreach (var path in _paths) 
-            itemList.AddRange(Resources.LoadAll<Item>(path));
+            itemList.AddRange(Resources.LoadAll<ItemConfig>(path));
     }
 }
