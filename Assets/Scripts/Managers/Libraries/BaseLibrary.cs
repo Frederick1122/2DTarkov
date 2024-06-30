@@ -37,6 +37,9 @@ namespace Managers.Libraries
 
         public T GetConfig(string configKey)
         {
+            if (configKey == "")
+                Debug.LogAssertion("configKey is null");
+
             if (!_allConfigs.ContainsKey(configKey))
                 Debug.LogAssertion($"Library not founded config with this key: {configKey}");
 

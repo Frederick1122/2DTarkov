@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base;
+using Base.MVC;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = System.Object;
 
 namespace UI.Base
 {
-    public class BaseUIWindowView : WindowView<BaseUIWindowModel>
+    public class BaseUIWindowView : WindowView
     {
         [SerializeField] private ExitInfoView _exitInfoViewPrefab;
         [Space]

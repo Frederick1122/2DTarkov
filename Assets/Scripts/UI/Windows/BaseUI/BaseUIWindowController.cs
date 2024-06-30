@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base;
+using Base.MVC;
 using Managers.SaveLoadManagers;
 using UnityEngine;
 
 namespace UI.Base
 {
-    public class BaseUIWindowController : WindowController<BaseUIWindowView, BaseUIWindowModel>
+    public class BaseUIWindowController : WindowController
     {
         [SerializeField] private HealthBarView _healthBarView;
         
@@ -25,12 +26,12 @@ namespace UI.Base
 
         public void UpdateInteractButton(IInteract interact)
         {
-            _view.UpdateInteractButton(interact);
+            GetView<BaseUIWindowView>().UpdateInteractButton(interact);
         }
 
         public void SetActiveInteractButton(bool isActive)
         {
-            _view.SetActiveInteractButton(isActive);
+            GetView<BaseUIWindowView>().SetActiveInteractButton(isActive);
         }
 
         private void SetHp(int hp)
@@ -51,7 +52,12 @@ namespace UI.Base
             var newTimeSpan = new TimeSpan(0, lastLevelData.lastRemainingMinutes,
                 lastLevelData.lastRemainingSeconds);
             
-            _view.Init(exitNames, newTimeSpan);
+            GetView<BaseUIWindowView>().Init(exitNames, newTimeSpan);
+        }
+
+        protected override UIModel GetViewData()
+        {
+            return new UIModel();
         }
     }
 }

@@ -1,14 +1,16 @@
-﻿using UnityEngine;
+﻿using Base.MVC;
+using UI.Storage;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : UIController<MainMenuView, MainMenuModel>
+public class MainMenuController : UIController //<MainMenuView, MainMenuModel>
 {
     [SerializeField] private StorageWindowController _storageWindowUI;
     private void OnEnable()
     {
-        _view.OnClickSortie += ClickOnSortie;
-        _view.OnClickStorage += ClickOnStorage;
-        _view.OnClickMerchants += ClickOnMerchants;
+        GetView<MainMenuView>().OnClickSortie += ClickOnSortie;
+        GetView<MainMenuView>().OnClickStorage += ClickOnStorage;
+        GetView<MainMenuView>().OnClickMerchants += ClickOnMerchants;
 
         _storageWindowUI.OnClickExitWindow += ReturnToMainMenu;
         _storageWindowUI.Init();
@@ -18,9 +20,9 @@ public class MainMenuController : UIController<MainMenuView, MainMenuModel>
 
     private void OnDisable()
     {
-        _view.OnClickSortie -= ClickOnSortie;
-        _view.OnClickStorage -= ClickOnStorage;
-        _view.OnClickMerchants -= ClickOnMerchants;
+        GetView<MainMenuView>().OnClickSortie -= ClickOnSortie;
+        GetView<MainMenuView>().OnClickStorage -= ClickOnStorage;
+        GetView<MainMenuView>().OnClickMerchants -= ClickOnMerchants;
         
         _storageWindowUI.OnClickExitWindow -= ReturnToMainMenu;
     }
@@ -45,5 +47,10 @@ public class MainMenuController : UIController<MainMenuView, MainMenuModel>
     {
         _storageWindowUI.Hide();
         _view.Show();
+    }
+
+    protected override UIModel GetViewData()
+    {
+        return new UIModel();
     }
 }

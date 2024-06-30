@@ -1,9 +1,11 @@
 using System;
+using Base.MVC;
 using TMPro;
+using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameUIView : WindowView<EndGameUIModel>
+public class EndGameUIView : WindowView//<EndGameUIModel>
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Button _goToMainMenuButton;
@@ -18,9 +20,11 @@ public class EndGameUIView : WindowView<EndGameUIModel>
         _goToMainMenuButton.onClick.RemoveListener(SceneLoader.Instance.GoToMainMenu);
     }
 
-    public override void UpdateView(EndGameUIModel uiModel)
+    public override void UpdateView(UIModel uiModel)
     {
-        _text.text = uiModel.endText;
+        var castData = (EndGameUIModel) uiModel; 
+        
+        _text.text = castData.endText;
         base.UpdateView(uiModel);
     }
 }

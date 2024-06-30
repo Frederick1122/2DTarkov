@@ -1,12 +1,14 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Base.MVC;
 using ConfigScripts;
+using UI.Base;
 using UI.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LootBoxWindowView : WindowView<LootWindowModel>
+public class LootBoxWindowView : WindowView //<LootWindowModel>
 {
     public event Action<ItemCellView> ClickOnCellAction;
     public event Action OnTakeAction;
@@ -19,8 +21,10 @@ public class LootBoxWindowView : WindowView<LootWindowModel>
 
     private void Start() => _takeButton.onClick.AddListener(() => OnTakeAction?.Invoke());
     
-    public override void UpdateView(LootWindowModel uiModel)
+    public override void UpdateView(UIModel uiModel)
     {
+        var castData = (LootWindowModel) uiModel;
+        
         for (int i = _cells.Count - 1; i >= 0; i--)
         {
             var cell = _cells[i];
@@ -31,10 +35,10 @@ public class LootBoxWindowView : WindowView<LootWindowModel>
         _cells.Clear();
         Refresh(false);
         
-        foreach (var item in uiModel.lootItems)
+        foreach (var item in castData.lootItems)
         {
             var newCell = Instantiate(_cellViewPrefab, _itemLayoutGroup.transform);
-            newCell.Init(item, item.baseStack);
+            newCell.Init(new ItemCellModel(item, item.baseStack));
             newCell.GetButton().onClick.AddListener(() => ClickOnCellAction?.Invoke(newCell));
             _cells.Add(newCell);
         }

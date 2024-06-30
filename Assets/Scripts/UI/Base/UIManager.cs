@@ -4,6 +4,7 @@ using ConfigScripts;
 using Managers.SaveLoadManagers;
 using Player.InputSystem;
 using UI.Base;
+using UI.Windows.Inventory;
 using UnityEngine;
 
 namespace UI

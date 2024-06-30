@@ -1,35 +1,42 @@
 using UnityEngine;
 
-public class UIView<T> : MonoBehaviour where T : UIModel
+namespace Base.MVC
 {
-    virtual public void Show()
+    public class UIView : MonoBehaviour
     {
-        for (var i = 0; i < transform.childCount; i++)
+        virtual public void Show()
         {
-            transform.GetChild(i).gameObject.SetActive(true);
-        }
-    }
+            gameObject.SetActive(true);
 
-    virtual public void Hide()
-    {
-        for (var i = 0; i < transform.childCount; i++)
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+
+        virtual public void Hide()
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            gameObject.SetActive(false);
+
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
-    }
 
-    virtual public void Init()
-    {
-        
-    }
+        virtual public void Init(UIModel uiModel)
+        {
+            UpdateView(uiModel);
+        }
 
-    virtual public void UpdateView(T uiModel)
-    {
-        
-    }
+        virtual public void UpdateView(UIModel uiModel)
+        {
 
-    virtual public void Terminate()
-    {
-        
+        }
+
+        virtual public void Terminate()
+        {
+
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using Base;
+using Base.MVC;
 using UnityEngine;
 
-public class EquipmentPanelView : UIView<EquipmentWindowModel>
+public class EquipmentPanelView : UIView//<EquipmentWindowModel>
 {
     public event Action<EquipmentTabView> OnContainerClick;
     public event Action<IEquip> OnRemoveButtonClick;
@@ -38,12 +39,14 @@ public class EquipmentPanelView : UIView<EquipmentWindowModel>
         _weapon2Container.OnRemoveButtonClick -= OnRemoveButtonClick;
     }
 
-    public override void UpdateView(EquipmentWindowModel uiModel)
+    public override void UpdateView(UIModel uiModel)
     {
-        _kevlarContainer.ChangeView(uiModel.kevlarContainerData);
-        _backpackContainer.ChangeView(uiModel.backpackContainerData);
-        _weaponContainer.ChangeView(uiModel.firstWeaponContainerData);
-        _weapon2Container.ChangeView(uiModel.secondWeaponContainerData);
+        var castData = (EquipmentWindowModel) uiModel;
+        
+        _kevlarContainer.ChangeView(castData.kevlarContainerData);
+        _backpackContainer.ChangeView(castData.backpackContainerData);
+        _weaponContainer.ChangeView(castData.firstWeaponContainerData);
+        _weapon2Container.ChangeView(castData.secondWeaponContainerData);
         base.UpdateView(uiModel);
     }
 

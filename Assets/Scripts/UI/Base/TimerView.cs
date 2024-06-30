@@ -1,16 +1,19 @@
 using System;
+using Base.MVC;
 using TMPro;
 using UnityEngine;
 
-public class TimerView : UIView<TimerModel>
+public class TimerView : UIView //<TimerModel>
 {
     [SerializeField] private TMP_Text _text;
     
-    public override void UpdateView(TimerModel uiModel)
+    public override void UpdateView(UIModel uiModel)
     {
+        var castData = (TimerModel) uiModel;
+        
         _text.text =
-            uiModel.remainingTime.Minutes.ToString("D2")  +
-            ":" + uiModel.remainingTime.Seconds.ToString("D2");
+            castData.remainingTime.Minutes.ToString("D2")  +
+            ":" + castData.remainingTime.Seconds.ToString("D2");
         base.UpdateView(uiModel);
     }
 }

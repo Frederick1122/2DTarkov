@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using Managers.SaveLoadManagers;
+using Base.MVC;
 using UnityEngine;
 
-public class TimerController : UIController<TimerView, TimerModel>
+public class TimerController : UIController //<TimerView, TimerModel>
 {
     private TimeSpan _remainingTime;
     
     private YieldInstruction _second = new WaitForSeconds(1f);
     private Coroutine _timerRoutine;
+
+    private TimerModel _data = new();
     
     private void OnDisable()
     {
@@ -40,13 +43,17 @@ public class TimerController : UIController<TimerView, TimerModel>
 
     private IEnumerator TimerRoutine()
     {
-        var timerData = new TimerModel();
         while (_remainingTime.TotalSeconds > 0)
         {
-            timerData.remainingTime = _remainingTime;
-            _view.UpdateView(timerData);
+            UpdateView();
             yield return new WaitForSeconds(1f);
             _remainingTime -= TimeSpan.FromSeconds(1);
         }
+    }
+
+    protected override UIModel GetViewData()
+    {
+        _data.remainingTime = _remainingTime;
+        return _data;
     }
 }

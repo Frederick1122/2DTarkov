@@ -1,37 +1,52 @@
-using System;
 using UnityEngine;
 
-public class UIController<T, T2> : MonoBehaviour where T : UIView<T2> where T2 : UIModel
+namespace Base.MVC
 {
-   [SerializeField] protected T _view;
-
-   private void OnDestroy()
+   public abstract class UIController : MonoBehaviour, IUiController
    {
-      Terminate();
+      [SerializeField] protected UIView _view;
+
+      public virtual void Show()
+      {
+         _view.Show();
+      }
+
+      public virtual void Hide()
+      {
+         _view.Hide();
+      }
+
+      public virtual void Init()
+      {
+         _view.Init(GetViewData());
+      }
+
+      public virtual void UpdateView()
+      {
+         _view.UpdateView(GetViewData());
+      }
+
+      public virtual void UpdateView(UIModel uiModel)
+      {
+         UpdateView();
+      }
+
+      protected abstract UIModel GetViewData();
+
+      protected T GetView<T>() where T : UIView
+      {
+         return (T) _view;
+      }
    }
 
-   virtual public void Show()
+   public interface IUiController
    {
-      _view.Show();
-   }
+      public void Show() { }
 
-   virtual public void Hide()
-   {
-      _view.Hide();
-   }
-      
-   virtual public void Init()
-   {
-      
-   }
+      public virtual void Hide() { }
 
-   virtual public void UpdateView()
-   {
-      
-   }
+      public virtual void Init() { }
 
-   virtual public void Terminate()
-   {
-      
+      public virtual void UpdateView() { }
    }
 }

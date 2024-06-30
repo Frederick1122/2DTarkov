@@ -1,36 +1,40 @@
 ﻿using System;
 using Base;
+using Base.MVC;
 using ConfigScripts;
 using Managers.SaveLoadManagers;
+using UI.Windows.Inventory;
 using UnityEngine;
 
-public class EquipmentPanelController : UIController<EquipmentPanelView, EquipmentWindowModel>
+public class EquipmentPanelController : UIController//<EquipmentPanelView, EquipmentWindowModel>
 {
     public event Action<IEquip> OnContainerClick;
     public event Action OnRemoveButtonClick;
 
     [SerializeField] private InventoryWindowController _inventoryWindowController;
 
+    private EquipmentData _data;
+
     private void OnEnable()
     {
-        _view.OnContainerClick += ClickOnContainer;
-        _view.OnRemoveButtonClick += ClickOnRemoveButton;
+        GetView<EquipmentPanelView>().OnContainerClick += ClickOnContainer;
+        GetView<EquipmentPanelView>().OnRemoveButtonClick += ClickOnRemoveButton;
 
         if (_inventoryWindowController != null)
         {
-            _inventoryWindowController.OnClickCell += _view.Refresh;
+            _inventoryWindowController.OnClickCell += GetView<EquipmentPanelView>().Refresh;
         }
     }
 
     private void OnDisable()
     {
         EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= UpdateView;
-        _view.OnContainerClick -= ClickOnContainer;
-        _view.OnRemoveButtonClick -= ClickOnRemoveButton;
+        GetView<EquipmentPanelView>().OnContainerClick -= ClickOnContainer;
+        GetView<EquipmentPanelView>().OnRemoveButtonClick -= ClickOnRemoveButton;
 
         if (_inventoryWindowController != null)
         {
-            _inventoryWindowController.OnClickCell -= _view.Refresh;
+            _inventoryWindowController.OnClickCell -= GetView<EquipmentPanelView>().Refresh;
         }
     }
 
@@ -45,16 +49,16 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
 
     private void UpdateView(EquipmentData equipmentData)
     {
-        _view.Refresh();
+        GetView<EquipmentPanelView>().Refresh();
 
-        var data = GenerateNewWindowData(equipmentData);
+        _data = equipmentData;
 
-        _view.UpdateView(data);
+        UpdateView();
     }
 
     private void ClickOnContainer(EquipmentTabView equipmentTabView)
     {
-        _view.Refresh();
+        GetView<EquipmentPanelView>().Refresh();
         equipmentTabView.OpenActionButton();
         OnContainerClick?.Invoke(equipmentTabView.GetItem());
     }
@@ -62,7 +66,7 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
     private void ClickOnRemoveButton(IEquip equipmentItem)
     {
         EquipmentSaveLoadManager.Instance.RemoveEquipment(equipmentItem);
-        _view.Refresh();
+        GetView<EquipmentPanelView>().Refresh();
         OnRemoveButtonClick?.Invoke();
     }
 
@@ -132,5 +136,10 @@ public class EquipmentPanelController : UIController<EquipmentPanelView, Equipme
 
         var data = new EquipmentWindowModel(kevlarData, backpackData, firstWeaponData, secondWeaponData);
         return data;
+    }
+
+    protected override UIModel GetViewData()
+    {
+        return GenerateNewWindowData(_data);
     }
 }

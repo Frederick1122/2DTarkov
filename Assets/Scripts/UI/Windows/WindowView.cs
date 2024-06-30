@@ -1,8 +1,10 @@
 ﻿using System;
+using Base.MVC;
+using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowView<T> : UIView<T> where T : UIModel
+public class WindowView : UIView
 {
     //optional functionality
     
