@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Base;
-using Player.InputSystem;
 using UI.Base;
 using UI.Storage;
 using UI.Windows.Inventory;
@@ -14,18 +13,16 @@ namespace UI
         [SerializeField] private BaseUIWindowController _baseUIWindowController;
         [SerializeField] private InventoryWindowController _inventoryWindowController;
         [SerializeField] private LootBoxWindowController _lootBoxWindowController;
-        [SerializeField] private EndGameWindowController endGameWindowController;
+        [SerializeField] private EndGameWindowController _endGameWindowController;
         [SerializeField] private MainMenuWindowController _mainMenuWindowController;
         [SerializeField] private StorageWindowController _storageWindowController;
-
-        private IInputSystem _inputSystem;
 
         private Dictionary<Type, WindowController> _allControllers = new();
         private Stack<WindowController> _activeControllers = new();
 
         public void Init()
         {
-            _inputSystem = GameBus.Instance.PlayerInputSystem;
+            
         }
 
         //private void Start() => OpenBaseUI();
