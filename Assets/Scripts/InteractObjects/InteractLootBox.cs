@@ -39,7 +39,9 @@ public class InteractLootBox : MonoBehaviour, IInteract
         if (!_isOpen)
             GenerateNewItems();
 
-        UIManager.Instance.OpenLootBoxUI(_index, _items);
+        //TODO: repair lootboxes
+        //UIManager.Instance.OpenLootBoxUI(_index, _items);
+        UIManager.Instance.OpenWindow<LootBoxWindowController>();
     }
 
     private void GenerateNewItems()

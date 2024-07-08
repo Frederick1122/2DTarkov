@@ -3,7 +3,7 @@ using Base.MVC;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuView : UIView //<MainMenuModel>
+public class MainMenuView : WindowView //<MainMenuModel>
 {
     [SerializeField] private Button _sortie;
     [SerializeField] private Button _storage;

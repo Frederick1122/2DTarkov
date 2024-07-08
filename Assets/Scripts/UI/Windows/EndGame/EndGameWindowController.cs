@@ -1,7 +1,7 @@
 using Base.MVC;
 using UI;
 
-public class EndGameUIController : WindowController //<EndGameUIView, EndGameUIModel>
+public class EndGameWindowController : WindowController //<EndGameUIView, EndGameUIModel>
 {
     private string _endText;
     

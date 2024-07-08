@@ -5,7 +5,6 @@ using Base.MVC;
 using ConfigScripts;
 using Managers.SaveLoadManagers;
 using UI.Inventory;
-using UnityEditor;
 using UnityEngine;
 
 namespace UI.Windows.Inventory
@@ -20,7 +19,7 @@ namespace UI.Windows.Inventory
         private InventoryWindowModel _model = new();
         private ItemConfig _currentEquipmentItem;
         private ItemCellView _currentCellView;
-        private List<InventoryCell> _inventoryCells;
+        private List<InventoryCell> _inventoryCells = new();
         private InventoryType _inventoryType;
         private bool _isStorageWindow;
 

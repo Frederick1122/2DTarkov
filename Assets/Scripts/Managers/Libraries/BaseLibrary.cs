@@ -1,8 +1,10 @@
-﻿using Base;
+﻿using System;
+using Base;
 using ConfigScripts;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Managers.Libraries
 {
@@ -37,11 +39,17 @@ namespace Managers.Libraries
 
         public T GetConfig(string configKey)
         {
-            if (configKey == "")
+            if (String.IsNullOrEmpty(configKey))
+            {
                 Debug.LogAssertion("configKey is null");
+                return null;
+            }
 
             if (!_allConfigs.ContainsKey(configKey))
+            {
                 Debug.LogAssertion($"Library not founded config with this key: {configKey}");
+                return null;
+            }
 
             var config = _allConfigs[configKey];
 

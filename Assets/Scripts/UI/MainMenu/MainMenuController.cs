@@ -1,9 +1,10 @@
 ﻿using Base.MVC;
+using UI;
 using UI.Storage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : UIController //<MainMenuView, MainMenuModel>
+public class MainMenuWindowController : WindowController //<MainMenuView, MainMenuModel>
 {
     [SerializeField] private StorageWindowController _storageWindowUI;
     private void OnEnable()

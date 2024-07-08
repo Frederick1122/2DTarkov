@@ -8,8 +8,8 @@ namespace Base.FSM
     {
         [Inject] private DiContainer _diContainer;
         
-        private Dictionary<Type, Fsm> _currentFsms = new ();
-        private Fsm _activeFsm;
+        private Dictionary<Type, GlobalFsm> _currentFsms = new ();
+        private GlobalFsm _activeFsm;
         
         protected override void Awake()
         {
@@ -18,7 +18,7 @@ namespace Base.FSM
                 currentFsm.Value.Init();
         }
 
-        public void SetActiveFsm<T>() where T : Fsm, new()
+        public void SetActiveFsm<T>() where T : GlobalFsm, new()
         {
             if (!_currentFsms.ContainsKey(typeof(T)))
             {
@@ -32,13 +32,13 @@ namespace Base.FSM
             _activeFsm.SetStartState();
         }
 
-        public Fsm TryGetFsm<T>() where T : Fsm
+        public Fsm TryGetFsm<T>() where T : GlobalFsm
         {
-            AddNewFsm<Fsm>();
+            AddNewFsm<GlobalFsm>();
             return _currentFsms.TryGetValue(typeof(T), out var fsm) ? fsm : null;
         }
 
-        public void AddNewFsm<T>() where T : Fsm, new()
+        public void AddNewFsm<T>() where T : GlobalFsm, new()
         {
             if (_currentFsms.ContainsKey(typeof(T)))
                 return;
@@ -54,10 +54,10 @@ namespace Base.FSM
                 return;
 
             newFsm.Init();
-            _currentFsms.Add(newFsm.GetType(), (Fsm)newFsm);
+            _currentFsms.Add(newFsm.GetType(), (GlobalFsm)newFsm);
         }
 
-        public void RemoveFsm<T>() where T : Fsm
+        public void RemoveFsm<T>() where T : GlobalFsm
         {
             _currentFsms.Remove(typeof(T));
         }

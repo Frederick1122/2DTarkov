@@ -23,7 +23,7 @@ using UnityEngine.UI;
             _playerHumanoid = GameBus.Instance.PlayerHumanoid;
             _inputSystem = GameBus.Instance.PlayerInputSystem;
             _inputSystem.OnInteractAction += TryInteract;
-            _baseUIWindowController = UIManager.Instance.GetBaseUI();
+            _baseUIWindowController = UIManager.Instance.GetWindow<BaseUIWindowController>();
         }
 
         private void OnDestroy()

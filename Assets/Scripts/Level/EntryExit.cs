@@ -34,7 +34,9 @@ public class EntryExit : MonoBehaviour
                 {
                     ChunksSaveLoadManager.Instance.ClearChunksData();
                     PlayerSaveLoadManager.Instance.ClearPlayerData();
-                    UIManager.Instance.OpenEndGameUI(TEXT_ON_EXIT);
+                    //TODO: repair endGameUI
+                    //UIManager.Instance.OpenEndGameUI(TEXT_ON_EXIT);
+                    UIManager.Instance.OpenWindow<EndGameWindowController>();
                     return;
                 }
             }

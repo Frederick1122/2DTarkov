@@ -214,7 +214,7 @@ namespace Managers.SaveLoadManagers
 
         private ItemConfig GetConfig(string configKey, ItemConfig loadedItemConfig)
         {
-            if (configKey == "")
+            if (String.IsNullOrEmpty(configKey))
                 return null;
                     
             if (loadedItemConfig == null || loadedItemConfig == default)

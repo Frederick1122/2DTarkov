@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Base;
 using Base.MVC;
+using UI.Windows.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = System.Object;
@@ -22,7 +23,7 @@ namespace UI.Base
 
         private void Start()
         {
-            _inventoryButton.onClick.AddListener(UIManager.Instance.OpenInventoryUI);
+            _inventoryButton.onClick.AddListener(HandleOpenInventory);
             _exitInfosButton.onClick.AddListener(ChangeActivityExitInfosPanel);
             _exitInfosPanel.gameObject.SetActive(false);
         }
@@ -55,6 +56,11 @@ namespace UI.Base
         public void SetActiveInteractButton(bool canInteract)
         {
             _interactButton.gameObject.SetActive(canInteract);
+        }
+
+        private void HandleOpenInventory()
+        {
+            UIManager.Instance.OpenWindow<InventoryWindowController>();
         }
         
         private void UpdateExitInfosPanel(List<string> exitNames)

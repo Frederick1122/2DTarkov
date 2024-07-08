@@ -13,7 +13,7 @@ public class EquipmentPanelController : UIController//<EquipmentPanelView, Equip
 
     [SerializeField] private InventoryWindowController _inventoryWindowController;
 
-    private EquipmentData _data;
+    private EquipmentData _data = new();
 
     private void OnEnable()
     {
