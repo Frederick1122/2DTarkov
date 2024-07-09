@@ -98,9 +98,7 @@ namespace UI.Windows.Inventory
             newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
             _activeCells.Add(newCell);
         }
-    
-        
-        
+
         private void ClickOnCell(ItemCellView cellView)
         { 
             OnClickCell?.Invoke(cellView);

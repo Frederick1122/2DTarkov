@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 776280620}
   - component: {fileID: 776280619}
   - component: {fileID: 776280621}
+  - component: {fileID: 776280622}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -325,6 +326,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 776280621}
+  - {fileID: 776280622}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -370,6 +372,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelCreatorPrefab: {fileID: 5927716829266068550, guid: 4421e6c80bd752d4b8c790927c1b70cc, type: 3}
+--- !u!114 &776280622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776280618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3545450ed44e415b95b8523cbcbd7242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &794953022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -475,17 +489,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f38b95805b5a2184d87d7445d4cb1a38, type: 3}
---- !u!114 &794953023 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5562855994821311492, guid: f38b95805b5a2184d87d7445d4cb1a38, type: 3}
-  m_PrefabInstance: {fileID: 794953022}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bafa85b11c9ee24fa36f9644099a231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &794953024 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3480895874609562187, guid: f38b95805b5a2184d87d7445d4cb1a38, type: 3}
@@ -1385,7 +1388,9 @@ MonoBehaviour:
   _baseUIWindowController: {fileID: 751769366}
   _inventoryWindowController: {fileID: 567135037}
   _lootBoxWindowController: {fileID: 1251633617}
-  _endGameUIController: {fileID: 794953023}
+  _endGameWindowController: {fileID: 0}
+  _mainMenuWindowController: {fileID: 0}
+  _storageWindowController: {fileID: 0}
 --- !u!1 &1758126421
 GameObject:
   m_ObjectHideFlags: 0

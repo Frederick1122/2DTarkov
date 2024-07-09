@@ -22,7 +22,21 @@ namespace UI
 
         public void Init()
         {
+            _baseUIWindowController.Init();
+            _inventoryWindowController.Init();
+            _lootBoxWindowController.Init();
+            _endGameWindowController.Init();
+            _mainMenuWindowController.Init();
+            _storageWindowController.Init();
             
+            _allControllers.Add(typeof(BaseUIWindowController), _baseUIWindowController);
+            _allControllers.Add(typeof(InventoryWindowController), _inventoryWindowController);
+            _allControllers.Add(typeof(LootBoxWindowController), _lootBoxWindowController);
+            _allControllers.Add(typeof(EndGameWindowController), _endGameWindowController);
+            _allControllers.Add(typeof(MainMenuWindowController), _mainMenuWindowController);
+            _allControllers.Add(typeof(StorageWindowController), _storageWindowController);
+            
+            HideAll();
         }
 
         //private void Start() => OpenBaseUI();
@@ -92,7 +106,7 @@ namespace UI
         
         public void OpenWindow<T>() where T : WindowController
         {
-            if (_allControllers.ContainsKey(typeof(T)))
+            if (!_allControllers.ContainsKey(typeof(T)))
             {
                 Debug.LogAssertion($"WindowController with type {typeof(T)} not found in UIManager");
                 return;
@@ -120,8 +134,18 @@ namespace UI
             // _inventoryWindowController.Hide();
             // _lootBoxWindowController.Hide();
             // endGameWindowController.Hide();
+            if (_activeControllers.Count == 0)
+                return;
             
             _activeControllers.Peek().Hide();
+        }
+
+        private void HideAll()
+        {
+            foreach (var controller in _allControllers.Values)
+            {
+                controller.Hide();
+            }
         }
     }
 }

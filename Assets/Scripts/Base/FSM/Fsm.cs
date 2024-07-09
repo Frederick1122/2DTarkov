@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Base.FSM
 {
-    public class Fsm : IFsm
+    public abstract class Fsm : IFsm
     {
         private FsmState _currentState;
         protected Dictionary<Type, FsmState> _states = new Dictionary<Type, FsmState>();

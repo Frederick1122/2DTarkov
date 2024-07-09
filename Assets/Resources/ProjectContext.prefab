@@ -51,6 +51,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 3585829036938247242}
   - {fileID: 4635616329446272595}
+  - {fileID: 3993464773880697054}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78184e9f84b842d884969e5340fe3fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fsmManagerPrefab: {fileID: 0}
+  _fsmManagerPrefab: {fileID: 6767618766714870588, guid: 82f0edf5433e71b41a06cfd0ac29d2ff, type: 3}
 --- !u!114 &4635616329446272595
 MonoBehaviour:
   m_ObjectHideFlags: 0

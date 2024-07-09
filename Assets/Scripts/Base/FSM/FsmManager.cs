@@ -32,20 +32,21 @@ namespace Base.FSM
             _activeFsm.SetStartState();
         }
 
-        public Fsm TryGetFsm<T>() where T : GlobalFsm
+        public Fsm TryGetFsm<T>() where T : GlobalFsm, new()
         {
-            AddNewFsm<GlobalFsm>();
-            return _currentFsms.TryGetValue(typeof(T), out var fsm) ? fsm : null;
+            _currentFsms.TryGetValue(typeof(T), out var fsm);
+            return fsm ?? AddNewFsm<T>();
         }
 
-        public void AddNewFsm<T>() where T : GlobalFsm, new()
+        private Fsm AddNewFsm<T>() where T : GlobalFsm, new()
         {
             if (_currentFsms.ContainsKey(typeof(T)))
-                return;
+                return _currentFsms[typeof(T)];
 
             var newFsm = new T();
             newFsm.Init();
             _currentFsms.Add(typeof(T), newFsm);
+            return newFsm;
         }
 
         public void AddNewFsm(IFsm newFsm)

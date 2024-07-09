@@ -1,4 +1,6 @@
-﻿namespace Base.FSM
+﻿using System;
+
+namespace Base.FSM
 {
     public class GlobalFsm : Fsm
     {
