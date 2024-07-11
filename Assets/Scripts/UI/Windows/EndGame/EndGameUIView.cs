@@ -5,19 +5,21 @@ using UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameUIView : WindowView//<EndGameUIModel>
+public class EndGameUIView : WindowView
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Button _goToMainMenuButton;
 
-    private void Start()
+    public override void Init(UIModel uiModel)
     {
         _goToMainMenuButton.onClick.AddListener(SceneLoader.Instance.GoToMainMenu);
+        base.Init(uiModel);
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         _goToMainMenuButton.onClick.RemoveListener(SceneLoader.Instance.GoToMainMenu);
+        base.Terminate();
     }
 
     public override void UpdateView(UIModel uiModel)

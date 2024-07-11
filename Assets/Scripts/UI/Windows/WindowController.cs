@@ -6,15 +6,19 @@ namespace UI
     public abstract class WindowController : UIController
     {
         public event Action OnClickExitWindow;
-
-        private void Start()
+        
+        public override void Init()
         {
             GetView<WindowView>().OnClickExitWindow += OnClickExitWindow;
+
+            base.Init();
         }
 
-        protected virtual void OnDestroy()
+        public override void Terminate()
         {
             GetView<WindowView>().OnClickExitWindow -= OnClickExitWindow;
+
+            base.Terminate();
         }
     }
 }

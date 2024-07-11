@@ -26,20 +26,22 @@ namespace UI.Windows.Inventory
         private List<ItemCellView> _activeCells = new List<ItemCellView>();
         private List<ItemCellView> _hideCells = new List<ItemCellView>();
 
-        internal void OnEnable()
+        public override void Init(UIModel uiModel)
         {
             _actionButtonsView.OnUseAction += Interact;
             _actionButtonsView.OnEquipAction += Interact;
             _actionButtonsView.OnDropAction += Drop;
             _actionButtonsView.OnMoveAction += Move;
+            base.Init(uiModel);
         }
 
-        internal void OnDisable()
+        internal override void OnDestroy()
         {
             _actionButtonsView.OnUseAction -= Interact;
             _actionButtonsView.OnEquipAction -= Interact;
             _actionButtonsView.OnDropAction -= Drop;
             _actionButtonsView.OnMoveAction -= Move;
+            base.OnDestroy();
         }
 
         public override void UpdateView(UIModel uiModel)
@@ -95,7 +97,7 @@ namespace UI.Windows.Inventory
             var newCell = Instantiate(_inventoryCellView, _inventoryLayoutGroup.gameObject.transform);
             var cellItem = cell.GetItem();
             newCell.Init(new ItemCellModel(cellItem, cell.count));
-            newCell.GetButton().onClick.AddListener(() => ClickOnCell(newCell));
+            newCell.OnClickCell += ClickOnCell;
             _activeCells.Add(newCell);
         }
 

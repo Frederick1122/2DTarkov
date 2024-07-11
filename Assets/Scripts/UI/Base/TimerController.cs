@@ -13,24 +13,6 @@ public class TimerController : UIController //<TimerView, TimerModel>
 
     private TimerModel _data = new();
     
-    private void OnDisable()
-    {
-        if (_timerRoutine != null)
-        {
-            StopCoroutine(_timerRoutine);
-        }
-    }
-
-    private void OnApplicationQuit()
-    {
-        PlayerSaveLoadManager.Instance.SetLastRemainingTime(_remainingTime);
-    }
-
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        PlayerSaveLoadManager.Instance.SetLastRemainingTime(_remainingTime);
-    }
-
     public void Init(TimeSpan remainingTime)
     {
         if (_timerRoutine != null)
@@ -39,6 +21,24 @@ public class TimerController : UIController //<TimerView, TimerModel>
         }
         _remainingTime = remainingTime;
         _timerRoutine = StartCoroutine(TimerRoutine());
+    }
+
+    public override void Terminate()
+    {
+        if (_timerRoutine != null) 
+            StopCoroutine(_timerRoutine);
+
+        base.Terminate();
+    }
+    
+    private void OnApplicationQuit()
+    {
+        PlayerSaveLoadManager.Instance.SetLastRemainingTime(_remainingTime);
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        PlayerSaveLoadManager.Instance.SetLastRemainingTime(_remainingTime);
     }
 
     private IEnumerator TimerRoutine()

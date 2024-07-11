@@ -12,9 +12,11 @@ public class WindowView : UIView
     
     [SerializeField] private Button _exitButton;
 
-    internal virtual void Start()
+
+    public override void Init(UIModel uiModel)
     {
         _exitButton?.onClick.AddListener(() => OnClickExitWindow?.Invoke());
+        base.Init(uiModel);
     }
 
     internal virtual void OnDestroy()

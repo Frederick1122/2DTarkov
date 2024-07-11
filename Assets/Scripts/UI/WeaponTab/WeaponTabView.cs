@@ -1,9 +1,10 @@
 using System;
+using Base.MVC;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponTabView : MonoBehaviour
+public class WeaponTabView : UIView
 {
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _name;
@@ -13,23 +14,27 @@ public class WeaponTabView : MonoBehaviour
     [SerializeField] private Button _reloadButton;
     [SerializeField] private Button _swipeWeaponButton;
 
-    public event Action onClickReload;
-    public event Action onClickSwipeWeapon;
+    public event Action OnClickReload;
+    public event Action OnClickSwipeWeapon;
 
-    private void OnEnable()
+    public override void Init(UIModel uiModel)
     {
-        _reloadButton.onClick.AddListener(() => onClickReload?.Invoke());
-        _swipeWeaponButton.onClick.AddListener(() => onClickSwipeWeapon?.Invoke());
+        _reloadButton.onClick.AddListener(() => OnClickReload?.Invoke());
+        _swipeWeaponButton.onClick.AddListener(() => OnClickSwipeWeapon?.Invoke());
+        base.Init(uiModel);
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         _reloadButton.onClick.RemoveAllListeners();
         _swipeWeaponButton.onClick.RemoveAllListeners();
+        base.Terminate();
     }
 
-    public void UpdateView(WeaponTabModel weaponTabModel)
+    public override void UpdateView(UIModel uiModel)
     {
+        var weaponTabModel = (WeaponTabModel) uiModel;
+        
         if (weaponTabModel == null)
         {
             _icon.gameObject.SetActive(false);
@@ -64,10 +69,12 @@ public class WeaponTabView : MonoBehaviour
         }
         
         _reserve.text = weaponTabModel.reserve >= 0 ? $"Reserve: {weaponTabModel.reserve}" : "";
+        
+        base.UpdateView(uiModel);
     }
 }
 
-public class WeaponTabModel
+public class WeaponTabModel : UIModel
 {
     public Sprite icon;
     public string name;

@@ -15,7 +15,7 @@ public class EquipmentPanelController : UIController//<EquipmentPanelView, Equip
 
     private EquipmentData _data = new();
 
-    private void OnEnable()
+    public override void Init()
     {
         GetView<EquipmentPanelView>().OnContainerClick += ClickOnContainer;
         GetView<EquipmentPanelView>().OnRemoveButtonClick += ClickOnRemoveButton;
@@ -24,9 +24,11 @@ public class EquipmentPanelController : UIController//<EquipmentPanelView, Equip
         {
             _inventoryWindowController.OnClickCell += GetView<EquipmentPanelView>().Refresh;
         }
+
+        base.Init();
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= UpdateView;
         GetView<EquipmentPanelView>().OnContainerClick -= ClickOnContainer;
@@ -36,6 +38,8 @@ public class EquipmentPanelController : UIController//<EquipmentPanelView, Equip
         {
             _inventoryWindowController.OnClickCell -= GetView<EquipmentPanelView>().Refresh;
         }
+        
+        base.Terminate();
     }
 
     private void Start()

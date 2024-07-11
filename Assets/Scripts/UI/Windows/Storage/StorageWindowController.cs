@@ -15,7 +15,6 @@ namespace UI.Storage
         private bool _isStorageState;
         public override void Init()
         {
-            base.Init();
             _inventoryWindowController.OnClickCell += ClearOldStorageCell;
             _storageController.OnClickCell += ClearOldInventoryCell;
 
@@ -28,6 +27,7 @@ namespace UI.Storage
             _equipmentPanelController.Init();
         
             OpenStorageTab();
+            base.Init();
         }
 
         protected override UIModel GetViewData()
@@ -35,7 +35,7 @@ namespace UI.Storage
             return new UIModel();
         }
 
-        protected override void OnDestroy()
+        public override void Terminate()
         {
             _inventoryWindowController.OnClickCell += ClearOldStorageCell;
             _storageController.OnClickCell += ClearOldInventoryCell;
@@ -48,7 +48,7 @@ namespace UI.Storage
             Destroy(_storageTabsController);
             Destroy(_equipmentPanelController);
             
-            base.OnDestroy();
+            base.Terminate();
         }
 
         public override void Show()

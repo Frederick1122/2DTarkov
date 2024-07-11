@@ -10,18 +10,21 @@ namespace UI.Base
     public class BaseUIWindowController : WindowController
     {
         [SerializeField] private HealthBarView _healthBarView;
-        
-        private void Start()
+
+        public override void Init()
         {
             GameBus.Instance.OnLevelSet += SetLevelInfo;
             PlayerSaveLoadManager.Instance.OnHpChanged += SetHp;
             SetHp(PlayerSaveLoadManager.Instance.GetHp());
+
+            base.Init();
         }
 
-        private void OnDisable()
+        public override void Terminate()
         {
             GameBus.Instance.OnLevelSet -= SetLevelInfo;
             PlayerSaveLoadManager.Instance.OnHpChanged -= SetHp;
+            base.Terminate();
         }
 
         public void UpdateInteractButton(IInteract interact)

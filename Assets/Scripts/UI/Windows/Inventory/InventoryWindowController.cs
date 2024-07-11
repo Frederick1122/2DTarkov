@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace UI.Windows.Inventory
 {
-    public class InventoryWindowController : WindowController//<InventoryWindowView, InventoryWindowModel>
+    public class InventoryWindowController : WindowController
     {
         public event Action OnClickCell;
 
@@ -23,8 +23,11 @@ namespace UI.Windows.Inventory
         private InventoryType _inventoryType;
         private bool _isStorageWindow;
 
-        private void OnEnable()
+        public void Init(InventoryType inventoryType, bool isStorageWindow)
         {
+            _inventoryType = inventoryType;
+            _isStorageWindow = isStorageWindow;
+            
             GetView<InventoryWindowView>().OnInteractWithItem += InteractWithItem;
             GetView<InventoryWindowView>().OnDrop += Drop;
             GetView<InventoryWindowView>().OnMove += Move;
@@ -35,9 +38,11 @@ namespace UI.Windows.Inventory
                 _equipmentPanelController.OnContainerClick += ClickOnEquipment;
                 _equipmentPanelController.OnRemoveButtonClick += RemoveEquipment;
             }
+            
+            base.Init();
         }
 
-        private void OnDisable()
+        public override void Terminate()
         {
             GetView<InventoryWindowView>().OnInteractWithItem -= InteractWithItem;
             GetView<InventoryWindowView>().OnDrop -= Drop;
@@ -49,15 +54,10 @@ namespace UI.Windows.Inventory
                 _equipmentPanelController.OnContainerClick -= ClickOnEquipment;
                 _equipmentPanelController.OnRemoveButtonClick -= RemoveEquipment;
             }
+            
+            base.Terminate();
         }
-
-        public void Init(InventoryType inventoryType, bool isStorageWindow)
-        {
-            _inventoryType = inventoryType;
-            _isStorageWindow = isStorageWindow;
-            base.Init();
-        }
-
+        
         public void ClearCurrentCell()
         {
             _currentCellView = null;
@@ -65,20 +65,20 @@ namespace UI.Windows.Inventory
 
         public override void Show()
         {
-            base.Show();
-
             Refresh();
 
             InventorySaveLoadManager.Instance.OnInventoryAdded += AddNewItem;
             InventorySaveLoadManager.Instance.OnInventoryDeleted += DeleteItem;
+            
+            base.Show();
         }
 
         public override void Hide()
         {
-            base.Hide();
-
             InventorySaveLoadManager.Instance.OnInventoryAdded -= AddNewItem;
             InventorySaveLoadManager.Instance.OnInventoryDeleted -= DeleteItem;
+            
+            base.Hide();
         }
 
         protected override UIModel GetViewData()
@@ -163,11 +163,10 @@ namespace UI.Windows.Inventory
             if (_currentCellView == null)
                 return;
             
-            if (_lootBoxWindowController != null)
-            {
-            
-            }
-        
+            if (_lootBoxWindowController == null)
+                InventorySaveLoadManager.Instance.DeleteItem(_currentCellView.GetItem(), _currentCellView.GetCount(),
+                    _inventoryType);
+
             var inventoryTypeToTransfer =
                 _inventoryType == InventoryType.Inventory ? InventoryType.Storage : InventoryType.Inventory;
             InventorySaveLoadManager.Instance.AddItem(_currentCellView.GetItem(), _currentCellView.GetCount(), inventoryTypeToTransfer);

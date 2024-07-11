@@ -1,42 +1,43 @@
+using Base.MVC;
 using ConfigScripts;
 using Managers.SaveLoadManagers;
-using UnityEngine;
 
-public class WeaponTabController : MonoBehaviour
+public class WeaponTabController : UIController
 {
-    [SerializeField] private WeaponTabView _weaponTabView;
-
     private WeaponConfig _currentWeaponConfig;
 
-    private void Start()
+    private EquipmentData _equipmentData;
+    public override void Init()
     {
-        EquipmentSaveLoadManager.Instance.OnEquipmentChanged += UpdateView;
-        InventorySaveLoadManager.Instance.OnInventoryAdded += UpdateReverse;
-        InventorySaveLoadManager.Instance.OnInventoryDeleted += UpdateReverse;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged += SetNewEquipment;
+        InventorySaveLoadManager.Instance.OnInventoryAdded += HandleinventoryUpdate;
+        InventorySaveLoadManager.Instance.OnInventoryDeleted += HandleinventoryUpdate;
 
-        _weaponTabView.onClickReload += ReloadCurrentWeapon;
-        _weaponTabView.onClickSwipeWeapon += SwipeWeapon;
+        GetView<WeaponTabView>().OnClickReload += ReloadCurrentWeapon;
+        GetView<WeaponTabView>().OnClickSwipeWeapon += SwipeWeapon;
         
-        UpdateView(EquipmentSaveLoadManager.Instance.GetEquipment());
+        SetNewEquipment(EquipmentSaveLoadManager.Instance.GetEquipment());
+        base.Init();
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
-        _weaponTabView.onClickReload -= ReloadCurrentWeapon;
-        _weaponTabView.onClickSwipeWeapon -= SwipeWeapon;
+        GetView<WeaponTabView>().OnClickReload -= ReloadCurrentWeapon;
+        GetView<WeaponTabView>().OnClickSwipeWeapon -= SwipeWeapon;
         
-        EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= UpdateView;
-        InventorySaveLoadManager.Instance.OnInventoryAdded -= UpdateReverse;
-        InventorySaveLoadManager.Instance.OnInventoryDeleted -= UpdateReverse;
+        EquipmentSaveLoadManager.Instance.OnEquipmentChanged -= SetNewEquipment;
+        InventorySaveLoadManager.Instance.OnInventoryAdded -= HandleinventoryUpdate;
+        InventorySaveLoadManager.Instance.OnInventoryDeleted -= HandleinventoryUpdate;
+        base.Terminate();
     }
 
-    private void UpdateView(EquipmentData equipmentData)
+    protected override UIModel GetViewData()
     {
-        var currentType = equipmentData.isSecondWeapon ? EquipmentType.secondWeapon : EquipmentType.firstWeapon;
-        _currentWeaponConfig = (WeaponConfig) equipmentData.GetEquipment(currentType);
-        var currentAmmo = equipmentData.isSecondWeapon
-            ? equipmentData.secondWeaponAmmoInMagazine
-            : equipmentData.firstWeaponAmmoInMagazine;
+        var currentType = _equipmentData.isSecondWeapon ? EquipmentType.secondWeapon : EquipmentType.firstWeapon;
+        _currentWeaponConfig = (WeaponConfig) _equipmentData.GetEquipment(currentType);
+        var currentAmmo = _equipmentData.isSecondWeapon
+            ? _equipmentData.secondWeaponAmmoInMagazine
+            : _equipmentData.firstWeaponAmmoInMagazine;
         if (_currentWeaponConfig != null)
         {
             var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeaponConfig.bulletConfig);
@@ -46,24 +47,21 @@ public class WeaponTabController : MonoBehaviour
                 currentAmmo,
                 reserve);
 
-            _weaponTabView.UpdateView(weaponTabModel);
+            return weaponTabModel;
         }
-        else
-        {
-            _weaponTabView.UpdateView(null);
-        }
+        
+        return null;
     }
 
-    private void UpdateReverse(ItemConfig itemConfig, int count, InventoryType inventoryType)
+    private void HandleinventoryUpdate(ItemConfig config, int count, InventoryType type)
     {
-        if(_currentWeaponConfig == null || itemConfig != _currentWeaponConfig.bulletConfig)
-            return;
-        
-        var reserve = InventorySaveLoadManager.Instance.GetItemCount(_currentWeaponConfig.bulletConfig);
+        UpdateView();
+    }
 
-        var weaponTabModel = new WeaponTabModel(reserve: reserve);
-        
-        _weaponTabView.UpdateView(weaponTabModel);
+    private void SetNewEquipment(EquipmentData equipmentData)
+    {
+        _equipmentData = equipmentData;
+        UpdateView();
     }
     
     private void ReloadCurrentWeapon()

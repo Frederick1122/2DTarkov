@@ -7,29 +7,31 @@ using UI.Base;
 using UI.Inventory;
 using UnityEngine;
 
-public class LootBoxWindowController : WindowController //<LootBoxWindowView, LootWindowModel>
+public class LootBoxWindowController : WindowController
 {
     [SerializeField] private ItemInformationPanelView _itemInformationPanelView;
     
     private ItemCellView _currentCellView;
     private List<ItemConfig> _lootItems = new List<ItemConfig>();
     private int _lootBoxIndex;
-
-    private void Start()
+    
+    public override void Init()
     {
         GetView<LootBoxWindowView>().ClickOnCellAction += ClickOnCellAction;
         GetView<LootBoxWindowView>().OnTakeAction += Take;
 
         _itemInformationPanelView.UpdateView(new ItemInformationPanelModel());
+        base.Init();
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         GetView<LootBoxWindowView>().ClickOnCellAction -= ClickOnCellAction;
         GetView<LootBoxWindowView>().OnTakeAction -= Take;
+        base.Terminate();
     }
 
-    public void Init(int lootBoxIndex, List<ItemConfig> lootItems)
+    public void SetNewData(int lootBoxIndex, List<ItemConfig> lootItems)
     {
         if (lootItems.Count == 0)
         {

@@ -6,28 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuWindowController : WindowController //<MainMenuView, MainMenuModel>
 {
-    [SerializeField] private StorageWindowController _storageWindowUI;
-    private void OnEnable()
+    
+    public override void Init()
     {
         GetView<MainMenuView>().OnClickSortie += ClickOnSortie;
         GetView<MainMenuView>().OnClickStorage += ClickOnStorage;
         GetView<MainMenuView>().OnClickMerchants += ClickOnMerchants;
 
-        _storageWindowUI.OnClickExitWindow += ReturnToMainMenu;
-        _storageWindowUI.Init();
-        
-        ReturnToMainMenu();
+        base.Init();
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         GetView<MainMenuView>().OnClickSortie -= ClickOnSortie;
         GetView<MainMenuView>().OnClickStorage -= ClickOnStorage;
         GetView<MainMenuView>().OnClickMerchants -= ClickOnMerchants;
         
-        _storageWindowUI.OnClickExitWindow -= ReturnToMainMenu;
+        base.Terminate();
     }
-    
+
     private void ClickOnSortie()
     {
         SceneManager.LoadScene("Game");
@@ -35,19 +32,12 @@ public class MainMenuWindowController : WindowController //<MainMenuView, MainMe
     
     private void ClickOnStorage()
     {
-        _storageWindowUI.Show();
-        _view.Hide();
+        UIManager.Instance.OpenWindow<StorageWindowController>();
     }
     
     private void ClickOnMerchants()
     {
         
-    }
-
-    private void ReturnToMainMenu()
-    {
-        _storageWindowUI.Hide();
-        _view.Show();
     }
 
     protected override UIModel GetViewData()

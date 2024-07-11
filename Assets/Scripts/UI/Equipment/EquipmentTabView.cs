@@ -1,10 +1,11 @@
 using System;
 using Base;
+using Base.MVC;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentTabView : MonoBehaviour
+public class EquipmentTabView : UIView
 {
     public event Action<EquipmentTabView> OnContainerClick;
     public event Action<IEquip> OnRemoveButtonClick;
@@ -26,18 +27,20 @@ public class EquipmentTabView : MonoBehaviour
         return _equipmentItem;
     }
     
-    private void OnEnable()
+    public override void Init(UIModel uiModel)
     {
         _containerButton.onClick.AddListener(() => OnContainerClick?.Invoke(this));
         _removeButton.onClick.AddListener(() => OnRemoveButtonClick?.Invoke(_equipmentItem));
+        base.Init(uiModel);
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         _containerButton.onClick.RemoveAllListeners();
         _removeButton.onClick.RemoveAllListeners();
+        base.Terminate();
     }
-
+    
     public void ChangeView(WeaponContainerData data)
     {
         data ??= new WeaponContainerData();

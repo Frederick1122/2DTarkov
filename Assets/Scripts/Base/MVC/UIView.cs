@@ -4,7 +4,17 @@ namespace Base.MVC
 {
     public class UIView : MonoBehaviour
     {
-        virtual public void Show()
+        public virtual void Init(UIModel uiModel)
+        {
+            UpdateView(uiModel);
+        }
+
+        public virtual void Terminate()
+        {
+            Destroy(gameObject);
+        }
+
+        public virtual void Show()
         {
             gameObject.SetActive(true);
 
@@ -14,7 +24,7 @@ namespace Base.MVC
             }
         }
 
-        virtual public void Hide()
+        public virtual void Hide()
         {
             gameObject.SetActive(false);
 
@@ -23,18 +33,8 @@ namespace Base.MVC
                 transform.GetChild(i).gameObject.SetActive(false);
             }
         }
-
-        virtual public void Init(UIModel uiModel)
-        {
-            UpdateView(uiModel);
-        }
-
-        virtual public void UpdateView(UIModel uiModel)
-        {
-
-        }
-
-        virtual public void Terminate()
+        
+        public virtual void UpdateView(UIModel uiModel)
         {
 
         }

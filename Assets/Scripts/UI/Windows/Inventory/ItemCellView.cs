@@ -1,3 +1,4 @@
+using System;
 using Base.MVC;
 using ConfigScripts;
 using TMPro;
@@ -9,6 +10,8 @@ namespace UI.Inventory
     [RequireComponent(typeof(Button))]
     public class ItemCellView : UIView
     {
+        public event Action<ItemCellView> OnClickCell = delegate { };
+        
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _countText;
 
@@ -21,6 +24,8 @@ namespace UI.Inventory
             if (_button == null) 
                 _button = GetComponent<Button>();
             
+            _button.onClick.AddListener(ClickOnCell);
+
             base.Init(uiModel);
         }
 
@@ -36,13 +41,16 @@ namespace UI.Inventory
             base.UpdateView(uiModel);
         }
 
-        public Button GetButton() => _button;
-
         public ItemConfig GetItem() => _itemConfig;
 
         public int GetCount() => _count;
 
         public void SetCount( int count ) => _count = count;
+
+        private void ClickOnCell()
+        {
+            OnClickCell?.Invoke(this);
+        }
     }
     
     public class ItemCellModel : UIModel

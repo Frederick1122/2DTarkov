@@ -20,20 +20,22 @@ namespace UI.Base
         [Space]
         [SerializeField] private Button _exitInfosButton;
         [SerializeField] private VerticalLayoutGroup _exitInfosPanel;
-
-        private void Start()
+        
+        public override void Init(UIModel uiModel)
         {
             _inventoryButton.onClick.AddListener(HandleOpenInventory);
             _exitInfosButton.onClick.AddListener(ChangeActivityExitInfosPanel);
             _exitInfosPanel.gameObject.SetActive(false);
+            base.Init(uiModel);
         }
 
-        private void OnDisable()
+        public override void Terminate()
         {
             _inventoryButton.onClick.RemoveAllListeners();
             _exitInfosButton.onClick.RemoveAllListeners();
+            base.Terminate();
         }
-
+        
         public void Init(List<string> exitNames, TimeSpan remainingTime)
         {
             UpdateExitInfosPanel(exitNames);

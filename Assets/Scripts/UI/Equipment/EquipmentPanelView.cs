@@ -12,8 +12,8 @@ public class EquipmentPanelView : UIView//<EquipmentWindowModel>
     [SerializeField] private EquipmentTabView _backpackContainer;
     [SerializeField] private EquipmentTabView _weaponContainer;
     [SerializeField] private EquipmentTabView _weapon2Container;
-
-    private void OnEnable()
+    
+    public override void Init(UIModel uiModel)
     {
         _kevlarContainer.OnContainerClick += OnContainerClick;
         _backpackContainer.OnContainerClick += OnContainerClick;
@@ -24,9 +24,10 @@ public class EquipmentPanelView : UIView//<EquipmentWindowModel>
         _backpackContainer.OnRemoveButtonClick += OnRemoveButtonClick;
         _weaponContainer.OnRemoveButtonClick += OnRemoveButtonClick;
         _weapon2Container.OnRemoveButtonClick += OnRemoveButtonClick;
+        base.Init(uiModel);
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         _kevlarContainer.OnContainerClick -= OnContainerClick;
         _backpackContainer.OnContainerClick -= OnContainerClick;
@@ -37,6 +38,7 @@ public class EquipmentPanelView : UIView//<EquipmentWindowModel>
         _backpackContainer.OnRemoveButtonClick -= OnRemoveButtonClick;
         _weaponContainer.OnRemoveButtonClick -= OnRemoveButtonClick;
         _weapon2Container.OnRemoveButtonClick -= OnRemoveButtonClick;
+        base.Terminate();
     }
 
     public override void UpdateView(UIModel uiModel)

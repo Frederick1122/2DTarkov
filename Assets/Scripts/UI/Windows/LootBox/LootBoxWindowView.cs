@@ -19,8 +19,13 @@ public class LootBoxWindowView : WindowView //<LootWindowModel>
 
     private List<ItemCellView> _cells = new List<ItemCellView>();
 
-    private void Start() => _takeButton.onClick.AddListener(() => OnTakeAction?.Invoke());
-    
+
+    public override void Init(UIModel uiModel)
+    {
+        _takeButton.onClick.AddListener(() => OnTakeAction?.Invoke());
+        base.Init(uiModel);
+    }
+
     public override void UpdateView(UIModel uiModel)
     {
         var castData = (LootWindowModel) uiModel;
@@ -39,7 +44,7 @@ public class LootBoxWindowView : WindowView //<LootWindowModel>
         {
             var newCell = Instantiate(_cellViewPrefab, _itemLayoutGroup.transform);
             newCell.Init(new ItemCellModel(item, item.baseStack));
-            newCell.GetButton().onClick.AddListener(() => ClickOnCellAction?.Invoke(newCell));
+            newCell.OnClickCell += ClickOnCell; 
             _cells.Add(newCell);
         }
         
@@ -51,6 +56,11 @@ public class LootBoxWindowView : WindowView //<LootWindowModel>
         _takeButton.gameObject.SetActive(isItemSelected);
     }
 
+    public void ClickOnCell(ItemCellView item)
+    {
+        ClickOnCellAction?.Invoke(item);
+    }
+    
     public void DeleteCell(ItemCellView cell)
     {
         _cells.Remove(cell);

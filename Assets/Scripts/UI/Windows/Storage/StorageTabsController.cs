@@ -1,7 +1,7 @@
 using System;
 using Base.MVC;
 
-public class StorageTabsController : UIController //<StorageTabsView, StorageTabsModel>
+public class StorageTabsController : UIController
 {
     public event Action OnClickEquipmentButton;
     public event Action OnClickStorageButton;

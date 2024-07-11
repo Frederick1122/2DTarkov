@@ -13,18 +13,20 @@ public class MainMenuView : WindowView //<MainMenuModel>
     public event Action OnClickStorage;
     public event Action OnClickMerchants;
 
-    private void OnEnable()
+    public override void Init(UIModel uiModel)
     {
         _sortie.onClick.AddListener(() => OnClickSortie?.Invoke());
         _storage.onClick.AddListener(() => OnClickStorage?.Invoke());
         _merchants.onClick.AddListener(() => OnClickMerchants?.Invoke());
+        base.Init(uiModel);
     }
 
-    private void OnDisable()
+    public override void Terminate()
     {
         _sortie.onClick.RemoveAllListeners();
         _storage.onClick.RemoveAllListeners();
         _merchants.onClick.RemoveAllListeners();
+        base.Terminate();
     }
 }
 
